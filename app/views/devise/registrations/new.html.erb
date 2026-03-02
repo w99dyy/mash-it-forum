@@ -1,0 +1,50 @@
+<div class="text-center border-inherit rounded-md pt-1 mt-7 pb-10 mx-auto ring shadow-xl ring-gray-900/5 focus:outline-none">
+
+<h1 class="text-xl font-bold"> Sign up</h1>
+
+<%= form_for(resource, as: resource_name, class: "mb-3",url: registration_path(resource_name), html: { data: { turbo: false } }) do |f| %>
+  <%= render "devise/shared/error_messages", resource: resource %>
+
+  <!-- Username field -->
+  <div class="field mt-3">
+<%= f.label :username %> <br />
+ <%= f.text_field :username,  
+   autofocus: true,  
+    autocomplete: "username",
+    required: true,
+    placeholder: "Username",
+    class: "border-2 border-[#2a2a2a] rounded-full focus:outline-none px-4 py-1" %> 
+      </div>
+
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Email",
+    class: "border-2 border-[#2a2a2a] rounded-full focus:outline-none px-4 py-1" %>
+  </div>
+
+  <div class="field mt-3">
+    <%= f.label :password %>
+    <% if @minimum_password_length %>
+    <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <% end %><br />
+    <%= f.password_field :password, autocomplete: "new-password", placeholder: "Password",
+    class: "border-2 border-[#2a2a2a] rounded-full focus:outline-none px-4 py-1" %>
+  </div>
+
+  <div class="field mt-3">
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "Password",
+    class: "border-2 border-[#2a2a2a] rounded-full focus:outline-none px-4 py-1" %>
+  </div>
+
+    <div class= "actions bg-blue-700 hover:bg-blue-600 mt-4 pt-1 pb-1 pr-10 pl-10 inline-block text-white font-medium  rounded-full shadow transition duration-200">
+    <%= f.submit "Sign up" %>
+  </div>
+<% end %>
+
+<div class="border-b pt-4 mb-3 border-[#2a2a2a]"> </div>
+<p class="pb-2 text-gray-400 text-sm">Already have an account? </p>
+
+<%= render "devise/shared/links" %>
+
+</div>

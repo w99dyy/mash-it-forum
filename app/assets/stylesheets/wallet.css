@@ -1,0 +1,27 @@
+/* app/assets/stylesheets/wallet.css */
+.nft-card {
+    position: relative;
+    transition: all 0.2s;
+}
+
+.nft-card.selected .relative {
+    border-color: #3b82f6;
+    border-width: 3px;
+}
+
+/* Ensure images layer properly */
+.nft-card .relative img {
+    pointer-events: none;
+    user-select: none;
+}
+
+/* Loading animation */
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.animate-spin {
+    animation: spin 1s linear infinite;
+}

@@ -1,0 +1,55 @@
+<div class="max-w-4xl mx-auto px-4 py-8">
+  <!-- Header -->
+  <div class="rounded-lg shadow-lg p-6 mb-6">
+    <div class="flex items-start space-x-6">
+    <div class="relative">
+    <div class="w-24 h-24 rounded-full overflow-hidden border-4 border-blue-500 bg-gray-100"
+         data-default-avatar-src="<%= asset_path('mashit.png') %>">
+      <% if @user.wallet_connected? %>
+        <div data-controller="mashit-avatar" 
+             data-mashit-avatar-wallet-value="<%= @user.wallet_address %>"
+             class="w-full h-full">
+        </div>
+      <% else %>
+        <img src="<%= asset_path('mashit.png') %>" 
+             alt="Default avatar"
+             class="w-full h-full object-cover">
+      <% end %>
+    </div>
+  </div>
+      
+      <!-- User Info -->
+      <div class="flex-1">
+        <h1 class="text-2xl font-bold"><%= @user.username %></h1>
+        <p class="text-gray-600"><%= @user.email %></p>
+        
+
+        <div data-controller="wallet" class="space-y-4">
+  <!-- Connection Status -->
+  <div class="flex items-center justify-between p-4 rounded-lg">
+    <div>
+      <p class="font-medium">Wallet Status</p>
+      <p data-wallet-target="status" class="text-sm text-gray-600">Not connected</p>
+      <p data-wallet-target="address" class="text-sm text-gray-600 hidden"></p>
+    </div>
+            
+            <!-- Connect/Disconnect Button -->
+            <button data-wallet-target="button"
+                    data-action="click->wallet#toggle"
+                    class="px-6 py-2 rounded-lg text-white transition
+                           <%= @user.wallet_connected? ? 'bg-red-600 hover:bg-red-700' : 'bg-blue-600 hover:bg-blue-700' %>">
+              <%= @user.wallet_connected? ? 'Disconnect Wallet' : 'Connect Wallet' %>
+            </button>
+          </div>
+          
+          <!-- Loading State -->
+          <div data-wallet-target="loading" class="hidden text-center py-4">
+            <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+            <p class="mt-2 text-gray-600">Loading your mashits...</p>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

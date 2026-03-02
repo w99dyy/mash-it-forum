@@ -1,0 +1,16 @@
+  <%= turbo_frame_tag dom_id(comment) do %>
+  <div class="border-b border-[#2a2a2a]">
+      <div class="py-8">
+        <%= comment.body.to_s.html_safe %>
+      </div>
+
+      <div class="mt-3 flex items-center gap-2 w-full">
+          <% if current_user && current_user == comment.user %>
+
+        <%= link_to "Edit", edit_topic_post_comment_path(comment.post.topic, comment.post, comment), class: "btn btn-white" %>
+        <%= button_to "Delete", topic_post_comment_path(comment.post.topic, comment.post, comment), method: :delete, class: "btn btn-white" %>
+            <% end %>
+
+        </div>
+      </div>
+  <% end %>

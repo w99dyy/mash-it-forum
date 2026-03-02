@@ -1,0 +1,77 @@
+<div class="posts-page px-3">
+  <!-- Page Header -->
+  <%= link_to "New Post", new_topic_post_path(@topic) %>
+
+  <div class="mb-2">
+    <h1 class="text-2xl font-bold text-white mb-4"><%= t :All_Posts %></h1>
+    <p class="text-gray-400 text-sm border-b border-[#2a2a2a] pb-4"><%= t :Browse_all_posts %></p>
+  </div>
+
+  <!-- Posts List -->
+  
+  <div class="posts-container divide-y divide-[#2a2a2a]">
+  
+    <% if @posts.any? %>
+      <% @posts.each do |post| %>
+        <div class="post-card  p-2 mb-2">
+
+        
+
+
+          <!-- Post Title -->
+
+          <h2 class="text-l font-bold text-white mb-3 ">
+           <%= link_to truncate(post.title, length: 100), topic_post_path(@topic, post), class: "hover:text-[#ababab] transition" %>
+
+          </h2>
+          
+          <!-- Post Content Preview -->
+
+          <div class="post-content mb-4">
+            <p class="text-gray-300 leading-relaxed">
+              <%= link_to strip_tags(post.body), topic_post_path(@topic, post) %>
+            </p>
+          </div>
+
+          <!-- Tags -->
+
+          <% if post.tags.any? %>
+            <div class="tags mb-4">
+              <div class="flex flex-wrap gap-2">
+                <% post.tags.each do |tag| %>
+                 <%= link_to tag.name, topic_posts_path(tag: tag.name),
+                class: "bg-blue-700 text-white px-4 rounded-full text-sm hover:bg-blue-600" %>
+
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+          
+          
+          <!-- Post Metadata -->
+          
+          <div class="flex justify-between text-sm text-gray-400">
+            <div>
+              <span class="mr-1">
+              <%= t :Posted%> <%= time_ago_in_words(post.updated_at) %> ago</span>
+              <% if post.updated_at.present? && post.updated_at > post.created_at + 1.minute %>
+                • <span>Edited <%= time_ago_in_words(post.updated_at) %> ago</span>
+              <% end %>
+            </div>
+            
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+    
+      <!-- Empty State -->
+    
+      <div class="empty-state text-center py-16 rounded-lg">
+        <h3 class="text-2xl font-bold text-white mb-2">No posts yet</h3>
+        <p class="text-gray-400 mb-6">Be the first to share your wondeful art!</p>
+        <%= link_to "Create Post", new_topic_post_path, 
+            class: "bg-blue-700 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold transition" %>
+      </div>
+    <% end %>
+  </div>
+</div>

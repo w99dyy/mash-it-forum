@@ -1,0 +1,49 @@
+<div class="text-center border-inherit rounded-md pt-3 pl-35 pr-35 mt-7 pb-5 mx-auto ring shadow-xl ring-gray-900/5 focus:outline-none">
+
+<h2 class="text-xl font-bold" >Edit <%= resource_name.to_s.humanize %></h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+  <%= render "devise/shared/error_messages", resource: resource %>
+
+  <div class="field mt-3">
+    <p><%= f.label :email %></p>
+    <p><%= f.email_field :email, autofocus: true, autocomplete: "email", 
+    class: "border-2 border-[#2a2a2a] rounded-full focus:outline-none px-4 py-1" %></p>
+  </div>
+
+  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+  <% end %>
+
+    <div class="field mt-3">
+    <p><%= f.label :password %> <i>(leave blank if you don't want to change it)</i></p>
+    <p><%= f.password_field :password, autocomplete: "new-password",
+    class: "border-2 border-[#2a2a2a] rounded-full focus:outline-none px-4 py-1" %></p>
+    <% if @minimum_password_length %>
+      <p><em><%= @minimum_password_length %> characters minimum</em></p>
+    <% end %>
+  </div>
+
+    <div class="field mt-3">
+    <p><%= f.label :password_confirmation %></p>
+    <p><%= f.password_field :password_confirmation, autocomplete: "new-password",
+    class: "border-2 border-[#2a2a2a] rounded-full focus:outline-none px-4 py-1" %></p>
+  </div>
+
+    <div class="field mt-3">
+    <p><%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i></p>
+    <p><%= f.password_field :current_password, autocomplete: "current-password",
+    class: "border-2 border-[#2a2a2a] rounded-full focus:outline-none px-4 py-1" %></p>
+  </div>
+
+      <div class= "actions bg-blue-700 hover:bg-blue-600 mt-4 pt-1 pb-1 pr-10 pl-10 mb-2 inline-block text-white font-medium  rounded-full shadow transition duration-200">
+    <%= f.submit "Update" %>
+  </div>
+<% end %>
+<div class="border-b pt-4 mb-3 border-[#2a2a2a]"> </div>
+<p class="pb-2 text-gray-400"> Unhappy? </p>
+<div> <%= button_to "Cancel my account", registration_path(resource_name), class: "hover:text-[#ababab] pb-2", data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
+
+<p><%= link_to "Go back", new_session_path(resource_name), class: "hover:text-[#ababab]" %></p>
+
+</div>
