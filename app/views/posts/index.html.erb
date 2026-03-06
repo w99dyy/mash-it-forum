@@ -8,16 +8,18 @@
   </div>
 
   <!-- Posts List -->
-  
+
   <div class="posts-container divide-y divide-[#2a2a2a]">
   
     <% if @posts.any? %>
       <% @posts.each do |post| %>
         <div class="post-card  p-2 mb-2">
-
         
-
-
+          <!-- thumbnail -->
+            <% if post.thumbnail %>
+              <%= link_to image_tag(post.thumbnail.representation(resize_to_limit: [100, 100])), topic_post_path(@topic, post), class: "float-left pr-5" %>
+            <% end %>
+          
           <!-- Post Title -->
 
           <h2 class="text-l font-bold text-white mb-3 ">
@@ -57,13 +59,15 @@
               <% if post.updated_at.present? && post.updated_at > post.created_at + 1.minute %>
                 • <span>Edited <%= time_ago_in_words(post.updated_at) %> ago</span>
               <% end %>
+              <%= pluralize(post.comments.count, 'comment') %>
+
             </div>
             
             </div>
           </div>
         <% end %>
       <% else %>
-    
+      
       <!-- Empty State -->
     
       <div class="empty-state text-center py-16 rounded-lg">
