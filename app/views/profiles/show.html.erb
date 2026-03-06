@@ -1,55 +1,125 @@
 <div class="max-w-4xl mx-auto px-4 py-8">
-  <!-- Header -->
   <div class="rounded-lg shadow-lg p-6 mb-6">
     <div class="flex items-start space-x-6">
-    <div class="relative">
-    <div class="w-24 h-24 rounded-full overflow-hidden border-4 border-blue-500 bg-gray-100"
-         data-default-avatar-src="<%= asset_path('mashit.png') %>">
-      <% if @user.wallet_connected? %>
-        <div data-controller="mashit-avatar" 
-             data-mashit-avatar-wallet-value="<%= @user.wallet_address %>"
-             class="w-full h-full">
-        </div>
-      <% else %>
-        <img src="<%= asset_path('mashit.png') %>" 
-             alt="Default avatar"
-             class="w-full h-full object-cover">
-      <% end %>
-    </div>
-  </div>
-      
+
+<!-- Avatar — rendered from DB, visible to everyone -->
+      <div class="w-50 h-50 rounded-lg overflow-hidden relative">
+      <div class="relative w-full h-full">
+  <% if @user.mashit_layers.any? %>
+    <% @user.mashit_layers.each do |layer| %>
+      <img src="<%= layer['image'] %>"
+           alt="<%= layer['name'] %>"
+           class="absolute inset-0 w-full h-full object-contain ">
+    <% end %>
+  <% else %>
+    <img src="<%= asset_path('mashit.png') %>"
+         alt="Default avatar"
+         class="w-full h-full object-cover">
+  <% end %>
+</div>
+      </div>
+
       <!-- User Info -->
       <div class="flex-1">
         <h1 class="text-2xl font-bold"><%= @user.username %></h1>
-        <p class="text-gray-600"><%= @user.email %></p>
-        
+        <p class="text-gray-600 mb-4"><%= @user.email %></p>
 
-        <div data-controller="wallet" class="space-y-4">
-  <!-- Connection Status -->
-  <div class="flex items-center justify-between p-4 rounded-lg">
-    <div>
-      <p class="font-medium">Wallet Status</p>
-      <p data-wallet-target="status" class="text-sm text-gray-600">Not connected</p>
-      <p data-wallet-target="address" class="text-sm text-gray-600 hidden"></p>
+        <!-- Wallet section — only shown to profile owner -->
+        <% if current_user == @user %>
+          <div data-controller="wallet">
+            <div class=" p-4 rounded-lg >
+              <div>
+                <p class="font-medium">Wallet Status</p>
+                <% if @user.wallet_connected? %>
+                  <p class="text-sm text-green-600">Connected</p>
+                  <p class="text-sm text-gray-500 font-mono">
+                    <%= "#{@user.wallet_address.first(6)}...#{@user.wallet_address.last(4)}" %>
+                  </p>
+                <% else %>
+                  <p class="text-sm text-gray-500">Not connected</p>
+                <% end %>
+              </div>
+
+              <button data-wallet-target="button"
+                      data-action="click->wallet#toggle"
+                      class="px-6 py-2 rounded-lg text-white transition
+                             <%= @user.wallet_connected? ? 'bg-red-600 hover:bg-red-700' : 'bg-blue-600 hover:bg-blue-700' %>">
+                <%= @user.wallet_connected? ? 'Disconnect Wallet' : 'Connect Wallet' %>
+              </button>
+            </div>
+          </div>
+        <% end %>
+
+      </div>
+
     </div>
-            
-            <!-- Connect/Disconnect Button -->
-            <button data-wallet-target="button"
-                    data-action="click->wallet#toggle"
-                    class="px-6 py-2 rounded-lg text-white transition
-                           <%= @user.wallet_connected? ? 'bg-red-600 hover:bg-red-700' : 'bg-blue-600 hover:bg-blue-700' %>">
-              <%= @user.wallet_connected? ? 'Disconnect Wallet' : 'Connect Wallet' %>
-            </button>
+
+     <div class="w-2/3 flex flex-col items-center">
+
+<% if @user.posts.any? %>
+  <% @user.posts.each do |post| %>
+    <div class="post-card rounded-lg p-6 mb-6 shadow-lg w-full max-w-3xl" >
+
+      <!-- Post Title -->
+
+      <h2 class="text-2xl font-bold text-white mb-3 ">
+       <%= link_to truncate(post.title, length: 150), topic_post_path(post.topic, post), class: "hover:text-cyan-400 transition" %>
+
+      </h2>
+      
+      <!-- Post Content Preview -->
+
+      <% if post.body.embeds.any? %>
+        <%= link_to image_tag(post.body.embeds.first), topic_post_path(post.topic, post) %>
+        <% end %>
+
+      <div class="post-content mb-4">
+        <p class="text-gray-300 leading-relaxed">
+          <%= link_to truncate(post.body.to_plain_text, length: 200), topic_post_path(post.topic, post), class: "hover:text-cyan-400 transition" %>
+        </p>
+      </div>
+      
+      <!-- Tags -->
+
+      <% if post.tags.any? %>
+        <div class="tags mb-4">
+          <div class="flex flex-wrap gap-2">
+            <% post.tags.each do |tag| %>
+             <%= link_to tag.name, tagged_path(tag: tag.name),
+          class: "bg-blue-700 text-white px-3 py-1 rounded-full text-sm hover:bg-blue-600" %>
+
+            <% end %>
           </div>
-          
-          <!-- Loading State -->
-          <div data-wallet-target="loading" class="hidden text-center py-4">
-            <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-            <p class="mt-2 text-gray-600">Loading your mashits...</p>
-          </div>
-          
         </div>
+      <% end %>
+      
+      <!-- Post Metadata -->
+          
+          <div class="flex justify-between text-sm text-gray-400 ">
+            <div>
+              <span class="mr-4">
+              Posted <%= time_ago_in_words(post.updated_at) %> ago</span>
+              <% if post.updated_at.present? && post.updated_at > post.created_at + 1.minute %>
+                <span>Edited <%= time_ago_in_words(post.updated_at) %> ago</span>
+              <% end %>
+            </div>
+        
       </div>
     </div>
+  <% end %>
+<% else %>
+
+  <!-- Empty State -->
+  
+  <div class="empty-state text-center py-16 bg-gray-800 rounded-lg w-full max-w-3xl">
+    <div class="text-6xl mb-4">📝</div>
+    <h3 class="text-2xl font-bold text-white mb-5 ">You didn't post yet</h3>
+    <%= link_to "Create First Post", new_topic_post_path, 
+        class: " text-white px-6 py-3 rounded-lg font-semibold transition" %>
   </div>
+<% end %>
+
+  </div>
+
+  
 </div>
