@@ -30,4 +30,12 @@ class User < ApplicationRecord
       return [] unless mashit_avatar_data.present?
       mashit_avatar_data["traits"] || []
     end
+
+    def mashit_layers
+      return [] unless mashit_avatar_url.present?
+      mashit_avatar_url.is_a?(Array) ? mashit_avatar_url : JSON.parse(mashit_avatar_url)
+      rescue JSON::ParserError
+      []
+    end
+
 end
