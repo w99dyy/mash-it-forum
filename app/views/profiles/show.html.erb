@@ -1,28 +1,31 @@
-<div class="max-w-4xl mx-auto px-4 py-8">
+<div class=" mx-auto px-4 py-8">
   <div class="rounded-lg shadow-lg p-6 mb-6">
     <div class="flex items-start space-x-6">
 
-<!-- Avatar — rendered from DB, visible to everyone -->
-      <div class="w-50 h-50 rounded-lg overflow-hidden relative">
+      <!-- Avatar — full card -->
+      <div class="w-50 h-71 rounded-lg overflow-hidden relative">
       <div class="relative w-full h-full">
-  <% if @user.mashit_layers.any? %>
-    <% @user.mashit_layers.each do |layer| %>
-      <img src="<%= layer['image'] %>"
-           alt="<%= layer['name'] %>"
-           class="absolute inset-0 w-full h-full object-contain ">
+      <% if @user.mashit_layers.any? %>
+        <% @user.mashit_layers.each do |layer| %>
+         <img src="<%= layer['image'] %>"
+              alt="<%= layer['name'] %>"
+              class="absolute inset-0 w-full h-full ">
     <% end %>
   <% else %>
     <img src="<%= asset_path('mashit.png') %>"
          alt="Default avatar"
          class="w-full h-full object-cover">
-  <% end %>
-</div>
+    <% end %>
+      </div>
       </div>
 
       <!-- User Info -->
       <div class="flex-1">
         <h1 class="text-2xl font-bold"><%= @user.username %></h1>
+
+        <% if current_user == @user %>
         <p class="text-gray-600 mb-4"><%= @user.email %></p>
+        <% end %>
 
         <!-- Wallet section — only shown to profile owner -->
         <% if current_user == @user %>
@@ -43,7 +46,7 @@
               <button data-wallet-target="button"
                       data-action="click->wallet#toggle"
                       class="px-6 py-2 rounded-lg text-white transition
-                             <%= @user.wallet_connected? ? 'bg-red-600 hover:bg-red-700' : 'bg-blue-600 hover:bg-blue-700' %>">
+                             <%= @user.wallet_connected? ? 'bg-red-600 hover:bg-red-700' : 'bg-[#ed5024] hover:bg-[#e0603c]' %>">
                 <%= @user.wallet_connected? ? 'Disconnect Wallet' : 'Connect Wallet' %>
               </button>
             </div>
@@ -54,30 +57,30 @@
 
     </div>
 
-     <div class="w-2/3 flex flex-col items-center">
+     
+
+  </div>
+<div class=" divide-y divide-[#2a2a2a]">
 
 <% if @user.posts.any? %>
   <% @user.posts.each do |post| %>
-    <div class="post-card rounded-lg p-6 mb-6 shadow-lg w-full max-w-3xl" >
+    <div class="post-card p-6 pb-8 " >
+
+    <% if post.thumbnail %>
+              <%= link_to image_tag(post.thumbnail.representation(resize_to_limit: [120, 120])), topic_post_path(post.topic, post), class: "float-left pr-5" %>
+            <% end %>
 
       <!-- Post Title -->
 
-      <h2 class="text-2xl font-bold text-white mb-3 ">
-       <%= link_to truncate(post.title, length: 150), topic_post_path(post.topic, post), class: "hover:text-cyan-400 transition" %>
+      <h2 class="text-lg font-bold text-white mb-3 ">
+       <%= link_to truncate(post.title, length: 150), topic_post_path(post.topic, post), class: "hover:text-[#ababab] transition" %>
 
       </h2>
       
       <!-- Post Content Preview -->
 
-      <% if post.body.embeds.any? %>
-        <%= link_to image_tag(post.body.embeds.first), topic_post_path(post.topic, post) %>
-        <% end %>
-
-      <div class="post-content mb-4">
-        <p class="text-gray-300 leading-relaxed">
-          <%= link_to truncate(post.body.to_plain_text, length: 200), topic_post_path(post.topic, post), class: "hover:text-cyan-400 transition" %>
-        </p>
-      </div>
+     
+     
       
       <!-- Tags -->
 
@@ -86,7 +89,7 @@
           <div class="flex flex-wrap gap-2">
             <% post.tags.each do |tag| %>
              <%= link_to tag.name, tagged_path(tag: tag.name),
-          class: "bg-blue-700 text-white px-3 py-1 rounded-full text-sm hover:bg-blue-600" %>
+          class: "bg-[#de7200] text-white px-3 py-1 rounded-full text-sm hover:bg-[#df8322]" %>
 
             <% end %>
           </div>
@@ -111,15 +114,9 @@
 
   <!-- Empty State -->
   
-  <div class="empty-state text-center py-16 bg-gray-800 rounded-lg w-full max-w-3xl">
+  <div class="empty-state text-center py-16 rounded-lg w-full max-w-full">
     <div class="text-6xl mb-4">📝</div>
-    <h3 class="text-2xl font-bold text-white mb-5 ">You didn't post yet</h3>
-    <%= link_to "Create First Post", new_topic_post_path, 
-        class: " text-white px-6 py-3 rounded-lg font-semibold transition" %>
-  </div>
+    <h3 class="text-2xl font-bold text-white mb-5 ">You didn't post yet.</h3>
 <% end %>
-
-  </div>
-
   
 </div>
