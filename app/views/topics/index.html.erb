@@ -13,20 +13,19 @@
   <div class="posts-container divide-y divide-[#2a2a2a]">
   
   <% @topics.each do |topic| %>
-    <div class="topic">
-      <h2><%= link_to topic.title, topic_posts_path(topic) %></h2>
+    <div class="topic mt-4">
+      <h2><%= link_to topic.title, topic_posts_path(topic), class: "hover:text-[#ababab] transition font-bold" %></h2>
       <p><%= topic.content %></p>
-      <%# topic.user.username if topic.user %>
       <small><%= topic.posts.count %> posts</small>
       <small><%= pluralize(topic.posts.sum { |post| post.comments.count }, 'comment') %></small>
       <!-- Tags -->
 
     <% if topic.tags.any? %>
-      <div class="tags mb-4">
+      <div class="tags mb-4 mt-2">
         <div class="flex flex-wrap gap-2">
           <% topic.tags.each do |tag| %>
            <%= link_to tag.name, topics_path(tag: tag.name),
-          class: "bg-blue-700 text-white px-4 rounded-full text-sm hover:bg-blue-600" %>
+          class: "bg-[#de7200] text-white px-4 rounded-full text-sm hover:bg-[#df8322]" %>
 
           <% end %>
         </div>
