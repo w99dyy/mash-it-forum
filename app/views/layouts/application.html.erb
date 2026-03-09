@@ -30,10 +30,10 @@
    <%= link_to "About", root_path, class: "pl-4" %>
    <div class="ml-auto">
       <% if user_signed_in? %>
-       <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "bg-blue-700 hover:bg-blue-600 inline-block text-white font-medium py-2 px-4 mr-3 rounded-full shadow transition duration-200" %> 
+       <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "bg-[#ed5024] hover:bg-[#e0603c] inline-block text-white font-medium py-2 px-4 mr-3 rounded-full shadow transition duration-200" %> 
            <% else %>
 
-      <%= link_to "Sign in", new_user_session_path, class: "bg-blue-700 hover:bg-blue-600 inline-block text-white font-medium py-2 px-4 mr-3 rounded-full shadow transition duration-200" %> 
+      <%= link_to "Sign in", new_user_session_path, class: "bg-[#ed5024] hover:bg-[#e0603c] inline-block text-white font-medium py-2 px-4 mr-3 rounded-full shadow transition duration-200" %> 
       <% end %>
     </div>
   </header>
@@ -42,16 +42,19 @@
   <div class="flex flex-grow">
     <nav class="md:flex w-1/6 flex-col hidden sticky top-0 h-screen pt-4 pr-5 pl-5 border-r border-[#2a2a2a]">
         <ul class="space-y-2">  <!-- space-y-2 adds vertical spacing between items -->
+        
         <!-- New topic -->
+        <% if current_user&.admin? %>
         <li>
       <%= link_to new_topic_path, class: "flex items-center gap-3 pl-8 py-2 hover:bg-[#2a2a2a] rounded-md group" do %>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
         <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
       </svg>
-    <span class="text-gray-300 group-hover:text-white"><%= t :New_topic %></span>
+    <span class="text-gray-300 group-hover:text-white"> New topic </span>
     <% end %>
 
       </li>
+      <% end %>
 
       <div class="border-b border-[#2a2a2a]">
       </div>
@@ -65,7 +68,7 @@
         </svg>
 
 
-          <span class="text-gray-300 group-hover:text-white"><%= t :Topics%></span>
+          <span class="text-gray-300 group-hover:text-white"> Topics </span>
         <% end %>
       </li>
 
@@ -80,7 +83,7 @@
 
 
 
-          <span class="text-gray-300 group-hover:text-white"><%= t :Profile%></span>
+          <span class="text-gray-300 group-hover:text-white"> Profile </span>
         <% end %>
         
 
