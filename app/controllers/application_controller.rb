@@ -8,6 +8,9 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+  def require_admin!
+    redirect_to root_path, alert: "Not authorized." unless current_user&.admin?
+  end
 
 
   # Changes to the importmap will invalidate the etag for HTML responses
