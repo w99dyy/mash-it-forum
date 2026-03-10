@@ -3,9 +3,11 @@
 <div class="posts-page px-3">
   <!-- Page Header -->
 
-  <div class="mb-2">
-    <h1 class="text-2xl font-bold text-white mb-4"><%= t :Topics %></h1>
-    <p class="text-gray-400 text-sm border-b border-[#2a2a2a] pb-4"><%= t :Browse_all_posts %></p>
+  <div class="mb-2 border-b border-[#2a2a2a] pb-8">
+    <h1 class="text-2xl font-bold text-white mb-4"> Topics </h1>
+    <p class="text-gray-400 text-sm "> Browse all posts </p>
+    <p class="float-right text-gray-400">Comments</p>
+    <p class="text-gray-400 float-right pr-7"> Posts </p>
   </div>
 
   <!-- Topics List -->
@@ -14,10 +16,15 @@
   
   <% @topics.each do |topic| %>
     <div class="topic mt-4">
+
+    <div class="float-right text-gray-400">
+    <div class="flex items-center gap-22 pr-7">
+      <span><%= topic.posts.count %> </span>
+      <span><%= topic.posts.sum { |post| post.comments.count } %></span>
+    </div>
+    </div>
       <h2><%= link_to topic.title, topic_posts_path(topic), class: "hover:text-[#ababab] transition font-bold" %></h2>
       <p><%= topic.content %></p>
-      <small><%= topic.posts.count %> posts</small>
-      <small><%= pluralize(topic.posts.sum { |post| post.comments.count }, 'comment') %></small>
       <!-- Tags -->
 
     <% if topic.tags.any? %>
