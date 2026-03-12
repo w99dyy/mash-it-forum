@@ -28,6 +28,7 @@ class ApplicationController < ActionController::Base
 
   def sync_mashit_avatar
       return unless user_signed_in? && current_user.wallet_connected?
+      # refetch every 5 minutes if user changed his avatar
       return if current_user.mashit_avatar_synced_at&.> 5.minutes.ago
 
       avatar_layers = fetch_latest_mashit(current_user.wallet_address)
