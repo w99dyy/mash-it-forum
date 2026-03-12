@@ -1,3 +1,5 @@
+<% content_for :title, @topic.title %>
+
 <div class="posts-page px-3">
   <!-- Page Header -->
   <%= link_to "New Post", new_topic_post_path(@topic), class: "max-w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-[#ed5024] hover:bg-[#e0603c] inline-block font-medium float-right" %>
@@ -5,8 +7,8 @@
   <div class="mb-2 border-b border-[#2a2a2a] pb-8">
     <h1 class="text-2xl font-bold text-white mb-4"> All Posts </h1>
     <p class="text-gray-400 text-sm "> Browse all posts </p>
-    <p class="float-right text-gray-400">Activity</p>
-    <p class="text-gray-400 float-right pr-5"> Comments </p>
+    <p class="float-right text-gray-400 hidden sm:block">Activity</p>
+    <p class="text-gray-400 float-right pr-5 hidden sm:block"> Comments </p>
   </div>
 
   <!-- Posts List -->
@@ -16,14 +18,16 @@
       <% @posts.each do |post| %>
         <div class="post-card  p-2 mb-3 pb-6">
 
-        <div class="float-left pr-5">
+            <div class="float-left pr-5">
 
-            <%= render 'layouts/mashit_avatar_sm', user: @topic.user %>
+            <%= link_to render('layouts/mashit_avatar_sm', user: post.user), profile_path(post.user.username) %>
             </div>
+
+            <div class="overflow-hidden">
 
                 <!-- Post Metadata -->
           
-          <div class="text-gray-400 float-right">
+          <div class="text-gray-400 float-right hidden sm:block">
             <div class="flex items-center gap-17">
               <span> <%= post.comments.count %> </span>
               <span> <%= time_ago_in_words(post.updated_at) %> </span>
@@ -31,19 +35,19 @@
             </div>
         
           <!-- thumbnail -->
-            <% if post.thumbnail %>
-              <%= link_to image_tag(post.thumbnail.representation(resize_to_limit: [100, 100])), topic_post_path(@topic, post), class: "float-left pr-5" %>
-            <% end %>
+            <%# if post.thumbnail %>
+              <%# link_to image_tag(post.thumbnail.representation(resize_to_limit: [100, 100])), topic_post_path(@topic, post), class: "float-left pr-5" %>
+            <%# end %>
 
               
           
           <!-- Post Title -->
 
-          <h2 class="text-l font-bold mb-3 ">
+          <h2 class="text-sm sm:text-base md:text-lg font-bold mb-3">
            <%= link_to truncate(post.title, length: 100), topic_post_path(@topic, post), class: "hover:text-[#ababab] transition" %>
 
           </h2>
-
+        
           <!-- Tags -->
 
           <% if post.tags.any? %>
@@ -60,6 +64,7 @@
           <% end %>
 
         
+  </div>
             
           </div>
         <% end %>
