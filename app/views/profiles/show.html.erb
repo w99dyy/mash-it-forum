@@ -1,26 +1,32 @@
+<% content_for :title, @user.username %>
+
 <div class=" mx-auto px-4 py-8">
   <div class="rounded-lg shadow-lg p-6 mb-6">
     <div class="flex items-start space-x-6">
 
       <!-- Avatar — full card -->
-      <div class="w-50 h-71 rounded-lg overflow-hidden relative">
-      <div class="relative w-full h-full">
+      <div class="rounded-lg overflow-hidden relative" style="width: 276px; height: 368px;">
       <% if @user.mashit_layers.any? %>
-        <% @user.mashit_layers.each do |layer| %>
-         <img src="<%= layer['image'] %>"
+      <% @user.mashit_layers.each do |layer| %>
+        <% if layer['name'] == 'background' %>
+          <img src="<%= layer['image'] %>"
               alt="<%= layer['name'] %>"
-              class="absolute inset-0 w-full h-full ">
-    <% end %>
-  <% else %>
-    <img src="<%= asset_path('mashit.png') %>"
-         alt="Default avatar"
-         class="w-full h-full object-cover">
-    <% end %>
-      </div>
+              class="absolute inset-0 w-full h-full object-cover">
+        <% else %>
+          <img src="<%= layer['image'] %>"
+              alt="<%= layer['name'] %>"
+              class="absolute inset-0 w-full h-full object-contain">
+        <% end %>
+      <% end %>
+      <% else %>
+        <img src="<%= asset_path('mashit.png') %>"
+            alt="Default avatar"
+            class="rounded-lg object-contain">
+      <% end %>
       </div>
 
       <!-- User Info -->
-      <div class="flex-1">
+      <div class="hidden sm:block">
         <h1 class="text-2xl font-bold"><%= @user.username %></h1>
 
         <% if current_user == @user %>
@@ -60,6 +66,8 @@
      
 
   </div>
+
+
 <div class=" divide-y divide-[#2a2a2a]">
 
 <% if @user.posts.any? %>
