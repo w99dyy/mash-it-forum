@@ -22,11 +22,14 @@ class TopicsController < ApplicationController
     def create
         @topic = Topic.new(topic_params)
         @topic.user = current_user
-
-        if @topic.save
-            redirect_to @topic, notice: "Topic created!"
-        else
-            render :new, status: :unproccessable_entity
+        respond_to do |format|
+            if @topic.save
+                format.html { redirect_to @topic, notice: "Topic created!" }
+                format.json { render :show, status: :created, location: @topic }
+            else
+                format.html { render :new, status: :unprocessable_entity }
+                format.json { render json: @topic.errors, status: :unprocessable_entity }
+            end
         end
     end
 
