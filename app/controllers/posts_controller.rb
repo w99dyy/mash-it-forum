@@ -65,8 +65,8 @@ class PostsController < ApplicationController
     else
       respond_to do |format|
         format.html { redirect_to root_path, alert: "Not authorized!" }
-        format.json { redner json: {error: "Not authorized"}, status: :forbidden }
-      end 
+        format.json { redner json: { error: "Not authorized" }, status: :forbidden }
+      end
     end
   end
 

@@ -12,6 +12,6 @@ class Admin::UsersController < BaseController
   def demote
     @user = User.find(params[:id])
     @user.update(admin: false)
-    redirect_to admin_user_path, notice: "#{user.username} is no longer an admin." 
+    redirect_to admin_user_path, notice: "#{user.username} is no longer an admin."
   end
 end
