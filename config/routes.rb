@@ -1,16 +1,17 @@
 Rails.application.routes.draw do
-  
   namespace :admin do
     root to: "dashboard#index"
-    resources :posts, only: [:index, :destroy]
-    resources :users, only: [:index] do
+    resources :posts, only: [ :index, :destroy ]
+    resources :users, only: [ :index ] do
       member do
         patch :promote
         patch :demote
       end
     end
   end
-  devise_for :users
+  devise_for :users, controllers: {
+    confirmations: "users/confirmation"
+  }
    # Defines the root path route ("/")
    root "topics#index"
 
