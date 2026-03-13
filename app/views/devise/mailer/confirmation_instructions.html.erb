@@ -1,5 +1,10 @@
-<p>Welcome <%= @email %>!</p>
+<p>Dear masher: </p>
 
-<p>You can confirm your account email through the link below:</p>
+<p>Thank you for registering to mash-it forum, to complete your sign in and ensure security we need to verify <%= @email %>. </p>
 
-<p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
+<p>You can confirm your email through the link below:</p>
+
+<p><%= link_to 'Verify my email', user_confirmation_url(confirmation_token: @token) %></p>
+
+<small> Sincerely, </small>
+<small> Mash-it team </small>
