@@ -1,0 +1,16 @@
+<!-- Avatar — rendered from DB, visible to everyone -->
+      <div class="w-20 h-20 rounded-full overflow-hidden ">
+      <div class="relative w-full h-full">
+  <% if user.mashit_layers.any? %>
+    <% user.mashit_layers.each do |layer| %>
+      <img src="<%= layer['image'] %>"
+           alt="<%= layer['name'] %>"
+           class="absolute inset-0 w-full h-full object-cover">
+    <% end %>
+  <% else %>
+    <img src="<%= asset_path('mashit.png') %>"
+         alt="Default avatar"
+         class="w-full h-full object-cover">
+  <% end %>
+</div>
+      </div>
