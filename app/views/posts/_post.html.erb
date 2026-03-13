@@ -1,6 +1,6 @@
 <div id="<%= dom_id post %>" class="w-full sm:w-auto px-3">
   <div class="flex items-center gap-2 pb-6">
-    <%= render 'layouts/mashit_avatar', user: @post.user %>
+    <%= render 'avatar_pfp/mashit_avatar', user: @post.user %>
     <%= post.user.username %>
   </div>
   
@@ -25,9 +25,9 @@
     <%= link_to "Edit Post", edit_topic_post_path(@topic, @post), 
     class: "block px-4 py-4 hover:text-[#ababab] cursor-pointer" %> 
 
-      <%= button_to "Destroy this post", [@topic, @post], method: :delete, 
-      class: "block px-4 py-4 hover:text-[#ababab] cursor-pointer",
-         data: { turbo_confirm: "Are you sure?" } %>
+      <%= button_to "Delete post", [@topic, @post], method: :delete, 
+      class: "block w-full text-left px-4 py-4 hover:text-[#ababab] cursor-pointer",
+      data: { turbo_confirm: "Are you sure?" } %>
 
       
   </div>

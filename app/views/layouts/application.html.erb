@@ -32,7 +32,7 @@
      <% if user_signed_in? %>
     <div class="relative group inline-block ml-auto">
       <%= link_to profile_path(current_user.username) do %>
-        <%= render 'layouts/mashit_avatar_sm', user: current_user %>
+        <%= render 'avatar_pfp/mashit_avatar_sm', user: current_user %>
       <% end %>
 
  <!-- hover menu -->
