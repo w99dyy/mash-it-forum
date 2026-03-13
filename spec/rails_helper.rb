@@ -43,7 +43,7 @@ RSpec.configure do |config|
   # factory bot
   config.include FactoryBot::Syntax::Methods
 
-  #devise
+  # devise
   config.include Devise::Test::IntegrationHelpers, type: :request
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
