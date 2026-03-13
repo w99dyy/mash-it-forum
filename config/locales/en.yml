@@ -31,7 +31,7 @@ en:
   datetime:
     distance_in_words:
       less_than_x_minutes:
-        one: "just now"
+        one: "0s"
         other: "%{count}m"
       about_x_minutes:
         one: "1m"
