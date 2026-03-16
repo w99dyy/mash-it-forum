@@ -3,7 +3,6 @@
       <% render "comments/shared/error_messages", resource: form.object %>
 
       <div class="field mb-4 container mx-auto">
-        <%= form.label :Content %>
         <%= form.rich_text_area :body, class: "border border-[#2a2a2a] rounded-md outline-none" %>
       </div>
 
