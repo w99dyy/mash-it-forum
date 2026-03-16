@@ -3,7 +3,7 @@ class Topic < ApplicationRecord
   has_many :posts, dependent: :destroy
   validates :title, presence: { message: "cannot be blank!" },
                     length: {
-                      minimum: 10,
+                      minimum: 5,
                       maximum: 100,
                       too_short: "must be at least %{count} characters long",
                       too_long: "cannot exceed %{count} characters"
