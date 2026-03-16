@@ -1,4 +1,4 @@
-  <%= turbo_frame_tag dom_id(comment) do %>
+<%= turbo_frame_tag dom_id(comment) do %>
   <div class="border-b border-[#2a2a2a] ml-auto">
         <!-- three dots -->
         <% if user_signed_in? && (current_user.admin? || current_user == @post.user) %>
@@ -17,8 +17,8 @@
 
             <%= button_to "Delete", 
             topic_post_comment_path(comment.post.topic, comment.post, comment),
-             method: :delete,
-              class: "block w-full text-left px-4 py-2 text-sm hover:bg-red-50 dark:hover:bg-red-900/20 text-red-600 dark:text-red-400" %>
+            method: :delete,
+            class: "block w-full text-left px-4 py-2 text-sm hover:bg-red-50 dark:hover:bg-red-900/20 text-red-600 dark:text-red-400" %>
           </div>
 
         </div>
@@ -33,4 +33,4 @@
       </div>
 
       </div>
-  <% end %>
+<% end %>
