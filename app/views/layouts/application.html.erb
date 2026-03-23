@@ -30,34 +30,43 @@
    <%= link_to "About", root_path, class: "pl-4" %>
 
      <% if user_signed_in? %>
-    <div class="relative group inline-block ml-auto">
-      <%= link_to profile_path(current_user.username) do %>
-        <%= render 'avatar_pfp/mashit_avatar_sm', user: current_user %>
-      <% end %>
+<div class="dropdown relative inline-block ml-auto">
+  <button onclick="this.nextElementSibling.classList.toggle('hidden')" 
+          class="focus:outline-none">
+    <%= render 'avatar_pfp/mashit_avatar_sm', user: current_user %>
+  </button>
 
- <!-- hover menu -->
-<div class="absolute right-0 mt-1 w-48 bg-[#161616] rounded-lg shadow-lg border border-[#2a2a2a] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-  <div class="p-3 border-b border-[#2a2a2a]">
-    <p class="font-semibold text-sm text-white"><%= current_user.username %></p>
-  </div>
-  <ul class="divide-y divide-[#2a2a2a]">
-    <li>
-      <%= link_to "View Profile", profile_path(current_user.username), class: "block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800" %>
-    </li>
-    <% if current_user&.admin? %>
+  <div class="dropdown-menu hidden absolute right-0 mt-1 w-48 bg-[#161616] rounded-lg shadow-lg border border-[#2a2a2a] z-50">
+    <div class="p-3 border-b border-[#2a2a2a]">
+      <p class="font-semibold text-sm text-white"><%= current_user.username %></p>
+    </div>
+    <ul class="divide-y divide-[#2a2a2a]">
       <li>
-        <%= link_to "Admin Dashboard", admin_root_path, class: "block px-4 py-2 text-sm text-red-500 hover:bg-gray-800" %>
+        <%= link_to "View Profile", profile_path(current_user.username), class: "block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800" %>
       </li>
-    <% end %>
-    <li class="">
-      <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-gray-800" %>
-    </li>
-  </ul>
+      <% if current_user&.admin? %>
+        <li>
+          <%= link_to "Admin Dashboard", admin_root_path, class: "block px-4 py-2 text-sm text-red-500 hover:bg-gray-800" %>
+        </li>
+      <% end %>
+      <li>
+        <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-gray-800" %>
+      </li>
+    </ul>
+  </div>
 </div>
   <% else %>
     <%= link_to "Sign in", new_user_session_path, class: "bg-[#ed5024] hover:bg-[#e0603c] inline-block text-white font-medium py-2 px-4 rounded-full shadow transition duration-200 ml-auto" %>
   <% end %>
   </header>
+ <%# script for hiding user avatar menu %>
+  <script>
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.dropdown')) {
+      document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.add('hidden'))
+    }
+  })
+</script>
   
     <!-- pinned nav bar -->
   <div class="flex flex-grow">
