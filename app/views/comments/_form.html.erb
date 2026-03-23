@@ -1,14 +1,19 @@
 <%= turbo_frame_tag "post_comment_form" do %>
   <%= form_with(model: [@topic, @post, comment]) do |form| %>
-      <% render "comments/shared/error_messages", resource: form.object %>
+      <%= render "comments/shared/error_messages", resource: form.object %>
 
       <div class="field mb-4 container mx-auto">
-        <%= form.rich_text_area :body, class: "border border-[#2a2a2a] rounded-md outline-none" %>
+        <%= form.rich_text_area :body, id: "body_#{comment.id || 'new'}", class: "border border-[#2a2a2a] rounded-md outline-none" %>
       </div>
 
       
     <div class="actions bg-[#ed5024] hover:bg-[#e0603c] pb-1 pr-8 pl-8 inline-block font-medium rounded-full shadow transition duration-200">
       <%= form.submit "Comment", class: "btn btn-primary", data: { turbo_frame: '_top' } %>
     </div>
+             <button type="button" 
+            onclick="document.getElementById('comment_form_container').style.display='none'; document.getElementById('comment_main_btn').style.display='inline-block'"
+            class="bg-gray-500 hover:bg-gray-600 py-1 px-8 font-medium rounded-full shadow transition duration-200 text-white mt-2">
+      Cancel
+    </button>
     <% end %>
  <% end %>
