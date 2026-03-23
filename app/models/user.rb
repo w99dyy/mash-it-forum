@@ -10,6 +10,8 @@ class User < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_one :profile
+  has_one_attached :avatar
+
 
     def wallet_connected?
       wallet_address.present?
