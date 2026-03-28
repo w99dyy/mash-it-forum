@@ -15,7 +15,7 @@ class PostsController < ApplicationController
   # GET /posts/1 or /posts/1.json
   def show
     @post = @topic.posts.find(params[:id])
-    all_comments = @post.comments.includes(:user, :rich_text_body).to_a
+    all_comments = @post.comments.includes(:user, :rich_text_body, :parent).order(created_at: :desc).to_a
     @comments = all_comments.select { |c| c.parent_id.nil? }
     @replies = all_comments.group_by(&:parent_id)
     @comment = Comment.new
