@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_14_225404) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_26_155707) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -52,6 +52,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_14_225404) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "badges_sashes", force: :cascade do |t|
+    t.integer "badge_id"
+    t.datetime "created_at"
+    t.boolean "notified_user", default: false
+    t.integer "sash_id"
+    t.index ["badge_id", "sash_id"], name: "index_badges_sashes_on_badge_id_and_sash_id"
+    t.index ["badge_id"], name: "index_badges_sashes_on_badge_id"
+    t.index ["sash_id"], name: "index_badges_sashes_on_sash_id"
+  end
+
   create_table "comment_hierarchies", id: false, force: :cascade do |t|
     t.integer "ancestor_id", null: false
     t.integer "descendant_id", null: false
@@ -73,6 +83,42 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_14_225404) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
+  create_table "merit_actions", force: :cascade do |t|
+    t.string "action_method"
+    t.integer "action_value"
+    t.datetime "created_at", null: false
+    t.boolean "had_errors", default: false
+    t.boolean "processed", default: false
+    t.text "target_data"
+    t.integer "target_id"
+    t.string "target_model"
+    t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.index ["processed"], name: "index_merit_actions_on_processed"
+  end
+
+  create_table "merit_activity_logs", force: :cascade do |t|
+    t.integer "action_id"
+    t.datetime "created_at"
+    t.string "description"
+    t.integer "related_change_id"
+    t.string "related_change_type"
+  end
+
+  create_table "merit_score_points", force: :cascade do |t|
+    t.datetime "created_at"
+    t.string "log"
+    t.bigint "num_points", default: 0
+    t.bigint "score_id"
+    t.index ["score_id"], name: "index_merit_score_points_on_score_id"
+  end
+
+  create_table "merit_scores", force: :cascade do |t|
+    t.string "category", default: "default"
+    t.bigint "sash_id"
+    t.index ["sash_id"], name: "index_merit_scores_on_sash_id"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.text "body"
     t.integer "comments_count"
@@ -83,6 +129,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_14_225404) do
     t.bigint "user_id", null: false
     t.index ["topic_id"], name: "index_posts_on_topic_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
+  end
+
+  create_table "sashes", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "taggings", force: :cascade do |t|
@@ -137,11 +188,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_14_225404) do
     t.datetime "created_at", null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
+    t.integer "level", default: 0
     t.datetime "mashit_avatar_synced_at"
     t.json "mashit_avatar_url"
     t.datetime "remember_created_at"
     t.datetime "reset_password_sent_at"
     t.string "reset_password_token"
+    t.integer "sash_id"
     t.string "unconfirmed_email"
     t.datetime "updated_at", null: false
     t.string "username"
