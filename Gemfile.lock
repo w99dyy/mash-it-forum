@@ -80,6 +80,7 @@ GEM
       zeitwerk (>= 2.4, < 3.0)
     addressable (2.8.8)
       public_suffix (>= 2.0.2, < 8.0)
+    ambry (1.0.0)
     ast (2.4.3)
     base64 (0.3.0)
     bcrypt (3.1.21)
@@ -121,6 +122,8 @@ GEM
       responders
       warden (~> 1.2.3)
     diff-lcs (1.6.2)
+    dockerfile-rails (1.7.10)
+      rails (>= 3.0.0)
     dotenv (3.2.0)
     drb (2.2.3)
     ed25519 (1.4.0)
@@ -190,6 +193,10 @@ GEM
       net-smtp
     marcel (1.1.0)
     matrix (0.4.3)
+    merit (5.0.0)
+      ambry (~> 1.0.0)
+      observer
+      zeitwerk
     mini_magick (5.3.1)
       logger
     mini_mime (1.1.5)
@@ -223,6 +230,7 @@ GEM
       racc (~> 1.4)
     nokogiri (1.19.1-x86_64-linux-musl)
       racc (~> 1.4)
+    observer (0.1.2)
     orm_adapter (0.5.0)
     ostruct (0.6.3)
     parallel (1.27.0)
@@ -451,12 +459,14 @@ DEPENDENCIES
   closure_tree
   debug
   devise (~> 5.0)
+  dockerfile-rails (>= 1.7)
   factory_bot_rails
   faker
   image_processing (~> 1.2)
   importmap-rails
   jbuilder
   kamal
+  merit
   pg (~> 1.1)
   propshaft
   puma (>= 5.0)
