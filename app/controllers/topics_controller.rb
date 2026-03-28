@@ -2,7 +2,11 @@ class TopicsController < ApplicationController
     before_action :authenticate_user!, except: [ :index, :show ]
 
     def index
+        @topics = if params[:tag].present?
+        Topic.tagged_with(params[:tag])
+        else
        @topics = Topic.includes(:posts, :taggings, :tags).order(created_at: :desc)
+        end
     end
 
     def show
