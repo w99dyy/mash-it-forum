@@ -1,4 +1,6 @@
 class Post < ApplicationRecord
+    include Pinnable
+    after_create :notify_discord
     belongs_to :topic, counter_cache: true
     belongs_to :user
     has_many :comments, dependent: :destroy
@@ -12,7 +14,7 @@ class Post < ApplicationRecord
       body.embeds.attachments.first&.blob
     end
 
-      scope :by_tag, ->(tag) { tagged_with(tag) if tag.present? }
+    scope :by_tag, ->(tag) { tagged_with(tag) if tag.present? }
 
 
   validates :title, presence: { message: "cannot be blank!" },
@@ -23,4 +25,11 @@ class Post < ApplicationRecord
                       too_long: "cannot exceed %{count} characters"
                     }
   validates :body, presence: true
+
+  private
+
+  def notify_discord
+    # Run in background to avoid slowing down response
+    DiscordNotifier.post_created(self)
+  end
 end
