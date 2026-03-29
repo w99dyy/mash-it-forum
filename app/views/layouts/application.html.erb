@@ -27,12 +27,12 @@
   <header class="bg-[#161616] pl-4 ring shadow-xl ring-gray-900/5 border-b border-[#2a2a2a] flex items-center">
    <%= link_to image_tag("logo.png", size: "70"), root_path, class: "inline-block" %>
    <%= link_to "Mash-it.io", "https://mash-it.io/mashers", class: "pl-6" %>
-   <%= link_to "About", root_path, class: "pl-4" %>
+   <%= link_to "About", about_path, class: "pl-4" %>
 
      <% if user_signed_in? %>
 <div class="dropdown relative inline-block ml-auto">
   <button onclick="this.nextElementSibling.classList.toggle('hidden')" 
-          class="focus:outline-none">
+          class="focus:outline-none flex items-center">
     <%= render 'avatar_pfp/mashit_avatar_sm', user: current_user %>
   </button>
 
@@ -45,6 +45,10 @@
         <%= link_to "View Profile", profile_path(current_user.username), class: "block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800" %>
       </li>
       <% if current_user&.admin? %>
+        <li class="block sm:hidden">
+        <%= link_to "New topic", new_topic_path, class: "block px-4 py-2 text-gray-300 text-sm hover:bg-gray-800" %>
+        </li>
+
         <li>
           <%= link_to "Admin Dashboard", admin_root_path, class: "block px-4 py-2 text-sm text-red-500 hover:bg-gray-800" %>
         </li>
