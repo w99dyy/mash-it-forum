@@ -48,6 +48,10 @@ module Merit
       grant_on ['users#create', 'users#update'], badge: 'developer', to: :user do |user|
         user.name.present? && user.email.present?
       end
+
+      grant_on ['users#create', 'users#update'], badge: 'admin', to: :user do |user|
+        user.name.present? && user.email.present?
+      end
     end
   end
 end
