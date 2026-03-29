@@ -92,6 +92,7 @@ group :development, :test do
   gem "factory_bot_rails"
   gem "faker"
   gem "shoulda-matchers", "~> 6.0"
+  gem "dotenv"
 end
 
 gem "dockerfile-rails", ">= 1.7", group: :development

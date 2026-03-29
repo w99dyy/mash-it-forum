@@ -460,6 +460,7 @@ DEPENDENCIES
   debug
   devise (~> 5.0)
   dockerfile-rails (>= 1.7)
+  dotenv
   factory_bot_rails
   faker
   image_processing (~> 1.2)
