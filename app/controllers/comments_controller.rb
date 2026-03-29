@@ -1,7 +1,7 @@
 class CommentsController < ApplicationController
   before_action :set_topic
   before_action :set_post
-  before_action :set_comment, only: [ :edit, :update, :destroy ]
+  before_action :set_comment, only: [ :edit, :update, :destroy, :pin, :unpin ]
   before_action :authenticate_user!
 
   def create
@@ -35,6 +35,16 @@ class CommentsController < ApplicationController
 
   def destroy
     @comment.destroy
+  end
+
+  def pin
+    @comment.pin!
+    redirect_back fallback_location: [ @topic, @post, @comment ], notice: "Comment pinned!"
+    end
+
+  def unpin
+    @comment.unpin!
+    redirect_back fallback_location: [ @topic, @post, @comment ], notice: "Comment unpinned!"
   end
 
   private

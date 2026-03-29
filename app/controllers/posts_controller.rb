@@ -1,21 +1,21 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!, except: [ :index, :show ]
-  before_action :set_topic, only: %i[ index new create show edit update destroy ]
-  before_action :set_post, only: %i[ show edit update destroy ]
+  before_action :set_topic, only: %i[ index new create show edit update destroy pin unpin ]
+  before_action :set_post, only: %i[ show edit update destroy pin unpin ]
+  before_action :require_admin, only: %i[ pin unpin ]
 
   # GET /posts or /posts.json
   def index
     @posts = if params[:tag].present?
-    Post.by_tag(params[:tag])
+    Post.by_tag(params[:tag]).pinned_first
     else
     @topic.posts
-    end.includes(:taggings, :tags, :user, :comments).order(created_at: :desc)
+    end.includes(:taggings, :tags, :user, :comments).pinned_first
   end
 
   # GET /posts/1 or /posts/1.json
   def show
-    @post = @topic.posts.find(params[:id])
-    all_comments = @post.comments.includes(:user, :rich_text_body, :parent).order(created_at: :desc).to_a
+    all_comments = @post.comments.includes(:user, :rich_text_body, :parent).pinned_first.to_a
     @comments = all_comments.select { |c| c.parent_id.nil? }
     @replies = all_comments.group_by(&:parent_id)
     @comment = Comment.new
@@ -67,7 +67,7 @@ class PostsController < ApplicationController
     else
       respond_to do |format|
         format.html { redirect_to root_path, alert: "Not authorized!" }
-        format.json { redner json: { error: "Not authorized" }, status: :forbidden }
+        format.json { render json: { error: "Not authorized" }, status: :forbidden }
       end
     end
   end
@@ -75,6 +75,16 @@ class PostsController < ApplicationController
   def tagged
   @posts = Post.tagged_with(params[:tag]).includes(:taggings, :tags, :user).order(created_at: :desc)
   end
+
+  def pin
+      @post.pin!
+      redirect_back fallback_location: [ @topic, @post ], notice: "Post pinned!"
+    end
+
+  def unpin
+      @post.unpin!
+      redirect_back fallback_location: [ @topic, @post ], notice: "Post unpinned!"
+    end
 
   private
   # Use callbacks to share common setup or constraints between actions.
@@ -84,7 +94,7 @@ class PostsController < ApplicationController
   end
 
   def set_post
-    @post = @topic.posts.find(params.expect(:id))
+    @post = @topic.posts.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.
@@ -106,4 +116,10 @@ class PostsController < ApplicationController
       render json: { error: "Failed to update avatar" }, status: :unprocessable_entity
     end
   end
+
+  def require_admin
+        unless current_user&.admin?
+            redirect_to root_path, alert: "You're not authorized!"
+        end
+    end
 end

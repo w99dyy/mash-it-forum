@@ -1,18 +1,19 @@
 class TopicsController < ApplicationController
     before_action :authenticate_user!, except: [ :index, :show ]
+    before_action :set_topic, only: %i[ show edit update destroy pin unpin ]
+    before_action :require_admin, only: %i[ pin unpin ]
 
     def index
         @topics = if params[:tag].present?
-        Topic.tagged_with(params[:tag])
+        Topic.by_tag(params[:tag]).pinned_first
         else
-       @topics = Topic.includes(:posts, :taggings, :tags).order(created_at: :desc)
+       @topics = Topic.includes(:posts, :taggings, :tags).pinned_first
         end
     end
 
     def show
-        @topic = Topic.find(params[:id])
         @post = Post.new
-        @post = @topic.posts.order(created_at: :desc)
+        @posts = @topic.posts.order(created_at: :desc)
     end
 
     def new
@@ -53,9 +54,29 @@ class TopicsController < ApplicationController
         redirect_to topics_path, notice: "Topic deleted!"
     end
 
+    def pin
+        @topic.pin!
+        redirect_back fallback_location: @topic, notice: "Topic pinned!"
+    end
+
+     def unpin
+        @topic.unpin!
+        redirect_back fallback_location: @topic, notice: "Topic unpinned!"
+    end
+
     private
 
     def topic_params
         params.require(:topic).permit(:title, :body, :tag_list)
+    end
+
+    def require_admin
+        unless current_user&.admin?
+            redirect_to root_path, alert: "You're not authorized!"
+        end
+    end
+
+    def set_topic
+        @topic = Topic.find(params[:id])
     end
 end

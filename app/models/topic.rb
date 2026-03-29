@@ -11,4 +11,6 @@ class Topic < ApplicationRecord
                       too_long: "cannot exceed %{count} characters"
                     }
   acts_as_taggable_on :tags
+
+  scope :by_tag, ->(tag) { tagged_with(tag) if tag.present? }
 end
