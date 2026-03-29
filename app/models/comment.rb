@@ -1,4 +1,6 @@
 class Comment < ApplicationRecord
+  include Pinnable
+  
   after_create :send_email_notification
   belongs_to :post, counter_cache: true
   belongs_to :user
