@@ -38,3 +38,11 @@ Rails.application.reloader.to_prepare do
     description: "Developer and maintainer for the forum",
   )
 end
+
+Rails.application.reloader.to_prepare do
+  Merit::Badge.create!(
+    id: 2,
+    name: "Admin",
+    description: "Admin of the forum",
+  )
+end
