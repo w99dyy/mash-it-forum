@@ -9,8 +9,8 @@
             </svg>
             
             <div class="flex items-center gap-1">
-              <%= link_to render('avatar_pfp/mashit_avatar_comments', user: comment.parent.user), profile_path(comment.parent.user.username), data: { turbo: false }, class: "inline-block pl-2" %>
-              <%= link_to comment.parent.user.username, profile_path(comment.parent.user.username), data: { turbo: false }, class: "text-[#ed5024] text-sm hover:underline pr-5" %>
+              <%= link_to render('avatar_pfp/mashit_avatar_comments', user: comment.user), profile_path(comment.user.username), data: { turbo: false }, class: "inline-block pl-2" %>
+              <%= link_to comment.user.username, profile_path(comment.user.username), data: { turbo: false }, class: "text-[#ed5024] text-sm hover:underline pr-5" %>
             </div>
           <blockquote><%# comment.parent.body %></blockquote>
         </div>
