@@ -1,6 +1,6 @@
 <%= turbo_frame_tag dom_id(comment) do %>
-<div class="flex items-center block sm:hidden pt-3">
-    <% if comment.parent.present? %>
+      <div class="flex items-center block sm:hidden pt-3">
+        <% if comment.parent.present? %>
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" style="transform: scaleX(-1);" class="text-gray-400" viewBox="0 0 16 16">
               <path d="M5.921 11.9 1.353 8.62a.72.72 0 0 1 0-1.238L5.921 4.1A.716.716 0 0 1 7 4.719V6c1.5 0 6 0 7 8-2.5-4.5-7-4-7-4v1.281c0 .56-.606.898-1.079.62z"/>
             </svg>
@@ -11,8 +11,30 @@
             </div>
           <% end %>
           </div>
-    <%# Timestamp %>
-    <div class="hidden md:flex items-center float-right text-sm text-gray-400 mb-2">
+   
+
+    <%# Avatar and content %>
+    <div class="flex items-start gap-2 mb-2 mt-3 w-full">
+      <div class="flex-shrink-0">
+        <%= link_to render('avatar_pfp/mashit_avatar', user: comment.user), profile_path(comment.user.username), data: { turbo: false } %>
+      </div>
+      
+      <div class="flex-1 w-full">
+        <div class="flex items-center flex-wrap gap-1">
+          <span class="font-medium"><%= comment.user.username %></span>  
+          <% if user_has_badges?(comment.user, "Developer") %>
+       <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-code-circle-2"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M17 3.34a10 10 0 1 1 -15 8.66l.005 -.324a10 10 0 0 1 14.995 -8.336m-3.658 5.22a1 1 0 0 0 -1.282 .598l-2 5.5a1 1 0 0 0 1.88 .684l2 -5.5a1 1 0 0 0 -.598 -1.282m-4.135 1.233a1 1 0 0 0 -1.414 0l-1.5 1.5a1 1 0 0 0 0 1.414l1.5 1.5a1 1 0 0 0 1.414 0l.083 -.094a1 1 0 0 0 -.083 -1.32l-.792 -.793l.792 -.793a1 1 0 0 0 0 -1.414m7 0a1 1 0 0 0 -1.414 0l-.083 .094a1 1 0 0 0 .083 1.32l.792 .793l-.792 .793a1 1 0 0 0 1.414 1.414l1.5 -1.5a1 1 0 0 0 0 -1.414z" /></svg>
+        <% end %> 
+        <% if user_has_badges?(comment.user, "Admin") %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-shield-checkered"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M11.013 12v9.754a13 13 0 0 1 -8.733 -9.754h8.734zm9.284 3.794a13 13 0 0 1 -7.283 5.951l-.001 -9.745h8.708a12.96 12.96 0 0 1 -1.424 3.794zm-9.283 -13.268l-.001 7.474h-8.986c-.068 -1.432 .101 -2.88 .514 -4.282a1 1 0 0 1 1.005 -.717a11 11 0 0 0 7.192 -2.256l.276 -.219zm1.999 7.474v-7.453l-.09 -.073a11 11 0 0 0 7.189 2.537l.342 -.01a1 1 0 0 1 1.005 .717c.413 1.403 .582 2.85 .514 4.282h-8.96z" /></svg>
+        <% end %> 
+
+        <% if comment.pinned? %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-pinned"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M16 3a1 1 0 0 1 .117 1.993l-.117 .007v4.764l1.894 3.789a1 1 0 0 1 .1 .331l.006 .116v2a1 1 0 0 1 -.883 .993l-.117 .007h-4v4a1 1 0 0 1 -1.993 .117l-.007 -.117v-4h-4a1 1 0 0 1 -.993 -.883l-.007 -.117v-2a1 1 0 0 1 .06 -.34l.046 -.107l1.894 -3.791v-4.762a1 1 0 0 1 -.117 -1.993l.117 -.007h8z" /></svg>
+        <% end %>
+        
+         <%# Timestamp %>
+    <div class="hidden md:flex items-center ml-auto text-sm text-gray-400 mb-2">
     <% if comment.parent.present? %>
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" style="transform: scaleX(-1);" class="text-gray-400" viewBox="0 0 16 16">
               <path d="M5.921 11.9 1.353 8.62a.72.72 0 0 1 0-1.238L5.921 4.1A.716.716 0 0 1 7 4.719V6c1.5 0 6 0 7 8-2.5-4.5-7-4-7-4v1.281c0 .56-.606.898-1.079.62z"/>
@@ -31,29 +53,10 @@
         <span><%= time_ago_in_words(comment.created_at) %> ago</span>
         </svg>
         </div>
-      <% end %>
-    </div>
-
-    <%# Avatar and content %>
-    <div class="flex items-start gap-2 mb-2 mt-3">
-      <div class="flex-shrink-0">
-        <%= link_to render('avatar_pfp/mashit_avatar', user: comment.user), profile_path(comment.user.username), data: { turbo: false } %>
-      </div>
-      
-      <div class="flex-1">
-        <div class="flex items-center flex-wrap gap-1">
-          <span class="font-medium"><%= comment.user.username %></span>  
-          <% if user_has_badges?(comment.user, "Developer") %>
-       <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-code-circle-2"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M17 3.34a10 10 0 1 1 -15 8.66l.005 -.324a10 10 0 0 1 14.995 -8.336m-3.658 5.22a1 1 0 0 0 -1.282 .598l-2 5.5a1 1 0 0 0 1.88 .684l2 -5.5a1 1 0 0 0 -.598 -1.282m-4.135 1.233a1 1 0 0 0 -1.414 0l-1.5 1.5a1 1 0 0 0 0 1.414l1.5 1.5a1 1 0 0 0 1.414 0l.083 -.094a1 1 0 0 0 -.083 -1.32l-.792 -.793l.792 -.793a1 1 0 0 0 0 -1.414m7 0a1 1 0 0 0 -1.414 0l-.083 .094a1 1 0 0 0 .083 1.32l.792 .793l-.792 .793a1 1 0 0 0 1.414 1.414l1.5 -1.5a1 1 0 0 0 0 -1.414z" /></svg>
-        <% end %> 
-        <% if user_has_badges?(comment.user, "Admin") %>
-        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-shield-checkered"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M11.013 12v9.754a13 13 0 0 1 -8.733 -9.754h8.734zm9.284 3.794a13 13 0 0 1 -7.283 5.951l-.001 -9.745h8.708a12.96 12.96 0 0 1 -1.424 3.794zm-9.283 -13.268l-.001 7.474h-8.986c-.068 -1.432 .101 -2.88 .514 -4.282a1 1 0 0 1 1.005 -.717a11 11 0 0 0 7.192 -2.256l.276 -.219zm1.999 7.474v-7.453l-.09 -.073a11 11 0 0 0 7.189 2.537l.342 -.01a1 1 0 0 1 1.005 .717c.413 1.403 .582 2.85 .514 4.282h-8.96z" /></svg>
-        <% end %> 
-
-        <% if comment.pinned? %>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-pinned"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M16 3a1 1 0 0 1 .117 1.993l-.117 .007v4.764l1.894 3.789a1 1 0 0 1 .1 .331l.006 .116v2a1 1 0 0 1 -.883 .993l-.117 .007h-4v4a1 1 0 0 1 -1.993 .117l-.007 -.117v-4h-4a1 1 0 0 1 -.993 -.883l-.007 -.117v-2a1 1 0 0 1 .06 -.34l.046 -.107l1.894 -3.791v-4.762a1 1 0 0 1 -.117 -1.993l.117 -.007h8z" /></svg>
         <% end %>
         </div>
+
+      </div>
 
         <div class="flex gap-2 flex-wrap">
 
@@ -64,6 +67,22 @@
           <% end %>
           </div>
 
+      <%# desktop parent body quote %>
+      <div class="hidden sm:block">
+        <% if comment.quoted_comment.present? %>
+          <div style="border-left: 4px solid #ed5024; background-color: #3e3e3e; width: 100%" class=" pl-4 mt-4 mb-3 py-3 text-sm select-none pointer-events-none">
+          <div class="flex items-center gap-1">
+          <% if comment.quoted_comment.user.present? %>
+
+              <%= link_to render('avatar_pfp/mashit_avatar_comments', user: comment.parent.user), profile_path(comment.parent.user.username), data: { turbo: false }, class: "inline-block" %>
+              <%= link_to comment.quoted_comment.user.username, profile_path(comment.parent.user.username), data: { turbo: false }, class: "text-[#ed5024] text-sm hover:underline " %>
+            </div>
+          <% end %>
+            <p class="mt-4"><%= comment.quoted_comment.body.to_plain_text.truncate(300) %></p>
+          </div>
+        <% end %>
+      </div>
+
         <div class="comment-content mt-4 hidden sm:block">
           <p class="text-gray-300">
             <%= comment.body %>
@@ -71,14 +90,28 @@
         </div>
       </div>
     </div>
+    <%# mobile parent body quote %>
     <div class="comment-content mt-4 block sm:hidden">
+            <% if comment.quoted_comment.present? %>
+          <div style="border-left: 4px solid #ed5024; background-color: #3e3e3e;" class="pl-4 mt-4 mb-3 py-3 text-sm select-none pointer-events-none">
+           <div class="flex items-center gap-1 mb-4">
+            <% if comment.quoted_comment.user.present? %>
+
+            <%= link_to render('avatar_pfp/mashit_avatar_comments', user: comment.parent.user), profile_path(comment.parent.user.username), data: { turbo: false }, class: "inline-block" %>
+            <%= link_to comment.quoted_comment.user.username, profile_path(comment.parent.user.username), data: { turbo: false }, class: "text-[#ed5024] text-sm hover:underline " %>
+            </div>
+          <% end %>
+            <strong class="text-[#ed5024]"><%= comment.quoted_comment.user.username %>:</strong>
+            <p><%= comment.quoted_comment.body.to_plain_text.truncate(300) %></p>
+          </div>
+        <% end %>
           <p class="text-gray-300">
             <%= comment.body %>
           </p>
         </div>
     
     
-    <div class="padding-border divide-y divide-[#2a2a2a]">
+    <div class="padding-border border-b border-[#2a2a2a]">
       <%# reply section %>
       <div id="reply_section_<%= comment.id %>">
         <div class="pb-5 flex justify-end items-center gap-2">
@@ -91,12 +124,7 @@
             </svg>
           </button>
           <div class="peer absolute right-0 text-sm mt-2 opacity-0 divide-y divide-[#2a2a2a] invisible peer-focus:opacity-100 peer-focus:visible transition-all duration-200 bg-[#161616] rounded-lg shadow-[0_20px_40px_-1px_rgba(0,0,0,0.3)] w-48 z-10">
-            <%= link_to "Edit", edit_topic_post_comment_path(@topic, @post, comment),
-              class: "block w-full text-left px-4 py-2 text-sm hover:text-[#ababab] text-white" %>
-            <%= button_to "Delete", topic_post_comment_path(@topic, @post, comment),
-              method: :delete,
-              class: "block w-full text-left px-4 py-2 text-sm hover:bg-red-50 dark:hover:bg-red-900/20 text-red-600 dark:text-red-400" %>
-            <% if current_user&.admin? %>
+          <% if current_user&.admin? %>
               <% if comment.pinned? %>
                 <%= button_to "Unpin", unpin_topic_post_comment_path(@topic, @post, comment), method: :patch,
                   class: "block w-full text-left px-4 py-2 text-sm text-white hover:text-[#ababab] rounded-lg" %>
@@ -105,21 +133,17 @@
                   class: "block w-full text-left px-4 py-2 text-sm text-white hover:text-[#ababab] rounded-lg" %>
               <% end %>
             <% end %>
+            <%= link_to "Edit", edit_topic_post_comment_path(@topic, @post, comment),
+              class: "block w-full text-left px-4 py-2 text-sm hover:text-[#ababab] text-white" %>
+            <%= button_to "Delete", topic_post_comment_path(@topic, @post, comment),
+              method: :delete,
+              class: "block w-full text-left px-4 py-2 text-sm hover:bg-red-50 dark:hover:bg-red-900/20 text-red-600 dark:text-red-400" %>
           </div>
         </div>
       <% end %>
           <%# Reply button %>
       <button id="reply_button_<%= comment.id %>"
-        onclick="
-        var form = document.getElementById('reply_form_container_<%= comment.id %>');
-        form.style.display = 'block';
-        this.style.display = 'flex';
-        var editor = form.querySelector('trix-editor');
-        if (editor) {
-          editor.editor.loadHTML('<blockquote><strong><%= j comment.user.username %>:</strong><br><%= j comment_plain_text(comment) %></blockquote><p><br></p>');
-          editor.editor.setSelectedRange(editor.editor.getDocument().getLength());
-          }
-        "
+            onclick="document.getElementById('reply_form_container_<%= comment.id %>').style.display='block'"
             class="<%= 'ml-auto' unless user_signed_in? && (current_user.admin? || current_user == comment.user) %> flex gap-1 pt-2 py-1 p-3 hover:bg-[#2a2a2a] rounded-full group">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-reply-fill" viewBox="0 0 16 16">
               <path d="M5.921 11.9 1.353 8.62a.72.72 0 0 1 0-1.238L5.921 4.1A.716.716 0 0 1 7 4.719V6c1.5 0 6 0 7 8-2.5-4.5-7-4-7-4v1.281c0 .56-.606.898-1.079.62z"/>
@@ -133,12 +157,12 @@
           <%= render partial: 'comments/reply_form', locals: { topic: @topic, post: @post, comment: comment } %>
         </div>
       </div>
+    </div>
+<% end %>
 
-      <%# sub comments %>
+<%# sub comments %>
       <div class="sub-comments" id="sub_comments_<%= comment.id %>">
         <% ((@replies || {})[comment.id] || []).each do |reply| %>
           <%= render partial: "comments/comment", locals: { comment: reply } %>
         <% end %>
       </div>
-    </div>
-<% end %>
