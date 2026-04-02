@@ -12,15 +12,6 @@ class ApplicationController < ActionController::Base
     redirect_to root_path, alert: "Not authorized." unless current_user&.admin?
   end
 
-  def make_me_admin
-    if current_user && current_user.email == "huzskywalker@tutamail.com"
-      current_user.update(admin: true)
-      redirect_to root_path, notice: "You are now an admin!"
-    else
-      redirect_to root_path, alert: "You cannot do that."
-    end
-  end
-
   # Changes to the importmap will invalidate the etag for HTML responses
   stale_when_importmap_changes
 

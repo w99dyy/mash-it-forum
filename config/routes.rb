@@ -57,8 +57,6 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'make-me-admin', to: 'application#make_me_admin'
-
   # tags
   get "/tagged", to: "posts#tagged", as: :tagged
 
