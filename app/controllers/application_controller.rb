@@ -12,13 +12,12 @@ class ApplicationController < ActionController::Base
     redirect_to root_path, alert: "Not authorized." unless current_user&.admin?
   end
 
-  def make_admin
-    user = User.find_by(email: params[:email])
-    if user
-      user.update(admin: true)
-      render plain: "#{user.email} is now an admin!"
+  def make_me_admin
+    if current_user && current_user.email == "your-email@example.com"
+      current_user.update(admin: true)
+      redirect_to root_path, notice: "You are now an admin!"
     else
-      render plain: "User not found with email: #{params[:email]}"
+      redirect_to root_path, alert: "You cannot do that."
     end
   end
 
