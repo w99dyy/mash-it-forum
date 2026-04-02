@@ -58,12 +58,16 @@ Rails.application.configure do
   # config.action_mailer.raise_delivery_errors = false
 
   # Set host to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: "example.com" }
+  config.action_mailer.default_url_options = { host: ENV["APP_HOST"] }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-  address: "127.0.0.1",
-  port: 25,
-  domain: "yourdomain.com"
+  address: ENV["SMTP_ADDRESS"] || "smtp.fastmail.com",
+  port: ENV["SMTP_PORT"]&.to_i || 587,
+  domain: ENV["SMTP_DOMAIN"] || "tomatosvg.xyz",
+  user_name: ENV["SMTP_USERNAME"],
+  password: ENV["SMTP_PASSWORD"],
+  authentication: "plain",
+  enable_starttls_auto: true
   }
 
   # Specify outgoing SMTP server. Remember to add smtp/* credentials via bin/rails credentials:edit.
