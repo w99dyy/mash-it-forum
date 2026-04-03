@@ -137,7 +137,7 @@ Avo.configure do |config|
      logo: "/assets/logo.png",
      logomark: "/avo-assets/logomark.png",
      placeholder: "/avo-assets/placeholder.svg",
-     favicon: "/assets/favicon.ico"
+     favicon: "/assets/favicon-avo.ico"
    }
 
   ## == Breadcrumbs ==
