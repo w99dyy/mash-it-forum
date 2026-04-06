@@ -16,6 +16,6 @@ class Avo::Resources::Topic < Avo::BaseResource
     field :posts_count, as: :number
     field :user, as: :belongs_to
     field :posts, as: :has_many
-    field :tags, as: :tags
+    field :tag_list, as: :tags
   end
 end

@@ -13,13 +13,14 @@ class Avo::Resources::Post < Avo::BaseResource
     field :topic_id, as: :number
     field :comments_count, as: :number
     field :pinned, as: :boolean
-    field :images, as: :files
+    field :locked, as: :boolean
+  #  field :images, as: :files
   #  field :avatar, as: :file
   #  field :cover_image, as: :file
     field :topic, as: :belongs_to
     field :user, as: :belongs_to
     field :comments, as: :has_many
   #  field :subjects, as: :tags
-    field :tags, as: :tags
+    field :tag_list, as: :tags
   end
 end
