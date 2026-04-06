@@ -42,6 +42,8 @@ Rails.application.routes.draw do
     member do
       patch :pin
       patch :unpin
+      patch :lock
+      patch :unlock
     end
 
     resources :posts do
