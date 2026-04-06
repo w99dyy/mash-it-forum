@@ -10,7 +10,7 @@ class Avo::Resources::Topic < Avo::BaseResource
     field :title, as: :text
     field :content, as: :textarea
     field :user_id, as: :number
-    field :views_count, as: :number
+  #  field :views_count, as: :number
     field :pinned, as: :boolean
     field :locked, as: :boolean
     field :posts_count, as: :number
