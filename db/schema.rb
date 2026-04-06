@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_03_151351) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_05_230746) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -126,6 +126,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_03_151351) do
     t.text "body"
     t.integer "comments_count"
     t.datetime "created_at", null: false
+    t.boolean "locked", default: false
     t.boolean "pinned", default: false, null: false
     t.string "title"
     t.integer "topic_id"
