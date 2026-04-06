@@ -26,3 +26,21 @@ figcaption.attachment__caption,
     position: absolute !important;
     pointer-events: none !important;
 }
+
+.trix-button--icon-heading-1,
+.trix-button--icon-decrease-nesting-level,
+.trix-button--icon-undo,
+.trix-button--icon-redo,
+.trix-button-group--history-tools,
+.trix-button--icon-increase-nesting-level {
+  display: none !important;
+}
+
+.trix-content a {
+  color: #648efc !important;
+  text-decoration: underline !important;
+}
+
+.trix-content a:hover {
+  color: #648efc !important;
+}
