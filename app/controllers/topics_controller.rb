@@ -1,7 +1,7 @@
 class TopicsController < ApplicationController
     before_action :authenticate_user!, except: [ :index, :show ]
-    before_action :set_topic, only: %i[ show edit update destroy pin unpin ]
-    before_action :require_admin, only: %i[ pin unpin ]
+    before_action :set_topic, only: %i[ show edit update destroy pin unpin lock unlock ]
+    before_action :require_admin, only: %i[ pin unpin lock unlock ]
 
     def index
         @topics = if params[:tag].present?
@@ -62,6 +62,18 @@ class TopicsController < ApplicationController
      def unpin
         @topic.unpin!
         redirect_back fallback_location: @topic, notice: "Topic unpinned!"
+    end
+
+    def lock
+        @topic = Topic.find(params[:id])
+        @topic.update(locked: true)
+        redirect_to @topic, notice: "Topic has been locked!"
+    end
+
+    def unlock
+        @topic = Topic.find(params[:id])
+        @topic.update(locked: false)
+        redirect_to @topic, notice: "Topic has been unlocked!"
     end
 
     private

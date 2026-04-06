@@ -26,10 +26,24 @@ class Post < ApplicationRecord
                     }
   validates :body, presence: true
 
+  validate :has_tags
+
+  validate :topic_not_locked, on: :create
+
   private
 
   def notify_discord
     # Run in background to avoid slowing down response
     DiscordNotifier.post_created(self)
+  end
+
+  def topic_not_locked
+    errors.add(:base, "This topic is locked.") if topic.locked?
+  end
+
+  def has_tags
+    if tag_list.empty?
+      errors.add(:base, "Tags can't be blank")
+    end
   end
 end
