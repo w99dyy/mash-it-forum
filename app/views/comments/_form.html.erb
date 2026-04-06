@@ -7,12 +7,12 @@
       </div>
 
       
-    <div class="actions bg-[#ed5024] hover:bg-[#e0603c] pb-1 pr-8 pl-8 inline-block font-medium rounded-full shadow transition duration-200">
+    <div class="actions bg-[#ed5024] hover:bg-[#e0603c] py-1 px-5 mr-2 inline-block font-medium rounded-full shadow transition duration-200">
       <%= form.submit "Comment", class: "btn btn-primary", data: { turbo_frame: '_top' } %>
     </div>
     <% if comment.persisted? %>
       <%= link_to "Cancel", topic_post_path(@topic, @post),
-          class: "bg-gray-500 hover:bg-gray-600 py-1 px-8 font-medium rounded-full shadow transition duration-200 text-white",
+          class: "bg-gray-500 hover:bg-gray-600 py-1 px-5 font-medium rounded-full shadow transition duration-200 text-white",
           data: { turbo_frame: dom_id(comment) } %>
     <% else %>
         <button type="button" 

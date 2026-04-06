@@ -123,7 +123,7 @@
               <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
             </svg>
           </button>
-          <div class="peer absolute right-0 text-sm mt-2 opacity-0 divide-y divide-[#2a2a2a] invisible peer-focus:opacity-100 peer-focus:visible transition-all duration-200 bg-[#161616] rounded-lg shadow-[0_20px_40px_-1px_rgba(0,0,0,0.3)] w-48 z-10">
+          <div class="peer absolute right-4 bottom-8 text-sm mt-2 opacity-0 divide-y divide-[#2a2a2a] invisible peer-focus:opacity-100 peer-focus:visible transition-all duration-200 bg-[#161616] rounded-lg shadow-[0_20px_40px_-1px_rgba(0,0,0,0.3)] w-48 z-10">
           <% if current_user&.admin? %>
               <% if comment.pinned? %>
                 <%= button_to "Unpin", unpin_topic_post_comment_path(@topic, @post, comment), method: :patch,
@@ -137,7 +137,7 @@
               class: "block w-full text-left px-4 py-2 text-sm hover:text-[#ababab] text-white" %>
             <%= button_to "Delete", topic_post_comment_path(@topic, @post, comment),
               method: :delete,
-              class: "block w-full text-left px-4 py-2 text-sm hover:bg-red-50 dark:hover:bg-red-900/20 text-red-600 dark:text-red-400" %>
+              class: "block w-full text-left px-4 py-2 text-sm hover:bg-red-900/20 text-red-400" %>
           </div>
         </div>
       <% end %>

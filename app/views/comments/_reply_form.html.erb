@@ -19,11 +19,11 @@
         <%= form.rich_text_area :body, id: "reply_body_#{comment.id}" %>
         
         <div class="flex gap-2 items-center mt-2 mb-3">
-          <%= form.submit "Reply", class: "bg-[#ed5024] hover:bg-[#e0603c] py-1 px-8 pr-5 pl-5 font-medium rounded-full shadow transition duration-200 cursor-pointer" %>
+          <%= form.submit "Reply", class: "bg-[#ed5024] hover:bg-[#e0603c] py-1 px-5 font-medium rounded-full shadow transition duration-200 cursor-pointer" %>
           
           <button type="button" 
                   onclick="document.getElementById('reply_form_container_<%= comment.id %>').style.display='none'; document.getElementById('reply_button_<%= comment.id %>').style.display='flex'"
-                  class="bg-gray-500 hover:bg-gray-600 py-1 px-8 font-medium rounded-full shadow transition duration-200 text-white">
+                  class="bg-gray-500 hover:bg-gray-600 py-1 px-5 font-medium rounded-full shadow transition duration-200 text-white">
             Cancel
           </button>
         </div>

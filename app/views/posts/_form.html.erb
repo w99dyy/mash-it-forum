@@ -27,12 +27,12 @@
 </div>
 
   <div class="field mb-4 container mx-auto">
-      <%= form.label :Content %>
-      <%= form.rich_text_area :body, class: "border border-[#2a2a2a] rounded-md outline-none" %>
+      <%= form.rich_text_area :body, class: "border border-[#2a2a2a] rounded-md outline-none",
+      placeholder: "Write your post content here... You can use markdown for formatting." %>
     </div>
 
 
   <div class="inline">
-    <%= form.submit class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-[#ed5024] hover:bg-[#e0603c] text-white inline-block font-medium cursor-pointer" %>
+    <%= form.submit class: "max-w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-[#ed5024] hover:bg-[#e0603c] text-white inline-block font-medium cursor-pointer" %>
   </div>
 <% end %>
