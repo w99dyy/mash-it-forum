@@ -2,7 +2,7 @@
 # The values disaplayed here are the default ones. Uncomment and change them to fit your needs.
 Avo.configure do |config|
   ## == Routing ==
-  config.root_path = '/avo'
+  config.root_path = '/avo/resources/users'
   # used only when you have custom `map` configuration in your config.ru
   # config.prefix_path = "/internal"
 
@@ -134,10 +134,10 @@ Avo.configure do |config|
        600 => "#ea580c"
      },
      chart_colors: ["#0B8AE2", "#34C683", "#2AB1EE", "#34C6A8"],
-     logo: "/assets/logo.png",
-     logomark: "/avo-assets/logomark.png",
+     logo: "logo.png",
+     logomark: "logo.png",
      placeholder: "/avo-assets/placeholder.svg",
-     favicon: "/assets/favicon-avo.ico"
+     favicon: "favicon.ico"
    }
 
   ## == Breadcrumbs ==
