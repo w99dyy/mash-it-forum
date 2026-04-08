@@ -8,12 +8,12 @@ pin_all_from "app/javascript/controllers", under: "controllers"
 pin "trix" # @2.1.18
 pin "@rails/actiontext", to: "@rails--actiontext.js" # @8.1.300
 pin "ethers" # @6.16.0
-pin "#lib.esm/crypto/crypto.js", to: "#lib.esm--crypto--crypto.js.js" # @6.16.0
-pin "#lib.esm/providers/provider-ipcsocket.js", to: "#lib.esm--providers--provider-ipcsocket.js.js" # @6.16.0
-pin "#lib.esm/providers/ws.js", to: "#lib.esm--providers--ws.js.js" # @6.16.0
-pin "#lib.esm/utils/base64.js", to: "#lib.esm--utils--base64.js.js" # @6.16.0
-pin "#lib.esm/utils/geturl.js", to: "#lib.esm--utils--geturl.js.js" # @6.16.0
-pin "#lib.esm/wordlists/wordlists.js", to: "#lib.esm--wordlists--wordlists.js.js" # @6.16.0
+# pin "#lib.esm/crypto/crypto.js", to: "#lib.esm--crypto--crypto.js.js" # @6.16.0
+# pin "#lib.esm/providers/provider-ipcsocket.js", to: "#lib.esm--providers--provider-ipcsocket.js.js" # @6.16.0
+# pin "#lib.esm/providers/ws.js", to: "#lib.esm--providers--ws.js.js" # @6.16.0
+# pin "#lib.esm/utils/base64.js", to: "#lib.esm--utils--base64.js.js" # @6.16.0
+# pin "#lib.esm/utils/geturl.js", to: "#lib.esm--utils--geturl.js.js" # @6.16.0
+# pin "#lib.esm/wordlists/wordlists.js", to: "#lib.esm--wordlists--wordlists.js.js" # @6.16.0
 pin "@adraffy/ens-normalize", to: "@adraffy--ens-normalize.js" # @1.10.1
 pin "@noble/curves/secp256k1", to: "@noble--curves--secp256k1.js" # @1.2.0
 pin "@noble/hashes/crypto", to: "@noble--hashes--crypto.js" # @1.3.2
