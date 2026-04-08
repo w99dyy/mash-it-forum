@@ -9,15 +9,54 @@
   
   <%= turbo_stream.replace "reply_section_#{@comment.parent_id}" do %>
     <%= turbo_frame_tag "reply_section_#{@comment.parent_id}" do %>
-      <div class="pb-5 pt-5 border-b border-[#2a2a2a]">
+      <div class="pb-5 pt-5 border-b border-[#2a2a2a] flex justify-end items-center gap-2">
+       <%# Three dots menu %>
+          <% if user_signed_in? && (current_user.admin? || current_user == comment.user) %>
+        <div class="relative ml-auto">
+          <button class="peer hover:text-[#ababab] rounded-full outline-none p-2 hover:bg-[#2a2a2a] transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-three-dots" style="color: gray"; viewBox="0 0 16 16">
+              <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+            </svg>
+          </button>
+          <div class="peer absolute right-4 bottom-8 text-sm mt-2 opacity-0 divide-y divide-[#2a2a2a] invisible peer-focus:opacity-100 peer-focus:visible transition-all duration-200 bg-[#161616] rounded-lg shadow-[0_20px_40px_-1px_rgba(0,0,0,0.3)] w-48 z-10">
+          <% if @current_user&.admin? %>
+              <% if @comment.pinned? %>
+                <%= button_to unpin_topic_post_comment_path(@topic, @post, @comment), method: :patch,
+                  class: "block w-full text-left px-4 py-2 text-sm text-white hover:text-[#ababab] rounded-lg flex items-center gap-2" do %>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-pin"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 4.5l-4 4l-4 1.5l-1.5 1.5l7 7l1.5 -1.5l1.5 -4l4 -4" /><path d="M9 15l-4.5 4.5" /><path d="M14.5 4l5.5 5.5" /></svg>
+                  <span> Unpin </span>
+                  <% end %>
+
+              <% else %>
+                <%= button_to pin_topic_post_comment_path(@topic, @post, @comment), method: :patch,
+                  class: "block w-full text-left px-4 py-2 text-sm text-white hover:text-[#ababab] rounded-lg flex items-center gap-2" do %>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-pinned"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 4v6l-2 4v2h10v-2l-2 -4v-6" /><path d="M12 16l0 5" /><path d="M8 4l8 0" /></svg>
+                  <span> Pin </span>
+                  <% end %>
+              <% end %>
+            <% end %>
+            <%= link_to edit_topic_post_comment_path(@topic, @post, @comment),
+              class: "block w-full text-left px-4 py-2 text-sm hover:text-[#ababab] flex items-center gap-2" do %>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M8 7a1 1 0 0 1 -1 1h-1a1 1 0 0 0 -1 1v9a1 1 0 0 0 1 1h9a1 1 0 0 0 1 -1v-1a1 1 0 0 1 2 0v1a3 3 0 0 1 -3 3h-9a3 3 0 0 1 -3 -3v-9a3 3 0 0 1 3 -3h1a1 1 0 0 1 1 1" /><path d="M14.596 5.011l4.392 4.392l-6.28 6.303a1 1 0 0 1 -.708 .294h-3a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 .294 -.708zm6.496 -2.103a3.097 3.097 0 0 1 .165 4.203l-.164 .18l-.693 .694l-4.387 -4.387l.695 -.69a3.1 3.1 0 0 1 4.384 0" /></svg>
+              <span> Edit </span>
+              <% end %>
+            <%= button_to topic_post_comment_path(@topic, @post, @comment),
+              method: :delete,
+              class: "block w-full text-left px-4 py-2 text-sm hover:bg-red-900/20 text-red-400 flex items-center gap-2" do %>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
+              <span> Delete </span>
+              <% end %>
+          </div>
+        </div>
+      <% end %>
         <button id="reply_button_<%= @comment.parent_id %>"
                 onclick="document.getElementById('reply_form_container_<%= @comment.parent_id %>').style.display='block'; this.style.display='none'"
-                class="ml-auto flex items-center gap-1 pl-3">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-reply-fill" viewBox="0 0 16 16">
+                class="flex items-center gap-1 pl-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-reply-fill" style="color: gray"; viewBox="0 0 16 16">
               <path d="M5.921 11.9 1.353 8.62a.72.72 0 0 1 0-1.238L5.921 4.1A.716.716 0 0 1 7 4.719V6c1.5 0 6 0 7 8-2.5-4.5-7-4-7-4v1.281c0 .56-.606.898-1.079.62z"/>
               </svg>
 
-          <span>Reply</span>
+          <span style="color: gray";>Reply</span>
         </button>
       </div>
       <div id="reply_form_container_<%= @comment.parent_id %>" style="display: none;">
