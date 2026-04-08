@@ -1,6 +1,6 @@
   <div id="reply_form_wrapper_<%= comment.id %>">
     <%= turbo_frame_tag "reply_form_#{comment.id}" do %>
-      <%= form_with(model: [@topic, @post, Comment.new(parent_id: comment.id)]) do |form| %>
+      <%= form_with(model: [@topic, @post, Comment.new(parent_id: comment.id)], data: { turbo_frame:"_top" }) do |form| %>
       
       <% if comment.present? %>
         <div class="quote-block flex items-center pb-2">
