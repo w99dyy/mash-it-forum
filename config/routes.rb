@@ -22,9 +22,16 @@ Rails.application.routes.draw do
       end
     end
   end
+
   devise_for :users, controllers: {
     confirmations: "users/confirmation"
   }
+
+  devise_scope :user do
+    get "sign_in", to: "devise/sessions#new"
+    get "sign_up", to: "devise/registrations#new"
+  end
+
    # Defines the root path route ("/")
    root "topics#index"
 
@@ -64,9 +71,7 @@ Rails.application.routes.draw do
   get "/tagged", to: "posts#tagged", as: :tagged
 
   # profiles
-  get "/users/:username", to: "profiles#show", as: "profile"
-  get "/users/:username/edit", to: "profiles#edit", as: "edit_profile"
-  patch "/users/:username", to: "profiles#update"
+  resources :profiles, param: :username
 
   get "/about", to: "pages#about"
 
