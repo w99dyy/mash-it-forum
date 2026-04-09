@@ -6,7 +6,7 @@ class Post < ApplicationRecord
     has_many :comments, dependent: :destroy
     has_rich_text :body
     has_many_attached :images
-    acts_as_taggable_on :tags, :subjects
+    acts_as_taggable_on :tags
     has_one_attached :avatar
     has_one_attached :cover_image
 
