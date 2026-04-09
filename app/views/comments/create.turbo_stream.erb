@@ -14,7 +14,7 @@
           <% if user_signed_in? && (current_user.admin? || current_user == comment.user) %>
         <div class="relative ml-auto">
           <button class="peer hover:text-[#ababab] rounded-full outline-none p-2 hover:bg-[#2a2a2a] transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-three-dots" style="color: gray"; viewBox="0 0 16 16">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-three-dots" style="color: gray" viewBox="0 0 16 16">
               <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
             </svg>
           </button>
@@ -52,11 +52,11 @@
         <button id="reply_button_<%= @comment.parent_id %>"
                 onclick="document.getElementById('reply_form_container_<%= @comment.parent_id %>').style.display='block'; this.style.display='none'"
                 class="flex items-center gap-1 pl-3">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-reply-fill" style="color: gray"; viewBox="0 0 16 16">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-reply-fill" style="color: gray" viewBox="0 0 16 16">
               <path d="M5.921 11.9 1.353 8.62a.72.72 0 0 1 0-1.238L5.921 4.1A.716.716 0 0 1 7 4.719V6c1.5 0 6 0 7 8-2.5-4.5-7-4-7-4v1.281c0 .56-.606.898-1.079.62z"/>
               </svg>
 
-          <span style="color: gray";>Reply</span>
+          <span style="color: gray">Reply</span>
         </button>
       </div>
       <div id="reply_form_container_<%= @comment.parent_id %>" style="display: none;">
