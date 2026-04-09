@@ -1,0 +1,15 @@
+class Avo::Resources::Tag < Avo::BaseResource
+   self.includes = []
+   self.title = :name
+   self.model_class = "ActsAsTaggableOn::Tag"
+  # self.attachments = []
+  # self.search = {
+  #   query: -> { query.ransack(id_eq: q, m: "or").result(distinct: false) }
+  # }
+
+  def fields
+    field :id, as: :id
+    field :name, as: :text, required: true
+    field :taggings_count, as: :number, readonly: true
+  end
+end
