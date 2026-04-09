@@ -7,7 +7,32 @@ class DiscordNotifier
       require "uri"
 
         message = {
-  content: "📝 **New Post Created!**\n**Title:** #{post.title}\n**Author:** #{post.user.username}\n**Topic:** #{post.topic.title}\n**View:** #{ENV['APP_URL']}/#{post.topic.id}/posts/#{post.id}"
+        content: "**New post on Mashit Forum**",
+        embeds: [{
+        title: post.title,
+        url: "#{ENV['APP_URL']}/topics/#{post.topic.slug}/posts/#{post.slug}",
+        author: {
+          name: post.user.username
+        },
+
+        fields: [
+          {
+          name: "Topic:",
+          value: "[#{post.topic.title}](#{ENV['APP_URL']}/topics/#{post.topic.slug})"
+        },
+
+        {
+          name: "Content:",
+          value: post.body.to_plain_text.truncate(100)
+        }
+      ],
+      footer: {
+        text: "Mash-it project.",
+        url: "https://mash-it.io/mashers"
+      },
+      timestamp: Time.now.utc.iso8601
+
+        }]
 }
 
       uri = URI.parse(webhook_url)
