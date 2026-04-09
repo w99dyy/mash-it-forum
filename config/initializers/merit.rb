@@ -37,9 +37,7 @@ Rails.application.reloader.to_prepare do
     name: "Developer",
     description: "Developer and maintainer for the forum",
   )
-end
 
-Rails.application.reloader.to_prepare do
   Merit::Badge.create!(
     id: 2,
     name: "Admin",
