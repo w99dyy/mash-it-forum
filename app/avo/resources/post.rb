@@ -10,6 +10,7 @@ class Avo::Resources::Post < Avo::BaseResource
     field :title, as: :text
     field :body, as: :trix
     field :user_id, as: :number
+    field :topic, as: :belongs_to
     field :topic_id, as: :number
     field :comments_count, as: :number
     field :pinned, as: :boolean
@@ -17,7 +18,6 @@ class Avo::Resources::Post < Avo::BaseResource
   #  field :images, as: :files
   #  field :avatar, as: :file
   #  field :cover_image, as: :file
-    field :topic, as: :belongs_to
     field :user, as: :belongs_to
     field :comments, as: :has_many
   #  field :subjects, as: :tags
