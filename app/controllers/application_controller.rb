@@ -30,8 +30,6 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:account_update, keys: [ :username, :email, :password, :password_confirmation, :current_password ])
   end
 
-  private
-
   def storable_location?
     request.get? && is_navigational_format? && !devise_controller? && !request.xhr?
   end
@@ -43,6 +41,8 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource)
     stored_location_for(resource) || super
   end
+
+  private
 
   def sync_mashit_avatar
       return unless user_signed_in? && current_user.wallet_connected?
