@@ -5,8 +5,13 @@ class Avo::Resources::User < Avo::BaseResource
   #   query: -> { query.ransack(id_eq: q, m: "or").result(distinct: false) }
   # }
 
-  def self.find_record(id, query = nil)
+  def self.friendly_find_record(id, query = nil)
     model_class.find_by(username: id)
+  end
+
+  def actions
+    action Avo::Actions::GrantBadgeAction
+    action Avo::Actions::RevokeBadgeAction
   end
 
   def fields
@@ -27,5 +32,13 @@ class Avo::Resources::User < Avo::BaseResource
     field :posts, as: :has_many
     field :comments, as: :has_many
   #  field :profile, as: :has_one
+    field :badges, as: :text,
+          name: "Badges",
+          format_using: -> {
+            record.badges
+                  .select { |b| b.id.to_i > 0 }
+                  .map(&:name)
+                  .join(", ")
+          }
   end
 end
