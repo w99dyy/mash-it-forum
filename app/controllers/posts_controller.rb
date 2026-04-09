@@ -87,7 +87,6 @@ class PostsController < ApplicationController
     end
 
   private
-  # Use callbacks to share common setup or constraints between actions.
 
   def set_topic
     @topic = Topic.friendly.find(params[:topic_id])
@@ -97,7 +96,6 @@ class PostsController < ApplicationController
     @post = @topic.posts.friendly.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def post_params
     params.require(:post).permit(:title, :body, :tag_list)
   end
