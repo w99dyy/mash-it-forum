@@ -1,8 +1,8 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!, except: [ :index, :show ]
-  before_action :set_topic, only: %i[ index new create show edit update destroy pin unpin ]
-  before_action :set_post, only: %i[ show edit update destroy pin unpin ]
-  before_action :require_admin, only: %i[ pin unpin ]
+  before_action :set_topic, only: %i[ index new create show edit update destroy pin unpin lock unlock]
+  before_action :set_post, only: %i[ show edit update destroy pin unpin lock unlock]
+  before_action :require_admin, only: %i[ pin unpin lock unlock ]
 
   # GET /posts or /posts.json
   def index
@@ -24,6 +24,7 @@ class PostsController < ApplicationController
   # GET /posts/new
   def new
     @post = @topic.posts.build
+    @available_tags = ActsAsTaggableOn::Tag.all.order(:name)
   end
 
   # GET /posts/1/edit
@@ -33,6 +34,7 @@ class PostsController < ApplicationController
   # POST /posts or /posts.json
   def create
     @post = @topic.posts.build(post_params.merge(user: current_user))
+    @available_tags = ActsAsTaggableOn::Tag.all.order(:name)
 
     respond_to do |format|
       if @post.save
@@ -79,12 +81,24 @@ class PostsController < ApplicationController
   def pin
       @post.pin!
       redirect_back fallback_location: [ @topic, @post ], notice: "Post pinned!"
-    end
+  end
 
   def unpin
       @post.unpin!
       redirect_back fallback_location: [ @topic, @post ], notice: "Post unpinned!"
-    end
+  end
+
+  def lock
+      @post = Post.friendly.find(params[:id])
+      @post.update(locked: true)
+      redirect_to @post, notice: "Post has been locked!"
+  end
+
+  def unlock
+      @post = Post.friendly.find(params[:id])
+      @post.update(locked: false)
+      redirect_to @post, notice: "Post has been unlocked!"
+  end
 
   private
 
@@ -97,7 +111,7 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:title, :body, :tag_list)
+    params.require(:post).permit(:title, :body, tag_list: [])
   end
 
   def update_avatar_from_wallet
