@@ -24,7 +24,8 @@ Rails.application.routes.draw do
   end
 
   devise_for :users, controllers: {
-    confirmations: "users/confirmation"
+    confirmations: "users/confirmation",
+    registrations: "users/registrations"
   }
 
   devise_scope :user do
