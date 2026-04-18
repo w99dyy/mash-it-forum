@@ -1,3 +1,3 @@
 # Mash-it forum
 
-This forum is for Mash-it project.
+Forum of Mash-it project.
