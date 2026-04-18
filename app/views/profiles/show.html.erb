@@ -2,11 +2,12 @@
 
 <div class="mx-auto py-8">
   <div class="rounded-lg shadow-lg p-6 mb-6">
-    <div class="flex items-start md:space-x-6">
+    <div class="flex items-start md:gap-6">
 
       <!-- Avatar — full card -->
-      <div class="rounded-lg overflow-hidden relative" style="width: 276px; height: 368px;">
+      <div class="rounded-lg overflow-hidden mx-auto md:mx-0">
       <% if @user.mashit_layers.any? %>
+      <div class="relative w-[276px] h-[368px] aspect-square md:aspect-auto">
       <% @user.mashit_layers.each do |layer| %>
         <% if layer['name'] == 'background' %>
           <img src="<%= layer['image'] %>"
@@ -18,10 +19,11 @@
               class="absolute inset-0 w-full h-full object-contain">
         <% end %>
       <% end %>
+      </div>
       <% else %>
         <img src="<%= asset_path('mashit.png') %>"
             alt="Default avatar"
-            class="rounded-lg object-contain">
+            class="md:w-[276px] rounded-lg object-contain">
       <% end %>
       </div>
 
