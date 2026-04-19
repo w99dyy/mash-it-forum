@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  include Merit
   has_merit
   after_save :grant_admin_badge, if: :saved_change_to_admin?
 
