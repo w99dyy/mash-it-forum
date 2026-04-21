@@ -58,7 +58,7 @@
   
     <% if @posts.any? %>
       <% @posts.each do |post| %>
-        <div class="post-card  p-2 mb-3 pb-6">
+        <div class="post-card  p-2 mb-3 pb-4">
 
             <div class="float-left">
 
@@ -101,7 +101,7 @@
            </span>
           </h2>
         </div>
-        
+
           <%# Tags %>
 
           <% if post.tags.any? %>
@@ -109,7 +109,7 @@
               <div class="flex flex-wrap gap-2">
                 <% post.tags.each do |tag| %>
                  <%= link_to tag.name, topic_posts_path(tag: tag.name),
-                class: "bg-[#de7200] text-white px-4 rounded-full text-sm hover:bg-[#df8322]" %>
+                class: "bg-[#de7200] px-3 py-0.5 rounded-full text-sm hover:bg-[#df8322]" %>
 
                 <% end %>
             
