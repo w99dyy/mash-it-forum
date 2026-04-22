@@ -56,7 +56,7 @@ class CommentsController < ApplicationController
   private
 
   def set_topic
-    @topic = Topic.friendly.find(params[:topic_id])
+    @topic = Topic.friendly.find(params[:topic_slug])
   end
 
   def set_comment
@@ -64,7 +64,7 @@ class CommentsController < ApplicationController
   end
 
   def set_post
-    @post = Post.friendly.find(params[:post_id])
+    @post = Post.friendly.find(params[:post_slug])
   end
 
   def comment_params

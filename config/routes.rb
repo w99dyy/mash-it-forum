@@ -46,7 +46,7 @@ Rails.application.routes.draw do
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
-  resources :topics do
+  resources :topics, path: "t", param: :slug do
     member do
       patch :pin
       patch :unpin
@@ -54,7 +54,7 @@ Rails.application.routes.draw do
       patch :unlock
     end
 
-    resources :posts do
+    resources :posts, path: "p", param: :slug do
       member do
         patch :pin
         patch :unpin
@@ -72,7 +72,7 @@ Rails.application.routes.draw do
   get "/tagged", to: "posts#tagged", as: :tagged
 
   # profiles
-  resources :profiles, param: :username
+  resources :profiles, param: :username, path: "u"
 
   get "/about", to: "pages#about"
 

@@ -11,7 +11,7 @@ class Post < ApplicationRecord
     has_one_attached :cover_image
 
     extend FriendlyId
-    friendly_id :title, use: :slugged
+    friendly_id :title, use: [:slugged, :finders]
 
   #  def thumbnail
   #    body.embeds.attachments.first&.blob
@@ -41,6 +41,15 @@ class Post < ApplicationRecord
         errors.add(:tag, "#{tag_name} is not valid")
       end
     end
+  end
+
+  # this prevents triggering updated_at when pin/unpin a post
+  def pin!
+    update_columns(pinned: true)
+  end
+
+  def unpin!
+    update_columns(pinned: false)
   end
 
   private

@@ -104,11 +104,11 @@ class PostsController < ApplicationController
   private
 
   def set_topic
-    @topic = Topic.friendly.find(params[:topic_id])
+    @topic = Topic.friendly.find(params[:topic_slug])
   end
 
   def set_post
-    @post = @topic.posts.friendly.find(params[:id])
+    @post = @topic.posts.friendly.find(params[:slug])
   end
 
   def post_params
