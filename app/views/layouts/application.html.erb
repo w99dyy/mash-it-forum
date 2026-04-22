@@ -64,44 +64,45 @@
   <% end %>
   </header>
 
-    <!-- pinned nav bar -->
-  <div class="flex flex-grow">
-    <nav class="md:flex w-1/7 flex-col hidden sticky top-0 h-full pt-4 pr-5 pl-5">
-        <ul class="space-y-2">  <!-- space-y-2 adds vertical spacing between items -->
-        
-        <!-- New topic -->
+    <%# pinned nav bar  %>
+  <div data-controller="sidebar" class="flex flex-grow min-h-screen">
+    <nav data-sidebar-target="sidebar" class="md:flex w-1/7 flex-col hidden sticky top-6 left-3 h-full pt-4 pr-5 pl-5 pb-5 bg-[#1a1a1a] rounded-md mt-6">
+
+    <div class="flex justify-end">
+    <svg data-action="click->sidebar#toggle" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-layout-sidebar-left-collapse"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M18 3a3 3 0 0 1 2.995 2.824l.005 .176v12a3 3 0 0 1 -2.824 2.995l-.176 .005h-12a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-12a3 3 0 0 1 2.824 -2.995l.176 -.005h12zm0 2h-9v14h9a1 1 0 0 0 .993 -.883l.007 -.117v-12a1 1 0 0 0 -.883 -.993l-.117 -.007zm-2.293 4.293a1 1 0 0 1 .083 1.32l-.083 .094l-1.292 1.293l1.292 1.293a1 1 0 0 1 .083 1.32l-.083 .094a1 1 0 0 1 -1.32 .083l-.094 -.083l-2 -2a1 1 0 0 1 -.083 -1.32l.083 -.094l2 -2a1 1 0 0 1 1.414 0z" /></svg>
+    </div>
+        <ul class="space-y-2">  <%# space-y-2 adds vertical spacing between items %>
+
+        <%# New topic %>
         <% if current_user&.admin? %>
         <li>
-      <%= link_to new_topic_path, class: "flex items-center gap-3 pl-8 py-2 hover:bg-[#2a2a2a] rounded-md group" do %>
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-ballpen"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M14 6l7 7l-4 4" /><path d="M5.828 18.172a2.828 2.828 0 0 0 4 0l10.586 -10.586a2 2 0 0 0 0 -2.829l-1.171 -1.171a2 2 0 0 0 -2.829 0l-10.586 10.586a2.828 2.828 0 0 0 0 4" /><path d="M4 20l1.768 -1.768" /></svg>
-      <span class="text-gray-300 group-hover:text-white"> New topic </span>
+      <%= link_to new_topic_path, class: "flex items-center gap-3 pl-2 py-2 hover:bg-[#2a2a2a] rounded-md group" do %>
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-ballpen"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M14 6l7 7l-4 4" /><path d="M5.228 18.172a2.828 2.828 0 0 0 4 0l10.586 -10.586a2 2 0 0 0 0 -2.829l-1.171 -1.171a2 2 0 0 0 -2.829 0l-10.586 10.586a2.828 2.828 0 0 0 0 4" /><path d="M4 20l1.768 -1.768" /></svg>
+      <span class="text-gray-300 group-hover:text-white text-sm"> New topic </span>
 
     <% end %>
       </li>
       <% end %>
 
-      <!-- topics page -->
+      <%# topics page %>
       <li>
-        <%= link_to topics_path, class: "flex items-center gap-3 pl-8 py-2 hover:bg-[#2a2a2a] rounded-md group" do %>
-          <!-- Posts Icon -->
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 9v.906a2.25 2.25 0 0 1-1.183 1.981l-6.478 3.488M2.25 9v.906a2.25 2.25 0 0 0 1.183 1.981l6.478 3.488m8.839 2.51-4.66-2.51m0 0-1.023-.55a2.25 2.25 0 0 0-2.134 0l-1.022.55m0 0-4.661 2.51m16.5 1.615a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V8.844a2.25 2.25 0 0 1 1.183-1.981l7.5-4.039a2.25 2.25 0 0 1 2.134 0l7.5 4.039a2.25 2.25 0 0 1 1.183 1.98V19.5Z" />
-        </svg>
+        <%= link_to topics_path, class: "flex items-center gap-3 pl-2 py-2 hover:bg-[#2a2a2a] rounded-md group" do %>
+          <%# Posts Icon %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-messages"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M21 14l-3 -3h-7a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1h9a1 1 0 0 1 1 1v10" /><path d="M14 15v2a1 1 0 0 1 -1 1h-7l-3 3v-10a1 1 0 0 1 1 -1h2" /></svg>
 
-          <span class="text-gray-300 group-hover:text-white"> Topics </span>
+
+          <span class="text-gray-300 group-hover:text-white text-sm"> Topics </span>
         <% end %>
       </li>
 
       <li> 
       <% if user_signed_in? %>
 
-        <%= link_to profile_path(current_user), class: "flex items-center gap-3 pl-8 py-2 hover:bg-[#2a2a2a] rounded-md group" do %>
+        <%= link_to profile_path(current_user), class: "flex items-center gap-3 pl-2 py-2 hover:bg-[#2a2a2a] rounded-md group" do %>
           <!-- Posts Icon -->
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-          </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-user"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /></svg>
 
-          <span class="text-gray-300 group-hover:text-white"> Profile </span>
+          <span class="text-gray-300 group-hover:text-white text-sm"> Profile </span>
         <% end %>
         
       <% end %>
@@ -113,7 +114,7 @@
 
   <body class="bg-[#161616] min-h-screen text-white">
         <main class="flex-1 min-w-0">
-        <div class="container mx-auto mt-5 px-4">
+        <div class="container mx-auto mt-5 mb-5">
           <%= yield %>
         </div>
       </main>
