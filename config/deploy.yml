@@ -24,10 +24,19 @@ servers:
 #   ssl: true
 #   host: app.example.com
 
+proxy:
+  app_port: 3001
+  host: 212.227.161.11
+
+
 # Where you keep your container images.
 registry:
   # Alternatives: hub.docker.com / registry.digitalocean.com / ghcr.io / ...
+<<<<<<< HEAD
   server: ghcr.io
+=======
+  server: localhost:3001
+>>>>>>> contributor-branch
 
   # Needed for authenticated registries.
   username: w99dyy
