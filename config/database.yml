@@ -1,40 +1,32 @@
-# PostgreSQL. Versions 9.3 and up are supported.
 default: &default
   adapter: postgresql
   encoding: unicode
-  # For details on connection pooling, see Rails configuration guide
   max_connections: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  # Using host/port instead of socket to connect to external DB
-  host: 212.227.161.11
-  port: 5432
-  username: postgres
-  password: postgres
 
 development:
   <<: *default
-  database: mashit_development
+  database: mash_it_development
 
 test:
   <<: *default
-  database: mashit_test
+  database: mash_it_test
 
 production:
   primary: &primary_production
     <<: *default
-    database: mashit
-    # If you prefer using an environment variable, keep the line below:
-    # url: <%= ENV["DATABASE_URL"] %>
-
-  # Rails 8 multi-database configuration for Cache, Queue, and Cable
+    url: <%= ENV["DATABASE_URL"] %>
   cache:
     <<: *primary_production
-    database: mashit_cache
+    database: mash_it_production_cache
     migrations_paths: db/cache_migrate
+    url: <%= URI.parse(ENV["DATABASE_URL"]).tap { |url| url.path += "_cache" } if ENV["DATABASE_URL"] %>
   queue:
     <<: *primary_production
-    database: mashit_queue
+    database: mash_it_production_queue
     migrations_paths: db/queue_migrate
+    url: <%= URI.parse(ENV["DATABASE_URL"]).tap { |url| url.path += "_queue" } if ENV["DATABASE_URL"] %>
   cable:
     <<: *primary_production
-    database: mashit_cable
+    database: mash_it_production_cable
     migrations_paths: db/cable_migrate
+    url: <%= URI.parse(ENV["DATABASE_URL"]).tap { |url| url.path += "_cable" } if ENV["DATABASE_URL"] %>
