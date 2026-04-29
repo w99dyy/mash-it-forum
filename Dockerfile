@@ -68,4 +68,4 @@ ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
 # Start server via Thruster
 EXPOSE 3001
-CMD ["./bin/thrust", "bundle", "exec", "rails", "server", "-p", "3001"]
+CMD ["bundle", "exec", "puma", "-p", "3001"]
