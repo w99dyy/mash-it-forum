@@ -30,8 +30,8 @@ proxy:
 #  options:
 #    publish: "8080:8080"
   host: 212.227.161.11
-  run: "kamal-proxy run --http-port 8080"
-
+  run:
+    cmd: "kamal-proxy run --http-port 8080"
 # proxy:
 #  app_port: 3001
 
