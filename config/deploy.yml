@@ -23,16 +23,14 @@ servers:
 # Using an SSL proxy like this requires turning on config.assume_ssl and config.force_ssl in production.rb!
 #
 # Don't use this when deploying to multiple web servers (then you have to terminate SSL at your load balancer).
-#
+
 proxy:
   ssl: false
   app_port: 3001
-  options:
-    publish: "8080:8080"
   host: 212.227.161.11
-
-# proxy:
-#  app_port: 3001
+  docker:
+    options:
+      publish: "8080:80"
 
 # Where you keep your container images.
 registry:
