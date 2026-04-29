@@ -1,6 +1,9 @@
 # Name of your application. Used to uniquely configure containers.
 service: forum
 
+proxy: 
+  disabled: true
+
 # Name of the container image (use your-user/app-name on external registries).
 image: ghcr.io/w99dyy/mash_it
 
