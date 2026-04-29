@@ -11,13 +11,7 @@ servers:
       publish: "3001:3001"
     hosts:
       - 212.227.161.11
-    proxy: flase
-    healthcheck:
-      path: /up
-      port: 3001
-      max_attempts: 10
-      interval: 5
-      timeout: 30
+    proxy: false
   # job:
   #   hosts:
   #     - 192.168.0.1
