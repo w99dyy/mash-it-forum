@@ -29,7 +29,8 @@ proxy:
   app_port: 3001
   host: 212.227.161.11
   run:
-    cmd: "kamal-proxy run --http-port 8080"
+    http_port: 8080
+    https_port: 0
 
 # Where you keep your container images.
 registry:
