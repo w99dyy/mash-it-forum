@@ -24,8 +24,8 @@ servers:
 #   ssl: true
 #   host: app.example.com
 
-# proxy:
-#  app_port: 3001
+proxy:
+  app_port: 3001
 
 # Where you keep your container images.
 registry:
