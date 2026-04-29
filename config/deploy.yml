@@ -8,7 +8,7 @@ image: ghcr.io/w99dyy/mash_it
 servers:
   web:
     - 212.227.161.11
-  health_check:
+  healthcheck:
   timeout: 60
   path: /up
   # job:
