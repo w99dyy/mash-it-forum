@@ -1,3 +1,3 @@
 class UserMailer < ApplicationMailer
-  default from: 'mash-it@tomatosvg.xyz'
+  default from: "mash-it@mashiverse.com"
 end

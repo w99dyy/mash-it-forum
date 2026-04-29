@@ -1,5 +1,5 @@
 class CommentMailer < ApplicationMailer
-    default from: "mash-it@tomatosvg.xyz"
+    default from: "mash-it@mashiverse.com"
 
     def reply_notification
         @comment = params[:comment]
