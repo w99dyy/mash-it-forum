@@ -7,7 +7,10 @@ image: ghcr.io/w99dyy/mash_it
 # Deploy to these servers.
 servers:
   web:
-    - 212.227.161.11
+    options:
+      publish: "3001:3001"
+    hosts:
+      - 212.227.161.11
   # job:
   #   hosts:
   #     - 192.168.0.1
@@ -24,8 +27,8 @@ servers:
 #   ssl: true
 #   host: app.example.com
 
-proxy:
-  app_port: 3001
+# proxy:
+#  app_port: 3001
 
 # Where you keep your container images.
 registry:
