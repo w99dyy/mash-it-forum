@@ -8,6 +8,9 @@ image: ghcr.io/w99dyy/mash_it
 servers:
   web:
     - 212.227.161.11
+  health_check:
+  timeout: 60
+  path: /up
   # job:
   #   hosts:
   #     - 192.168.0.1
@@ -24,15 +27,15 @@ servers:
 #   ssl: true
 #   host: app.example.com
 
-proxy:
-  app_port: 3001
-  host: 212.227.161.11
+# proxy:
+#  app_port: 3001
+#  host: 212.227.161.11
 
 
 # Where you keep your container images.
 registry:
   # Alternatives: hub.docker.com / registry.digitalocean.com / ghcr.io / ...
-  server: localhost:3001
+  server: ghcr.io
 
   # Needed for authenticated registries.
   username: w99dyy
@@ -45,6 +48,7 @@ registry:
 env:
   secret:
     - RAILS_MASTER_KEY
+    - DATABASE_URL
   clear:
     # Run the Solid Queue Supervisor inside the web server's Puma process to do jobs.
     # When you start using multiple servers, you should split out job processing to a dedicated machine.
