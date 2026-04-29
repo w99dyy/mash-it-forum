@@ -24,9 +24,7 @@ servers:
 #   ssl: true
 #   host: app.example.com
 
-proxy:
-  app_port: 3001
-
+proxy: false
 # Where you keep your container images.
 registry:
   # Alternatives: hub.docker.com / registry.digitalocean.com / ghcr.io / ...
