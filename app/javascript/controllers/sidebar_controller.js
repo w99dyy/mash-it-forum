@@ -21,31 +21,33 @@ export default class extends Controller {
 
     collapse() {
         this.sidebarTarget.classList.add("w-16")
-        this.sidebarTarget.classList.remove("w-1/7")
+        this.sidebarTarget.classList.remove("w-64")
         
-        this.sidebarTarget.querySelectorAll("li span, .nav-text").forEach(span => {
-            span.classList.add("hidden")
+        // Hide all text spans and badges
+        this.sidebarTarget.querySelectorAll("li span:not(svg), .nav-text, .admin-badge").forEach(element => {
+            element.classList.add("hidden")
         })
         
         this.sidebarTarget.querySelectorAll("li a").forEach(link => {
-            link.classList.add("justify-center", "pl-0")
-            link.classList.remove("pl-2", "gap-3")
+            link.classList.add("justify-center", "px-0")
+            link.classList.remove("pl-2", "gap-3", "px-3")
         })
         
         localStorage.setItem("sidebarCollapsed", "true")
     }
 
     expand() {
-        this.sidebarTarget.classList.add("w-1/7")
+        this.sidebarTarget.classList.add("w-64")
         this.sidebarTarget.classList.remove("w-16")
         
-        this.sidebarTarget.querySelectorAll("li span, .nav-text").forEach(span => {
-            span.classList.remove("hidden")
+        // Show all text spans and badges
+        this.sidebarTarget.querySelectorAll("li span:not(svg), .nav-text, .admin-badge").forEach(element => {
+            element.classList.remove("hidden")
         })
         
         this.sidebarTarget.querySelectorAll("li a").forEach(link => {
-            link.classList.remove("justify-center", "pl-0")
-            link.classList.add("pl-2", "gap-3")
+            link.classList.remove("justify-center", "px-0")
+            link.classList.add("pl-2", "gap-3", "px-3")
         })
         
         localStorage.setItem("sidebarCollapsed", "false")
