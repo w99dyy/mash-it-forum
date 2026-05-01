@@ -10,8 +10,8 @@ image: ghcr.io/w99dyy/mash_it
 # Deploy to these servers.
 servers:
   web:
-    options:
-      publish: "127.0.0.1:3001:3001"
+#    options:
+#      publish: "127.0.0.1:3001:3001"
     hosts:
       - 212.227.161.11
 #    proxy: false
