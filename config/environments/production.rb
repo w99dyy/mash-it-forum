@@ -74,5 +74,8 @@ Rails.application.configure do
   # DNS rebinding protection.
   # Note: Since you are using a custom domain, you should uncomment this
   # and add your domain if you still see "Blocked host" errors.
-  # config.hosts = [ "mashiverse.com" ]
+  config.hosts = [ "mashiverse.com", "www.mashiverse.com" ]
+
+  config.action_controller.default_url_options = { host: 'mashiverse.com', protocol: 'https' }
+  config.action_mailer.default_url_options = { host: 'mashiverse.com', protocol: 'https' }
 end
