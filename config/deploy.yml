@@ -13,7 +13,7 @@ servers:
 #    options:
 #      publish: "127.0.0.1:3001:3001"
     hosts:
-      - mashiverse.com
+      - 212.227.161.11
 #    proxy: false
   # job:
   #   hosts:
@@ -29,7 +29,7 @@ servers:
 
 proxy:
   ssl: false
-  host: 212.227.161.11
+  host: mashiverse.com
   app_port: 3001
   healthcheck:
     path: "/up"
