@@ -77,12 +77,13 @@ Rails.application.configure do
   # Add all possible hosts that might connect to the app
   config.hosts = [
     "mashiverse.com",
-    "www.mashiverse.com",
+    "www.mashiverse.com", 
     "212.227.161.11",
-    /.*\.kamal\.local$/,  # Allow any kamal.local subdomains
-    /.*\.internal$/,       # Allow internal Docker hostnames
-    /[a-f0-9]+/,          # Allow container IDs (they look like hex strings)
-    /.*\.ionos\.local$/    # Allow IONOS internal hosts
+    /.*\.kamal\.local$/,
+    /.*\.internal$/,
+    /[a-f0-9]+/,           # Matches container ID
+    /[a-f0-9]+:\d+/,       # Matches container ID with port (like 1408e684efc6:3001)
+    /.*\.ionos\.local$/
   ]
 
   config.action_controller.default_url_options = { host: 'mashiverse.com', protocol: 'https' }
