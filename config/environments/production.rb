@@ -74,7 +74,16 @@ Rails.application.configure do
   # DNS rebinding protection.
   # Note: Since you are using a custom domain, you should uncomment this
   # and add your domain if you still see "Blocked host" errors.
-  config.hosts = [ "mashiverse.com", "www.mashiverse.com" ]
+  # Add all possible hosts that might connect to the app
+  config.hosts = [
+    "mashiverse.com",
+    "www.mashiverse.com",
+    "212.227.161.11",
+    /.*\.kamal\.local$/,  # Allow any kamal.local subdomains
+    /.*\.internal$/,       # Allow internal Docker hostnames
+    /[a-f0-9]+/,          # Allow container IDs (they look like hex strings)
+    /.*\.ionos\.local$/    # Allow IONOS internal hosts
+  ]
 
   config.action_controller.default_url_options = { host: 'mashiverse.com', protocol: 'https' }
   config.action_mailer.default_url_options = { host: 'mashiverse.com', protocol: 'https' }
