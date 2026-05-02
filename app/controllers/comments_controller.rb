@@ -6,7 +6,7 @@ class CommentsController < ApplicationController
   before_action :set_comment, only: [ :edit, :update, :destroy, :pin, :unpin ]
 
   def create
-    if @post.locked?
+    if @post.locked? && !current_user.admin?
       redirect_back fallback_location: [@topic, @post], alert: "This post is locked. You can't comment."
       return
     end
