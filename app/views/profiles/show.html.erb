@@ -1,6 +1,6 @@
 <% content_for :title, @user.username %>
 
-<div class="mx-auto py-4 w-5/6">
+<div class="mx-auto py-4 px-2 md:px-0 md:w-5/6">
   <div class="rounded-lg shadow-lg p-6 mb-6 bg-[#1a1a1a] ">
     <div class="flex items-start md:gap-6">
 
@@ -103,7 +103,7 @@
         <!-- Wallet section — only shown to profile owner -->
         <% if current_user == @user %>
           <div data-controller="wallet">
-            <div class="rounded-lg" >
+            <div class="rounded-lg">
               <div>
                 <p class="font-medium">Wallet Status</p>
                 <% if @user.wallet_connected? %>
