@@ -1,212 +1,252 @@
-<div id="<%= dom_id post %>" class="min-h-screen px-4 ">
- 
-
-<div class="flex mx-auto">
-
-  <h2 class="text-2xl font-bold flex flex-wrap items-center gap-2 break-words overflow-hidden pb-2">
-    <%= link_to @post.title, [@topic, @post], class: "hover:text-[#ababab] transition " %>
-    <% if post.pinned? %>
-      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-pinned inline-block align-middle" style="color: green"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M16 3a1 1 0 0 1 .117 1.993l-.117 .007v4.764l1.894 3.789a1 1 0 0 1 .1 .331l.006 .116v2a1 1 0 0 1 -.883 .993l-.117 .007h-4v4a1 1 0 0 1 -1.993 .117l-.007 -.117v-4h-4a1 1 0 0 1 -.993 -.883l-.007 -.117v-2a1 1 0 0 1 .06 -.34l.046 -.107l1.894 -3.791v-4.762a1 1 0 0 1 -.117 -1.993l.117 -.007h8z" /></svg>
-    <% end %>
-    <% if @topic.locked? || post.locked? %>
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-lock" style="color: gray";><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 2a5 5 0 0 1 5 5v3a3 3 0 0 1 3 3v6a3 3 0 0 1 -3 3h-10a3 3 0 0 1 -3 -3v-6a3 3 0 0 1 3 -3v-3a5 5 0 0 1 5 -5m0 12a2 2 0 0 0 -1.995 1.85l-.005 .15a2 2 0 1 0 2 -2m0 -10a3 3 0 0 0 -3 3v3h6v-3a3 3 0 0 0 -3 -3" /></svg>
-    <% end %>
-  </h2>
-
-  <% if user_signed_in? && (current_user.admin? || current_user == @post.user) %>
-
- <!-- 3 dots menu -->
-        <div class="relative ml-auto hidden sm:block">
-
-    <button class="peer hover:text-[#ababab] rounded-full outline-none ml-3 ">
-  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
-    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
-  </button>
-  
-  <div class="peer absolute top-3 right-4 divide-y divide-[#2a2a2a] text-sm mt-4 opacity-0 invisible peer-focus:opacity-100 peer-focus:visible transition-all duration-200 bg-[#161616] rounded-lg shadow-lg w-48 z-10">
-
-  <% if current_user&.admin? %>
-       <% if @post.pinned? %>
-        <%= button_to unpin_topic_post_path(@topic, @post), method: :patch, 
-            class: "block w-full text-left px-4 py-2 text-sm hover:text-[#ababab] rounded-lg flex items-center gap-2" do %>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-pin"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 4.5l-4 4l-4 1.5l-1.5 1.5l7 7l1.5 -1.5l1.5 -4l4 -4" /><path d="M9 15l-4.5 4.5" /><path d="M14.5 4l5.5 5.5" /></svg>
-            <span> Unpin </span>
-            <% end %>
-      <% else %>
-        <%= button_to pin_topic_post_path(@topic, @post), method: :patch, 
-            class: "block w-full text-left px-4 py-2 text-sm hover:text-[#ababab] rounded-lg flex items-center gap-2" do %>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-pinned"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 4v6l-2 4v2h10v-2l-2 -4v-6" /><path d="M12 16l0 5" /><path d="M8 4l8 0" /></svg>
-            <span> Pin </span>
-            <% end %>
+<div id="<%= dom_id post %>" >
+  <div class="flex mx-auto">
+    <h2 class="text-2xl font-bold flex flex-wrap items-center gap-2 break-words overflow-hidden pb-2">
+      <%= @post.title %>
+      <% if post.pinned? %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-pinned inline-block align-middle" style="color: green">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M16 3a1 1 0 0 1 .117 1.993l-.117 .007v4.764l1.894 3.789a1 1 0 0 1 .1 .331l.006 .116v2a1 1 0 0 1 -.883 .993l-.117 .007h-4v4a1 1 0 0 1 -1.993 .117l-.007 -.117v-4h-4a1 1 0 0 1 -.993 -.883l-.007 -.117v-2a1 1 0 0 1 .06 -.34l.046 -.107l1.894 -3.791v-4.762a1 1 0 0 1 -.117 -1.993l.117 -.007h8z" />
+        </svg>
       <% end %>
-
-    <%= link_to edit_topic_post_path(@topic, @post), 
-    class: "block px-4 py-4 hover:text-[#ababab] cursor-pointer flex items-center gap-2" do %>
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M8 7a1 1 0 0 1 -1 1h-1a1 1 0 0 0 -1 1v9a1 1 0 0 0 1 1h9a1 1 0 0 0 1 -1v-1a1 1 0 0 1 2 0v1a3 3 0 0 1 -3 3h-9a3 3 0 0 1 -3 -3v-9a3 3 0 0 1 3 -3h1a1 1 0 0 1 1 1" /><path d="M14.596 5.011l4.392 4.392l-6.28 6.303a1 1 0 0 1 -.708 .294h-3a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 .294 -.708zm6.496 -2.103a3.097 3.097 0 0 1 .165 4.203l-.164 .18l-.693 .694l-4.387 -4.387l.695 -.69a3.1 3.1 0 0 1 4.384 0" /></svg>
-    <span> Edit post</span>
-    <% end %> 
-
-      <%= button_to [@topic, @post], method: :delete, 
-      class: "block w-full text-left px-4 py-2 text-sm hover:bg-red-900/20 text-red-400 flex items-center gap-2",
-      data: { turbo_confirm: "Are you sure?" } do %>
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
-      <span> Delete post</span>
+      <% if @topic.locked? || post.locked? %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-lock" style="color: gray">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M12 2a5 5 0 0 1 5 5v3a3 3 0 0 1 3 3v6a3 3 0 0 1 -3 3h-10a3 3 0 0 1 -3 -3v-6a3 3 0 0 1 3 -3v-3a5 5 0 0 1 5 -5m0 12a2 2 0 0 0 -1.995 1.85l-.005 .15a2 2 0 1 0 2 -2m0 -10a3 3 0 0 0 -3 3v3h6v-3a3 3 0 0 0 -3 -3" />
+        </svg>
       <% end %>
-      <% end %>
+    </h2>
 
-  </div>
-  
-  </div>
-
-  <% end %>
-   
-  <!-- end -->
-
-
-</div>
-
-  <div class="prose max-w-none text-l md:txt-base divide-y divide-[#2a2a2a]">
-      
-    <!-- Tags Display -->
-    <div class="flex flex-wrap items-center gap-3 pb-4 mb-5">
-      <%# strong class="text-lg font-bold whitespace-nowrap">Tags:</strong%>
-    <div class="flex flex-wrap items-center gap-1">
-      <% if @post.tags.any? %>
-        <% @post.tags.each do |tag| %>
-          <%= link_to tag.name, topic_posts_path(tag: tag.name),
-                class: "bg-[#de7200] text-white px-3 rounded-full text-sm hover:bg-[#df8322]" %>
-        <% end %>
-      <% else %>
-        <p class="text-gray-400">No tags yet</p>
-      <% end %>
-    </div>
-    </div>
-
-      <div class="border-padding">
-        <div class="mr-1 text-sm text-gray-400 float-right flex gap-1">
-              <!-- Post Metadata -->
-              <span> <%= time_ago_in_words(post.created_at) %></span>
-              <% if post.updated_at.present? && post.updated_at > post.created_at + 1.minute %>
-              <div class=" flex flex-wrap items-center gap-1">
-              <span>⁃ <%= time_ago_in_words(post.updated_at) %></span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-pencil"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12.085 6.5l5.415 5.415l-8.793 8.792a1 1 0 0 1 -.707 .293h-4a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 .293 -.707zm5.406 -2.698a3.828 3.828 0 0 1 1.716 6.405l-.292 .293l-5.415 -5.415l.293 -.292a3.83 3.83 0 0 1 3.698 -.991" />
-              </svg>
-              </div>
-              <% end %>
-              </div>
-
-      <div>
-      <div class="flex items-start gap-2 mb-2">
-        <div class="flex-shrink-0">
-          <%= link_to render('avatar_pfp/mashit_avatar', user: @post.user), profile_path(post.user) %>
-        </div>
-        <div>
-
-        <div class="flex flex-wrap items-center gap-1">
-          <span class="font-medium"><%= link_to post.user.username, profile_path(post.user) %></span>
-        <% if user_has_badges?(post.user, "Developer") %>
-         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-code-circle-2"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M17 3.34a10 10 0 1 1 -15 8.66l.005 -.324a10 10 0 0 1 14.995 -8.336m-3.658 5.22a1 1 0 0 0 -1.282 .598l-2 5.5a1 1 0 0 0 1.88 .684l2 -5.5a1 1 0 0 0 -.598 -1.282m-4.135 1.233a1 1 0 0 0 -1.414 0l-1.5 1.5a1 1 0 0 0 0 1.414l1.5 1.5a1 1 0 0 0 1.414 0l.083 -.094a1 1 0 0 0 -.083 -1.32l-.792 -.793l.792 -.793a1 1 0 0 0 0 -1.414m7 0a1 1 0 0 0 -1.414 0l-.083 .094a1 1 0 0 0 .083 1.32l.792 .793l-.792 .793a1 1 0 0 0 1.414 1.414l1.5 -1.5a1 1 0 0 0 0 -1.414z" /></svg>
-        <% end %>
-        <% if user_has_badges?(post.user, "Admin") %>
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-shield-checkered"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M11.013 12v9.754a13 13 0 0 1 -8.733 -9.754h8.734zm9.284 3.794a13 13 0 0 1 -7.283 5.951l-.001 -9.745h8.708a12.96 12.96 0 0 1 -1.424 3.794zm-9.283 -13.268l-.001 7.474h-8.986c-.068 -1.432 .101 -2.88 .514 -4.282a1 1 0 0 1 1.005 -.717a11 11 0 0 0 7.192 -2.256l.276 -.219zm1.999 7.474v-7.453l-.09 -.073a11 11 0 0 0 7.189 2.537l.342 -.01a1 1 0 0 1 1.005 .717c.413 1.403 .582 2.85 .514 4.282h-8.96z" /></svg>
-        <% end %> 
-        </div>
-         <div class="flex flex-row gap-1 flex-wrap">
-           <% if post.user.badges.any? %>
-          <% post.user.badges.each do |badge| %>
-          <span class="text-sm font-bold text-[#de7220]"><%= badge.name %> </span>
-          <% end %>
-        <% end %>
-        </div>
-          <div class="post-content mt-4 hidden sm:block">
-            <p class="text-gray-300">
-              <%= post.body %>
-            </p>
-          </div>
-       
-      </div>
-          
-    </div>
-          <div class="post-content mt-4 block sm:hidden">
-            <p class="text-gray-300">
-              <%= post.body %>
-            </p>
-          </div>
-  </div>
-
- <div class="mt-5 flex items-center justify-end">
- <% if user_signed_in? && (current_user.admin? || current_user == @post.user) %>
-
- <!-- 3 dots menu mobile -->
-
-    <button class="peer hover:text-[#ababab] rounded-full outline-none block sm:hidden">
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-three-dots text-[#808080]" viewBox="0 0 16 16">
-    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
-  </button>
-  
-  <div class="absolute right-30 bottom-44 divide-y divide-[#2a2a2a] text-sm mt-4 opacity-0 invisible peer-focus:opacity-100 peer-focus:visible transition-all duration-200 bg-[#161616] rounded-lg shadow-[0_20px_40px_-1px_rgba(0,0,0,0.3)] w-48 z-10">
-
-  <% if current_user&.admin? %>
-       <% if @post.pinned? %>
-        <%= button_to unpin_topic_post_path(@topic, @post), method: :patch, 
-            class: "block w-full text-left px-4 py-2 text-sm text-white hover:text-[#ababab] rounded-lg flex items-center gap-2" do %>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-pin"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 4.5l-4 4l-4 1.5l-1.5 1.5l7 7l1.5 -1.5l1.5 -4l4 -4" /><path d="M9 15l-4.5 4.5" /><path d="M14.5 4l5.5 5.5" /></svg>
-            <span> Unpin </span>
-            <% end %>
-      <% else %>
-        <%= button_to pin_topic_post_path(@topic, @post), method: :patch, 
-            class: "block w-full text-left px-4 py-2 text-sm text-white hover:text-[#ababab] rounded-lg flex items-center gap-2" do %>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-pinned"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 4v6l-2 4v2h10v-2l-2 -4v-6" /><path d="M12 16l0 5" /><path d="M8 4l8 0" /></svg>
-            <span> Pin </span>
-            <% end %>
-      <% end %>
-
-    <%= link_to edit_topic_post_path(@topic, @post), 
-    class: "block px-4 py-4 hover:text-[#ababab] cursor-pointer flex items-center gap-2" do %>
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M8 7a1 1 0 0 1 -1 1h-1a1 1 0 0 0 -1 1v9a1 1 0 0 0 1 1h9a1 1 0 0 0 1 -1v-1a1 1 0 0 1 2 0v1a3 3 0 0 1 -3 3h-9a3 3 0 0 1 -3 -3v-9a3 3 0 0 1 3 -3h1a1 1 0 0 1 1 1" /><path d="M14.596 5.011l4.392 4.392l-6.28 6.303a1 1 0 0 1 -.708 .294h-3a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 .294 -.708zm6.496 -2.103a3.097 3.097 0 0 1 .165 4.203l-.164 .18l-.693 .694l-4.387 -4.387l.695 -.69a3.1 3.1 0 0 1 4.384 0" /></svg>
-    <span> Edit post</span>
-    <% end %> 
-
-      <%= button_to [@topic, @post], method: :delete, 
-      class: "block w-full text-left px-4 py-2 text-sm hover:bg-red-900/20 text-red-400 flex items-center gap-2",
-      data: { turbo_confirm: "Are you sure?" } do %>
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
-      <span> Delete post</span>
-      <% end %>
-      <% end %>
-
-  </div>
-  
-
-  <% end %>
-   
-        <!-- end -->
-        <button id="comment_main_btn" 
-          <%= "disabled" if @topic.locked? || post.locked? %>
-          onclick="toggleForm(this)" class="flex items-center gap-1 p-2 hover:bg-[#2a2a2a] rounded-full group <%= 'cursor-not-allowed opacity-50' if @topic.locked? || post.locked? %>">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-reply-fill text-[#808080]" viewBox="0 0 16 16">
-          <path d="M5.921 11.9 1.353 8.62a.72.72 0 0 1 0-1.238L5.921 4.1A.716.716 0 0 1 7 4.719V6c1.5 0 6 0 7 8-2.5-4.5-7-4-7-4v1.281c0 .56-.606.898-1.079.62z"/>
+    <% if user_signed_in? && (current_user.admin? || current_user == @post.user) %>
+      <%# 3 dots menu %>
+      <div class="relative ml-auto hidden sm:block">
+        <button class="peer hover:text-[#ababab] rounded-full outline-none ml-3 ">
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+            <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
           </svg>
-
-          <span class="text-[#808080]">Reply</span>
         </button>
 
-      </div>
-        </div>
-</div>
-        <div id="comment_form_container" style="display: none;">
-          <%= turbo_frame_tag "post_comment_form" do %>
-            <%= render "comments/form", topic: @topic, post: @post, comment: @comment, parent: nil %>
+        <div class="peer absolute top-3 right-4 text-sm mt-4 opacity-0 invisible peer-focus:opacity-100 peer-focus:visible transition-all duration-200 bg-[#1f1f1f] rounded-lg shadow-lg w-48 z-10">
+          <% if current_user&.admin? %>
+            <% if @post.pinned? %>
+              <%= button_to unpin_topic_post_path(@topic, @post), method: :patch, 
+                  class: "block w-full text-left px-4 py-3 text-sm hover:text-[#ababab] rounded-lg flex items-center gap-2" do %>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-pin">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M15 4.5l-4 4l-4 1.5l-1.5 1.5l7 7l1.5 -1.5l1.5 -4l4 -4" />
+                  <path d="M9 15l-4.5 4.5" />
+                  <path d="M14.5 4l5.5 5.5" />
+                </svg>
+                <span>Unpin</span>
+              <% end %>
+            <% else %>
+              <%= button_to pin_topic_post_path(@topic, @post), method: :patch, 
+                  class: "block w-full text-left px-4 py-3 text-sm hover:text-[#ababab] rounded-lg flex items-center gap-2" do %>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-pinned">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M9 4v6l-2 4v2h10v-2l-2 -4v-6" />
+                  <path d="M12 16l0 5" />
+                  <path d="M8 4l8 0" />
+                </svg>
+                <span>Pin</span>
+              <% end %>
+            <% end %>
+
+            <%= link_to edit_topic_post_path(@topic, @post), 
+                class: "block px-4 py-3 hover:text-[#ababab] cursor-pointer flex items-center gap-2" do %>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-edit">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M8 7a1 1 0 0 1 -1 1h-1a1 1 0 0 0 -1 1v9a1 1 0 0 0 1 1h9a1 1 0 0 0 1 -1v-1a1 1 0 0 1 2 0v1a3 3 0 0 1 -3 3h-9a3 3 0 0 1 -3 -3v-9a3 3 0 0 1 3 -3h1a1 1 0 0 1 1 1" />
+                <path d="M14.596 5.011l4.392 4.392l-6.28 6.303a1 1 0 0 1 -.708 .294h-3a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 .294 -.708zm6.496 -2.103a3.097 3.097 0 0 1 .165 4.203l-.164 .18l-.693 .694l-4.387 -4.387l.695 -.69a3.1 3.1 0 0 1 4.384 0" />
+              </svg>
+              <span>Edit post</span>
+            <% end %>
+
+            <%= button_to [@topic, @post], method: :delete, 
+                class: "block w-full text-left px-4 py-3 text-sm hover:bg-red-900/20 text-red-400 flex items-center gap-2",
+                data: { turbo_confirm: "Are you sure?" } do %>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M4 7l16 0" />
+                <path d="M10 11l0 6" />
+                <path d="M14 11l0 6" />
+                <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+              </svg>
+              <span>Delete post</span>
+            <% end %>
           <% end %>
         </div>
-<script>
-        function toggleForm(button) {
-          const container = document.getElementById('comment_form_container');
-          if (container.style.display === 'none') {
-            container.style.display = 'block';
-          } else {
-            container.style.display = 'none';
+      </div>
+    <% end %>
+    <%# end %>
+  </div>
 
-          }
-        }
-        </script>
+  <div class="prose max-w-none text-l md:txt-base divide-y divide-[#2a2a2a]">
+    <%# Tags Display %>
+    <div class="flex flex-wrap items-center gap-3 pb-4 mb-5">
+      <%# strong class="text-lg font-bold whitespace-nowrap">Tags:</strong%>
+      <div class="flex flex-wrap items-center gap-1">
+        <% if @post.tags.any? %>
+          <% @post.tags.each do |tag| %>
+            <%= link_to tag.name, topic_posts_path(tag: tag.name),
+                class: "bg-[#de7200] text-white px-3 py-0.5 rounded-full text-sm hover:bg-[#df8322]" %>
+          <% end %>
+        <% else %>
+          <p class="text-gray-400">No tags yet</p>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="border-padding">
+      <div class="mr-1 text-sm text-gray-400 float-right flex gap-1">
+        <%# Post Metadata %>
+        <span><%= time_ago_in_words(post.created_at) %></span>
+        <% if post.updated_at.present? && post.updated_at > post.created_at + 1.minute %>
+          <div class="flex flex-wrap items-center gap-1">
+            <span>⁃ <%= time_ago_in_words(post.updated_at) %></span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-pencil">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M12.085 6.5l5.415 5.415l-8.793 8.792a1 1 0 0 1 -.707 .293h-4a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 .293 -.707zm5.406 -2.698a3.828 3.828 0 0 1 1.716 6.405l-.292 .293l-5.415 -5.415l.293 -.292a3.83 3.83 0 0 1 3.698 -.991" />
+            </svg>
+          </div>
+        <% end %>
+      </div>
+
+      <div>
+        <div class="flex items-start gap-2 mb-2">
+          <div class="flex-shrink-0">
+            <%= link_to render('avatar_pfp/mashit_avatar', user: @post.user), profile_path(post.user) %>
+          </div>
+          <div>
+            <div class="flex flex-wrap items-center gap-1">
+              <span class="font-medium"><%= link_to post.user.username, profile_path(post.user) %></span>
+              <% if user_has_badges?(post.user, "Developer") %>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-code-circle-2">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M17 3.34a10 10 0 1 1 -15 8.66l.005 -.324a10 10 0 0 1 14.995 -8.336m-3.658 5.22a1 1 0 0 0 -1.282 .598l-2 5.5a1 1 0 0 0 1.88 .684l2 -5.5a1 1 0 0 0 -.598 -1.282m-4.135 1.233a1 1 0 0 0 -1.414 0l-1.5 1.5a1 1 0 0 0 0 1.414l1.5 1.5a1 1 0 0 0 1.414 0l.083 -.094a1 1 0 0 0 -.083 -1.32l-.792 -.793l.792 -.793a1 1 0 0 0 0 -1.414m7 0a1 1 0 0 0 -1.414 0l-.083 .094a1 1 0 0 0 .083 1.32l.792 .793l-.792 .793a1 1 0 0 0 1.414 1.414l1.5 -1.5a1 1 0 0 0 0 -1.414z" />
+                </svg>
+              <% end %>
+              <% if user_has_badges?(post.user, "Admin") %>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-shield-checkered">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M11.013 12v9.754a13 13 0 0 1 -8.733 -9.754h8.734zm9.284 3.794a13 13 0 0 1 -7.283 5.951l-.001 -9.745h8.708a12.96 12.96 0 0 1 -1.424 3.794zm-9.283 -13.268l-.001 7.474h-8.986c-.068 -1.432 .101 -2.88 .514 -4.282a1 1 0 0 1 1.005 -.717a11 11 0 0 0 7.192 -2.256l.276 -.219zm1.999 7.474v-7.453l-.09 -.073a11 11 0 0 0 7.189 2.537l.342 -.01a1 1 0 0 1 1.005 .717c.413 1.403 .582 2.85 .514 4.282h-8.96z" />
+                </svg>
+              <% end %>
+            </div>
+
+            <div class="flex flex-row gap-1 flex-wrap">
+              <% if post.user.badges.any? %>
+                <% post.user.badges.each do |badge| %>
+                  <span class="text-sm font-bold text-[#de7220]"><%= badge.name %></span>
+                <% end %>
+              <% end %>
+            </div>
+
+            <div class="post-content mt-4 hidden sm:block">
+              <p class="text-gray-300">
+                <%= post.body %>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="post-content mt-4 block sm:hidden">
+          <p class="text-gray-300">
+            <%= post.body %>
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-5 flex items-center justify-end">
+        <% if user_signed_in? && (current_user.admin? || current_user == @post.user) %>
+          <%# 3 dots menu mobile %>
+          <button class="peer hover:text-[#ababab] rounded-full outline-none block sm:hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-three-dots text-[#808080]" viewBox="0 0 16 16">
+              <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+            </svg>
+          </button>
+
+          <div class="absolute right-30 bottom-44 text-sm mt-4 opacity-0 invisible peer-focus:opacity-100 peer-focus:visible transition-all duration-200 bg-[#1f1f1f] rounded-lg shadow-[0_20px_40px_-1px_rgba(0,0,0,0.3)] w-48 z-10">
+            <% if current_user&.admin? %>
+              <% if @post.pinned? %>
+                <%= button_to unpin_topic_post_path(@topic, @post), method: :patch, 
+                    class: "block w-full text-left px-4 py-2 text-sm text-white hover:text-[#ababab] rounded-lg flex items-center gap-2" do %>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-pin">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M15 4.5l-4 4l-4 1.5l-1.5 1.5l7 7l1.5 -1.5l1.5 -4l4 -4" />
+                    <path d="M9 15l-4.5 4.5" />
+                    <path d="M14.5 4l5.5 5.5" />
+                  </svg>
+                  <span>Unpin</span>
+                <% end %>
+              <% else %>
+                <%= button_to pin_topic_post_path(@topic, @post), method: :patch, 
+                    class: "block w-full text-left px-4 py-2 text-sm text-white hover:text-[#ababab] rounded-lg flex items-center gap-2" do %>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-pinned">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M9 4v6l-2 4v2h10v-2l-2 -4v-6" />
+                    <path d="M12 16l0 5" />
+                    <path d="M8 4l8 0" />
+                  </svg>
+                  <span>Pin</span>
+                <% end %>
+              <% end %>
+
+              <%= link_to edit_topic_post_path(@topic, @post), 
+                  class: "block px-4 py-4 hover:text-[#ababab] cursor-pointer flex items-center gap-2" do %>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-edit">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M8 7a1 1 0 0 1 -1 1h-1a1 1 0 0 0 -1 1v9a1 1 0 0 0 1 1h9a1 1 0 0 0 1 -1v-1a1 1 0 0 1 2 0v1a3 3 0 0 1 -3 3h-9a3 3 0 0 1 -3 -3v-9a3 3 0 0 1 3 -3h1a1 1 0 0 1 1 1" />
+                  <path d="M14.596 5.011l4.392 4.392l-6.28 6.303a1 1 0 0 1 -.708 .294h-3a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 .294 -.708zm6.496 -2.103a3.097 3.097 0 0 1 .165 4.203l-.164 .18l-.693 .694l-4.387 -4.387l.695 -.69a3.1 3.1 0 0 1 4.384 0" />
+                </svg>
+                <span>Edit post</span>
+              <% end %>
+
+              <%= button_to [@topic, @post], method: :delete, 
+                  class: "block w-full text-left px-4 py-2 text-sm hover:bg-red-900/20 text-red-400 flex items-center gap-2",
+                  data: { turbo_confirm: "Are you sure?" } do %>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M4 7l16 0" />
+                  <path d="M10 11l0 6" />
+                  <path d="M14 11l0 6" />
+                  <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                  <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                </svg>
+                <span>Delete post</span>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+        <%# end %>
+
+        <button id="comment_main_btn" 
+          <%= "disabled" if (@topic.locked? || post.locked?) && !@current_user.admin? %>
+          onclick="toggleForm(this)" 
+          class="flex items-center gap-1 p-2 hover:bg-[#2a2a2a] rounded-full group <%= 'cursor-not-allowed opacity-50' if "disabled" && !@current_user.admin? %>">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-reply-fill text-[#808080]" viewBox="0 0 16 16">
+            <path d="M5.921 11.9 1.353 8.62a.72.72 0 0 1 0-1.238L5.921 4.1A.716.716 0 0 1 7 4.719V6c1.5 0 6 0 7 8-2.5-4.5-7-4-7-4v1.281c0 .56-.606.898-1.079.62z"/>
+          </svg>
+          <span class="text-[#808080]">Reply</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="comment_form_container" style="display: none;">
+    <%= turbo_frame_tag "post_comment_form" do %>
+      <%= render "comments/form", topic: @topic, post: @post, comment: @comment, parent: nil %>
+    <% end %>
+  </div>
+</div>
+
+<script>
+  function toggleForm(button) {
+    const container = document.getElementById('comment_form_container');
+    if (container.style.display === 'none') {
+      container.style.display = 'block';
+    } else {
+      container.style.display = 'none';
+    }
+  }
+</script>
