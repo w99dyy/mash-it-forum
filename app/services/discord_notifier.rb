@@ -10,7 +10,7 @@ class DiscordNotifier
         content: "**New post on Mashit Forum**",
         embeds: [{
         title: post.title,
-        url: "#{ENV['APP_URL']}/topics/#{post.topic.slug}/posts/#{post.slug}",
+        url: "#{ENV['APP_URL']}/t/#{post.topic.slug}/p/#{post.slug}",
         author: {
           name: post.user.username
         },
@@ -18,7 +18,7 @@ class DiscordNotifier
         fields: [
           {
           name: "Topic:",
-          value: "[#{post.topic.title}](#{ENV['APP_URL']}/topics/#{post.topic.slug})"
+          value: "[#{post.topic.title}](#{ENV['APP_URL']}/t/#{post.topic.slug})"
         },
 
         {
