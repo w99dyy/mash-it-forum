@@ -14,7 +14,7 @@
    
 
     <%# Avatar and content %>
-    <div class="flex items-start gap-2 mb-2 mt-3 w-full">
+    <div class="flex items-start gap-2 mb-2 mt-3 ">
       <div class="flex-shrink-0">
         <%= link_to render('avatar_pfp/mashit_avatar', user: comment.user), profile_path(comment.user), data: { turbo: false } %>
       </div>
@@ -30,7 +30,7 @@
         <% end %> 
 
         <% if comment.pinned? %>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-pinned" style="color: green"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M16 3a1 1 0 0 1 .117 1.993l-.117 .007v4.764l1.894 3.789a1 1 0 0 1 .1 .331l.006 .116v2a1 1 0 0 1 -.883 .993l-.117 .007h-4v4a1 1 0 0 1 -1.993 .117l-.007 -.117v-4h-4a1 1 0 0 1 -.993 -.883l-.007 -.117v-2a1 1 0 0 1 .06 -.34l.046 -.107l1.894 -3.791v-4.762a1 1 0 0 1 -.117 -1.993l.117 -.007h8z" /></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-pinned" style="color: green"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M16 3a1 1 0 0 1 .117 1.993l-.117 .007v4.764l1.894 3.789a1 1 0 0 1 .1 .331l.006 .116v2a1 1 0 0 1 -.883 .993l-.117 .007h-4v4a1 1 0 0 1 -1.993 .117l-.007 -.117v-4h-4a1 1 0 0 1 -.993 -.883l-.007 -.117v-2a1 1 0 0 1 .06 -.34l.046 -.107l1.894 -3.791v-4.762a1 1 0 0 1 -.117 -1.993l.117 -.007h8z" /></svg>
         <% end %>
         
          <%# Timestamp %>
@@ -62,7 +62,7 @@
 
          <% if comment.user.badges.any? %>
           <% comment.user.badges.each do |badge| %>
-          <span class="text-sm font-bold text-[#de7220]"><%= badge.name %> </span>
+          <span class="text-sm font-bold <%= badge_color(badge) %>"><%= badge.name %> </span>
           <% end %>
           <% end %>
           </div>
@@ -156,9 +156,9 @@
       <% end %>
           <%# Reply button %>
       <button id="reply_button_<%= comment.id %>"
-      <%= "disabled" if (@topic.locked? || @post.locked?) && !@current_user.admin? %>
+      <%= "disabled" if (@topic.locked? || @post.locked?) && !@current_user&.admin? %>
             onclick="var form = document.getElementById('reply_form_container_<%= comment.id %>'); form.style.display = form.style.display === 'none' ? 'block' : 'none'"
-            class="<%= 'ml-auto' unless user_signed_in? && (current_user.admin? || current_user == comment.user) %> flex gap-1 p-2 hover:bg-[#2a2a2a] rounded-full group <%= 'cursor-not-allowed opacity-50' if "disabled" && !@current_user.admin? %>">
+            class="<%= 'ml-auto' unless user_signed_in? && (current_user.admin? || current_user == comment.user) %> flex gap-1 p-2 hover:bg-[#2a2a2a] rounded-full group <%= 'cursor-not-allowed opacity-50' if "disabled" && !@current_user&.admin? %>">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-reply-fill text-[#808080]" viewBox="0 0 16 16">
               <path d="M5.921 11.9 1.353 8.62a.72.72 0 0 1 0-1.238L5.921 4.1A.716.716 0 0 1 7 4.719V6c1.5 0 6 0 7 8-2.5-4.5-7-4-7-4v1.281c0 .56-.606.898-1.079.62z"/>
             </svg>

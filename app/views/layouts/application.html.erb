@@ -24,10 +24,10 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <header class="bg-[#161616] pl-4 ring shadow-xl ring-gray-900/5 border-b border-[#2a2a2a] flex items-center">
-   <%= link_to image_tag("logo.png", size: "70"), root_path, class: "inline-block" %>
-   <%= link_to "Mash-it.io", "https://mash-it.io/mashers", class: "pl-6" %>
-   <%= link_to "About", about_path, class: "pl-4" %>
+  <header class="bg-[#161616] h-15 md:max-h-18 ring shadow-xl ring-gray-900/5 border-b border-[#2a2a2a] flex items-center">
+   <%= link_to image_tag("logo.png"), root_path, class: "inline-block w-45 md:w-70" %>
+   <%= link_to "Mash-it.io", "https://mash-it.io/mashers" %>
+   <%= link_to "About", about_path, class: "hidden sm:block pl-4" %>
 
      <% if user_signed_in? %>
 <div data-controller="avatar-menu" class="dropdown relative inline-block ml-auto">
@@ -60,7 +60,7 @@
   </div>
 </div>
   <% else %>
-    <%= link_to "Sign in", sign_in_path, class: "bg-[#ed5024] hover:bg-[#e0603c] inline-block text-white font-medium mr-2 py-2 px-4 rounded-full shadow transition duration-200 ml-auto" %>
+    <%= link_to "Sign in", sign_in_path, class: "bg-[#ed5024] hover:bg-[#e0603c] inline-block text-white font-medium mr-2 py-1 px-3 rounded-full shadow transition duration-200 ml-auto" %>
   <% end %>
   </header>
 
