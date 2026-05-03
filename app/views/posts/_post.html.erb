@@ -1,6 +1,6 @@
 <div id="<%= dom_id post %>" >
   <div class="flex mx-auto">
-    <h2 class="text-2xl font-bold flex flex-wrap items-center gap-2 break-words overflow-hidden pb-2">
+    <h2 class="text-2xl font-bold flex flex-wrap items-center break-words overflow-hidden pb-2">
       <%= @post.title %>
       <% if post.pinned? %>
         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-pinned inline-block align-middle" style="color: green">
@@ -137,7 +137,9 @@
             <div class="flex flex-row gap-1 flex-wrap">
               <% if post.user.badges.any? %>
                 <% post.user.badges.each do |badge| %>
-                  <span class="text-sm font-bold text-[#de7220]"><%= badge.name %></span>
+                  <span class="text-sm font-bold <%= badge_color(badge) %>">
+                  <%= badge.name %>
+                  </span>
                 <% end %>
               <% end %>
             </div>
