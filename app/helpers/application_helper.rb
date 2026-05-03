@@ -4,4 +4,13 @@ module ApplicationHelper
 
         user.badges.any? { |badge| badge.name == badge_name }
     end
+
+    def badge_color(badge)
+        colors = {
+            "Developer" => "text-[#f7d969]",
+            "Admin" => "text-[#de7220]"
+        }
+        colors[badge.name] || "text-white"
+    end
+
 end
