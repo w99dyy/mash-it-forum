@@ -24,7 +24,7 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <header class="bg-[#161616] h-15 md:max-h-18 ring shadow-xl ring-gray-900/5 border-b border-[#2a2a2a] flex items-center">
+  <header class="bg-[#161616] h-15 md:max-h-18 ring shadow-lg ring-gray-900/5 border-b border-[#2a2a2a] flex items-center sticky top-0 z-30">
    <%= link_to image_tag("logo.png"), root_path, class: "inline-block w-45 md:w-70" %>
    <%= link_to "Mash-it.io", "https://mash-it.io/mashers" %>
    <%= link_to "About", about_path, class: "hidden sm:block pl-4" %>
@@ -36,25 +36,37 @@
     <%= render 'avatar_pfp/mashit_avatar_sm', user: current_user %>
   </button>
 
-  <div data-avatar-menu-target="menu" class="dropdown-menu hidden absolute right-0 mt-1 w-48 bg-[#161616] rounded-lg shadow-lg border border-[#2a2a2a] z-50">
-    <div class="p-3 border-b border-[#2a2a2a]">
+  <div data-avatar-menu-target="menu" class="dropdown-menu hidden absolute right-0 mt-3 w-48 bg-[#1f1f1f] rounded-lg shadow-lg">
+    <div class="p-4 flex flex-wrap items-center gap-2">
+        <%= render 'avatar_pfp/mashit_avatar_comments', user: current_user %>
       <p class="font-semibold text-sm text-white"><%= current_user.username %></p>
     </div>
-    <ul class="divide-y divide-[#2a2a2a]">
+    <ul>
       <li>
-        <%= link_to "View Profile", profile_path(current_user), class: "block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800" %>
+        <%= link_to profile_path(current_user), class: "block px-4 py-3 text-sm hover:text-[#ababab] flex flex-wrap items-center gap-2" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-user"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /></svg>          <span>View Profile</span>
+        <% end %>
       </li>
       <% if current_user&.admin? %>
         <li class="block sm:hidden">
-        <%= link_to "New topic", new_topic_path, class: "block px-4 py-2 text-gray-300 text-sm hover:bg-gray-800" %>
+        <%= link_to new_topic_path, class: "block px-4 py-3 text-sm hover:text-[#ababab] flex flex-wrap items-center gap-2" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-ballpen"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M14 6l7 7l-4 4" /><path d="M5.828 18.172a2.828 2.828 0 0 0 4 0l10.586 -10.586a2 2 0 0 0 0 -2.829l-1.171 -1.171a2 2 0 0 0 -2.829 0l-10.586 10.586a2.828 2.828 0 0 0 0 4" /><path d="M4 20l1.768 -1.768" /></svg>
+          <span>New topic</span>
+        <% end %>
         </li>
 
         <li>
-          <%= link_to "Admin Panel", avo_path, class: "block px-4 py-2 text-sm text-red-500 hover:bg-gray-800" %>
+          <%= link_to avo_path, class: "block px-4 py-3 text-sm text-red-500 flex flex-wrap items-center gap-2" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-shield-half"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M11.998 2l.032 .002l.086 .005a1 1 0 0 1 .342 .104l.105 .062l.097 .076l.016 .015l.247 .21a11 11 0 0 0 7.189 2.537l.342 -.01a1 1 0 0 1 1.005 .717a13 13 0 0 1 -9.208 16.25a1 1 0 0 1 -.502 0a13 13 0 0 1 -9.209 -16.25a1 1 0 0 1 1.005 -.717a11 11 0 0 0 7.791 -2.75l.046 -.036l.053 -.041a1 1 0 0 1 .217 -.112l.075 -.023l.036 -.01a1 1 0 0 1 .12 -.022l.086 -.005zm.002 2.296l-.176 .135a13 13 0 0 1 -7.288 2.572l-.264 .006l-.064 .31a11 11 0 0 0 1.064 7.175l.17 .314a11 11 0 0 0 6.49 5.136l.068 .019z" /></svg>
+          <span>Admin Panel</span>
+          <% end %>
         </li>
       <% end %>
       <li>
-        <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-gray-800" %>
+        <%= button_to destroy_user_session_path, method: :delete, class: "w-full text-left px-4 py-2 text-sm text-red-500 hover:text-red-600 mb-2 flex flex-wrap items-center gap-2" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-logout-2"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2" /><path d="M15 12h-12l3 -3" /><path d="M6 15l-3 -3" /></svg>
+        <span>Sign out</span>
+        <% end %>
       </li>
     </ul>
   </div>
@@ -66,13 +78,16 @@
 
     <%# pinned nav bar  %>
   <div data-controller="sidebar" class="flex flex-grow min-h-screen">
-    <nav data-sidebar-target="sidebar" class="md:flex w-64 flex-col hidden sticky top-6 h-full bg-[#1a1a1a] rounded-xl mt-6 shadow-lg">
+    <nav data-sidebar-target="sidebar" class="md:flex w-64 flex-col hidden sticky top-22 h-full bg-[#1a1a1a] rounded-xl mt-6 shadow-lg">
 
-    <div class="flex justify-end p-4 border-b border-[#2a2a2a]">
-      <svg data-action="click->sidebar#toggle" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-layout-sidebar-left-collapse text-gray-400 hover:text-white cursor-pointer transition-colors">
+    <div class="flex justify-between p-4 border-b border-[#2a2a2a]">
+        <span class="font-semibold text-sm">Menu</span>
+      <svg data-sidebar-target="collapseIcon" data-action="click->sidebar#toggle" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-layout-sidebar-left-collapse text-gray-400 hover:text-white cursor-pointer transition-colors">
         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
         <path d="M18 3a3 3 0 0 1 2.995 2.824l.005 .176v12a3 3 0 0 1 -2.824 2.995l-.176 .005h-12a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-12a3 3 0 0 1 2.824 -2.995l.176 -.005h12zm0 2h-9v14h9a1 1 0 0 0 .993 -.883l.007 -.117v-12a1 1 0 0 0 -.883 -.993l-.117 -.007zm-2.293 4.293a1 1 0 0 1 .083 1.32l-.083 .094l-1.292 1.293l1.292 1.293a1 1 0 0 1 .083 1.32l-.083 .094a1 1 0 0 1 -1.32 .083l-.094 -.083l-2 -2a1 1 0 0 1 -.083 -1.32l.083 -.094l2 -2a1 1 0 0 1 1.414 0z" />
       </svg>
+        <%# expand button %>
+          <svg data-sidebar-target="expandIcon" data-action="click->sidebar#toggle" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-layout-sidebar-right-collapse text-gray-400 hover:text-white cursor-pointer transition-colors hidden"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M18 3a3 3 0 0 1 2.995 2.824l.005 .176v12a3 3 0 0 1 -2.824 2.995l-.176 .005h-12a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-12a3 3 0 0 1 2.824 -2.995l.176 -.005h12zm-3 2h-9a1 1 0 0 0 -.993 .883l-.007 .117v12a1 1 0 0 0 .883 .993l.117 .007h9v-14zm-5.387 4.21l.094 .083l2 2a1 1 0 0 1 .083 1.32l-.083 .094l-2 2a1 1 0 0 1 -1.497 -1.32l.083 -.094l1.292 -1.293l-1.292 -1.293a1 1 0 0 1 -.083 -1.32l.083 -.094a1 1 0 0 1 1.32 -.083z" /></svg>
     </div>
         <ul class="space-y-1 p-3">
       <%# New topic %>
