@@ -60,7 +60,7 @@ class Post < ApplicationRecord
   end
 
   def topic_not_locked
-    errors.add(:base, "This topic is locked.") if topic.locked?
+    errors.add(:base, "This topic is locked.") if topic.locked? unless user.admin?
   end
 
   def has_tags
