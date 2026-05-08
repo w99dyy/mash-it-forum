@@ -11,7 +11,7 @@
     <%= turbo_frame_tag "reply_section_#{@comment.parent_id}" do %>
       <div class="pb-5 pt-5 border-b border-[#2a2a2a] flex justify-end items-center gap-2">
        <%# Three dots menu %>
-          <% if user_signed_in? && (current_user.admin? || current_user == comment.user) %>
+          <% if user_signed_in? && (current_user.admin? || current_user == @comment.user) %>
         <div class="relative ml-auto">
           <button class="peer hover:text-[#ababab] rounded-full outline-none p-2 hover:bg-[#2a2a2a] transition-colors">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-three-dots" style="color: gray" viewBox="0 0 16 16">
