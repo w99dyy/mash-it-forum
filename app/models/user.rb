@@ -16,6 +16,8 @@ class User < ApplicationRecord
   has_one :profile
   has_one_attached :avatar
 
+  has_many :notifications, as: :recipient, dependent: :destroy, class_name: "Noticed::Notification"
+
   extend FriendlyId
   friendly_id :username, use: :slugged
 
