@@ -19,6 +19,12 @@ class PostsController < ApplicationController
     @comments = all_comments.select { |c| c.parent_id.nil? }
     @replies = all_comments.group_by(&:parent_id)
     @comment = Comment.new
+
+    # when user click on notification and view post it mark as read
+    if params[:notification_id].present?
+      notification = current_user.notifications.find_by(id: params[:notification_id])
+      notification&.mark_as_read!
+    end
   end
 
   # GET /posts/new
