@@ -15,6 +15,7 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       if @comment.save
+        NewCommentNotifier.with(comment: @comment, post: @post).deliver(@post.user)
         format.turbo_stream
         format.html { redirect_to topic_post_url(@topic, @post), notice: "Comment was successfully created." }
       else
