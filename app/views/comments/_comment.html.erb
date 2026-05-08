@@ -42,7 +42,7 @@
             
             <div class="hidden md:flex items-center gap-1">
               <%= link_to render('avatar_pfp/mashit_avatar_comments', user: comment.parent.user), profile_path(comment.parent.user), data: { turbo: false }, class: "inline-block" %>
-              <%= link_to comment.parent.user.username, profile_path(comment.parent.user), data: { turbo: false }, class: "text-[#ed5024] text-sm hover:underline " %>
+              <%= link_to comment.parent.user.username, profile_path(comment.parent.user), data: { turbo: false }, class: "text-gray-400 text-sm hover:underline " %>
             </div>
           <% end %>
 
@@ -175,7 +175,7 @@
     </div>
 <% end %>
 
-<%# sub comments %>
+      <%# sub comments %>
       <div class="sub-comments" id="sub_comments_<%= comment.id %>">
         <% ((@replies || {})[comment.id] || []).each do |reply| %>
           <%= render partial: "comments/comment", locals: { comment: reply } %>
