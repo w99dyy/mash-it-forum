@@ -134,8 +134,8 @@ Avo.configure do |config|
        600 => "#ea580c"
      },
      chart_colors: ["#0B8AE2", "#34C683", "#2AB1EE", "#34C6A8"],
-     logo: "logo.png",
-     logomark: "logo.png",
+     logo: "mashit.png",
+     logomark: "mashit.png",
      placeholder: "/avo-assets/placeholder.svg",
      favicon: "favicon.ico"
    }
