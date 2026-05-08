@@ -46,6 +46,7 @@ Rails.application.routes.draw do
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
+  # Topic route
   resources :topics, path: "t", param: :slug do
     member do
       patch :pin
@@ -53,7 +54,8 @@ Rails.application.routes.draw do
       patch :lock
       patch :unlock
     end
-
+    
+    # Post route
     resources :posts, path: "p", param: :slug do
       member do
         patch :pin
@@ -68,15 +70,26 @@ Rails.application.routes.draw do
     end
   end
 
-  # tags
+  # Tags route
   get "/tagged", to: "posts#tagged", as: :tagged
 
-  # profiles
+  # Profile route
   resources :profiles, param: :username, path: "u"
 
+  # About page route
   get "/about", to: "pages#about"
 
+  # Wallet connection route
   post "/wallet/check_availability", to: "wallet#check_availability"
   post "/wallet/connect",            to: "wallet#connect"
   post "/wallet/disconnect",         to: "wallet#disconnect"
+
+  resources :notifications, only: [ :index, :show ] do
+    member do
+      patch :mark_as_read
+    end
+    collection do
+      patch :mark_all_as_read
+    end
+  end
 end
