@@ -1,0 +1,104 @@
+<div class="posts-page min-h-screen ml-0 md:ml-20 px-2 md:px-0 md:w-5/8">
+  <div class="mb-2 border-b border-[#2a2a2a] pb-5">
+    <div class="flex items-center">
+      <div>
+        <h1 class="text-2xl font-bold mb-2">Notifications</h1>
+      </div>
+        <% if current_user.notifications.unread.any? %>
+          <span class="ml-1 px-1.5 py-0.5 text-xs bg-[#ed5024] rounded-full">
+          <%= current_user.notifications.unread.count %>
+        </span>
+      <% end %>
+      <div class="ml-auto">
+      <% if @notifications.any? && @notifications.unread.any? %>
+        <%= button_to mark_all_as_read_notifications_path, method: :patch,
+          class: "font-bold text-sm hover:text-gray-300 transition" do %>
+          Mark all read
+        <% end %>
+      <% end %>
+      </div>
+    </div>
+  </div>
+
+  <%# Notifications List %>
+  <div class="">
+    <% if @notifications.empty? %>
+      <div class="text-center py-16">
+        <svg class="mx-auto h-16 w-16 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+        </svg>
+        <p class="mt-4 text-gray-400">No notifications yet</p>
+      </div>
+    <% else %>
+      <% @notifications.each do |notification| %>
+        <% post = notification.params[:post] %>
+        <% topic = post.topic if post %>
+        <%= link_to topic_post_path(topic, post, notification_id: notification.id), class: "block" do %>
+          <div class="mb-2 py-4 hover:bg-[#1a1a1a] transition-colors <%= 'bg-[#1a1a1a] hover:bg-[#2a2a2a]' unless notification.read? %>">
+            <div class="flex items-start">
+              <%# Avatar %>
+              <div class="flex-shrink-0">
+                  <%= render 'avatar_pfp/mashit_avatar_sm', user: notification&.actor %>
+              </div>
+              
+              <%# Content %>
+              <div class="flex-1 min-w-0">
+                <div class="text-sm">
+                  <span class="font-semibold">
+                    <%= notification.actor&.username || "Someone" %>
+                  </span>
+                  
+                  <% case notification.action %>
+                  <% when "reply" %>
+                    <span class="text-gray-400"> replied to your comment in</span>
+                    <span class="font-bold"><%= post.title %></span>
+                  <% when "post_comment" %>
+                    <span class="text-gray-400"> commented on your post in</span>
+                    <span class="font-bold"><%= truncate(post.title, length: 20) %></span>
+                  <% else %>
+                    <span class="text-gray-400"> interacted with your content</span>
+                  <% end %>
+                  
+                  <span class="text-xs text-gray-500">
+                    • <%= time_ago_in_words(notification.created_at) %>
+                  </span>
+                </div>
+                
+                <%# Comment Preview %>
+                <% if notification.comment.present? && notification.comment.body.present? %>
+                  <div class="mt-2 text-sm text-gray-400 px-3 py-2">
+                    <%= truncate(notification.comment.body.to_plain_text, length: 120) %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+      
+      <%# Pagination %>
+      <% if @notifications.respond_to?(:total_pages) && @notifications.total_pages > 1 %>
+        <div class="flex justify-between items-center py-4 mt-2">
+          <div class="text-sm text-gray-500">
+            Page <%= @notifications.current_page %> of <%= @notifications.total_pages %>
+          </div>
+          <div class="flex gap-2">
+            <% if @notifications.prev_page %>
+              <%= link_to notifications_path(page: @notifications.prev_page, filter: params[:filter]), 
+                          class: "px-3 py-1 text-sm border border-[#2a2a2a] rounded-md hover:bg-[#2a2a2a] transition" do %>
+                ← Previous
+              <% end %>
+            <% end %>
+            
+            <% if @notifications.next_page %>
+              <%= link_to notifications_path(page: @notifications.next_page, filter: params[:filter]), 
+                          class: "px-3 py-1 text-sm border border-[#2a2a2a] rounded-md hover:bg-[#2a2a2a] transition" do %>
+                Next →
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
