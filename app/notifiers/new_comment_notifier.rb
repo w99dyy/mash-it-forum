@@ -29,13 +29,10 @@ class NewCommentNotifier < ApplicationNotifier
   # end
 
   deliver_by :action_cable do |config|
-    config.message = ->(notification) { message }
+    config.message = ->(notification) { notification.message }
   end
 
   notification_methods do
-    def message
-      "#{params[:comment].user.username} commented on your post!"
-    end
     def actor
       params[:comment].user
     end
