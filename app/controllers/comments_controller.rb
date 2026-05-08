@@ -15,7 +15,18 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       if @comment.save
+      # New comment on post
+      if @comment.parent_id.nil? && @post.user != current_user
         NewCommentNotifier.with(comment: @comment, post: @post).deliver(@post.user)
+      end
+
+      # Reply to a comment
+      if @comment.parent_id.present?
+        parent_author = @comment.parent&.user
+        if parent_author && parent_author != current_user
+          NewReplyNotifier.with(comment: @comment, post: @post).deliver(parent_author)
+        end
+      end
         format.turbo_stream
         format.html { redirect_to topic_post_url(@topic, @post), notice: "Comment was successfully created." }
       else
