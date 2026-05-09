@@ -7,7 +7,7 @@ class CommentsController < ApplicationController
 
   def create
     if @post.locked? && !current_user.admin?
-      redirect_back fallback_location: [@topic, @post], alert: "This post is locked. You can't comment."
+      redirect_back fallback_location: [ @topic, @post ], alert: "This post is locked. You can't comment."
       return
     end
 
@@ -84,7 +84,7 @@ class CommentsController < ApplicationController
   end
 
   def check_topic_lock
-    if @topic.locked?
+    if @topic.locked? && !current_user.admin?
       redirect_back fallback_location: [ @topic, @post ], alert: "This topic is locked, you can't comment to this post"
     end
   end
