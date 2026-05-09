@@ -33,7 +33,7 @@
 <div class="flex items-center ml-auto mr-5">
   <div class="relative inline-block">
     <%= link_to notifications_path do %>
-    <span class="absolute -top-2 -right-2">
+    <span class="absolute -top-3 -right-2">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-bell text-gray-400 hover:text-gray-300 transition">
         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
         <path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
@@ -44,7 +44,7 @@
     
     <% if current_user.notifications.unread.any? %>
       <%= link_to notifications_path do %>
-        <span class="absolute -top-3 -right-3 flex items-center justify-center w-4 h-4 text-xs bg-[#ed5024] text-white rounded-full">
+        <span class="absolute -top-4 -right-3 flex items-center justify-center w-4 h-4 text-xs bg-[#ed5024] text-white rounded-full">
           <%= current_user.notifications.unread.count %>
         </span>
       <% end %>

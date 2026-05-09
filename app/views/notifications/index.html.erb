@@ -34,7 +34,7 @@
         <% post = notification.params[:post] %>
         <% topic = post.topic if post %>
         <%= link_to topic_post_path(topic, post, notification_id: notification.id), class: "block" do %>
-          <div class="mb-2 py-4 hover:bg-[#1a1a1a] transition-colors <%= 'bg-[#1a1a1a] hover:bg-[#2a2a2a]' unless notification.read? %>">
+          <div class="mb-2 py-4 hover:bg-[#1a1a1a] transition-colors <%= 'bg-[#2b2b2b] hover:bg-[#3a3a3a]' unless notification.read? %>">
             <div class="flex items-start">
               <%# Avatar %>
               <div class="flex-shrink-0">
