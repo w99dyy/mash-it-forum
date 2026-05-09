@@ -51,13 +51,13 @@
     <% end %>
   </div>
 </div>
-  <div data-controller="avatar-menu" class="dropdown relative inline-block">
+  <div data-controller="avatar-menu" class="dropdown relative">
     <button data-action="click->avatar-menu#toggle"
-            class="focus:outline-none flex items-center">
+            class="focus:outline-none flex items-center cursor-pointer">
       <%= render 'avatar_pfp/mashit_avatar_sm', user: current_user %>
     </button>
 
-  <div data-avatar-menu-target="menu" class="dropdown-menu hidden absolute right-0 mt-3 w-48 bg-[#1f1f1f] rounded-lg shadow-lg">
+  <div data-avatar-menu-target="menu" class="dropdown-menu hidden absolute right-2 mt-2 w-48 bg-[#1f1f1f] rounded-lg shadow-lg">
     <div class="p-4 flex flex-wrap items-center gap-2">
         <%= render 'avatar_pfp/mashit_avatar_comments', user: current_user %>
       <p class="font-semibold text-sm text-white"><%= current_user.username %></p>
