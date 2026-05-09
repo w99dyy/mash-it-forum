@@ -28,9 +28,9 @@ class NewCommentNotifier < ApplicationNotifier
   #   params[:record].thread.all_authors
   # end
 
-  deliver_by :action_cable do |config|
-    config.message = ->(notification) { notification.message }
-  end
+  # deliver_by :action_cable do |config|
+  #  config.message = ->(notification) { notification.message }
+  # end
 
   notification_methods do
     def actor
