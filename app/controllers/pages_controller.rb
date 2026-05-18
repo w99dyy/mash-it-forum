@@ -20,10 +20,10 @@ class PagesController < ApplicationController
 
       { name: "Potstar1", role: "Admin" },
 
-      { name: "Rylar", role: "Admin" },
+     # { name: "Rylar", role: "Admin" },
 
       { name: "Kappajoe", role: " Admin" }
-      
+
     ]
   end
 end
