@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-    static targets = ["sidebar", "collapseIcon", "expandIcon"]
+    static targets = ["sidebar", "hideSideBar"]
 
     connect() {
         const isCollapsed = localStorage.getItem("sidebarCollapsed") === "true"
@@ -11,7 +11,7 @@ export default class extends Controller {
     }
 
     toggle() {
-        const isCollapsed = this.sidebarTarget.classList.contains("w-16")
+        const isCollapsed = this.sidebarTarget.classList.contains("w-0")
         if (isCollapsed) {
             this.expand()
         } else {
@@ -20,40 +20,24 @@ export default class extends Controller {
     }
 
     collapse() {
-        this.sidebarTarget.classList.add("w-16")
+        this.sidebarTarget.classList.add("w-0")
         this.sidebarTarget.classList.remove("w-64")
         
         // Hide all text spans and badges
-        this.sidebarTarget.querySelectorAll("span").forEach(span => {
+        this.sidebarTarget.querySelectorAll("span, svg, a").forEach(span => {
             span.classList.add("hidden")
         })
-
-        // Center the header (remove justify-between, add justify-center)
-        const header = this.sidebarTarget.querySelector('.flex.justify-between')
-        if (header) {
-            header.classList.remove("justify-between")
-            header.classList.add("justify-center")
-        }
-        
-        // Center the links
-        this.sidebarTarget.querySelectorAll("li a").forEach(link => {
-            link.classList.add("justify-center", "px-0")
-            link.classList.remove("pl-2", "gap-3", "px-3")
-        })
-
-        // Swap icons: hide collapse, show expand
-        this.collapseIconTarget.classList.add("hidden")
-        this.expandIconTarget.classList.remove("hidden")
+        this.sidebarTarget.classList.add("collapsed")
         
         localStorage.setItem("sidebarCollapsed", "true")
     }
 
     expand() {
         this.sidebarTarget.classList.add("w-64")
-        this.sidebarTarget.classList.remove("w-16")
+        this.sidebarTarget.classList.remove("w-0")
         
         // Show all text spans and badges
-        this.sidebarTarget.querySelectorAll("span").forEach(span => {
+        this.sidebarTarget.querySelectorAll("span, svg, a").forEach(span => {
             span.classList.remove("hidden")
         })
         
@@ -69,11 +53,7 @@ export default class extends Controller {
             link.classList.remove("justify-center", "px-0")
             link.classList.add("pl-2", "gap-3", "px-3")
         })
-
-        // Swap icons: hide expand, show collapse
-        this.expandIconTarget.classList.add("hidden")
-        this.collapseIconTarget.classList.remove("hidden")
-        
+        this.sidebarTarget.classList.remove("collapsed")
         localStorage.setItem("sidebarCollapsed", "false")
     }
 }
