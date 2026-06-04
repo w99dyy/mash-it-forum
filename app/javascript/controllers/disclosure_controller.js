@@ -14,6 +14,7 @@ export default class extends Controller {
     toggle() {
     const isOpen = this.menuTarget.classList.toggle("hidden") === false
     this.chevronTarget.classList.toggle("rotate-180")
+
     localStorage.setItem("topicsMenuOpen", isOpen)
     }
 }
