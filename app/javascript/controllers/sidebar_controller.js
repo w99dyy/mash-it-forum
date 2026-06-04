@@ -4,28 +4,19 @@ export default class extends Controller {
     static targets = ["sidebar", "hideSideBar", "backdrop"]
 
     connect() {
-        const isMobile = window.innerWidth < 768
-        // sidebar default is closed on mobile
-        if(isMobile) {
-            this.sidebarTarget.classList.add("hidden")
-            this.sidebarTarget.classList.remove("md:flex")
-            localStorage.setItem("sidebarOpen", "false")
-        } else {
-            // Default on dekstop is opened
-            const isOpen = localStorage.getItem("sidebarOpen") !== "false"
-            if (isOpen) {
-                this.sidebarTarget.classList.remove("hidden")
-                this.sidebarTarget.classList.add("flex")
-            }
+        if (window.innerWidth < 768) {
+            this.sidebarTarget.classList.add("-translate-x-full")
+            return
         }
-        
-        
+
+        // desktop
         const isCollapsed = localStorage.getItem("sidebarCollapsed") === "true"
         if (isCollapsed) {
-            this.collapse()
+            this.sidebarTarget.classList.add("-translate-x-full")
+        } else {
+            this.sidebarTarget.classList.remove("-translate-x-full")
         }
     }
-
     toggle() {
         const isCollapsed = this.sidebarTarget.classList.contains("-translate-x-full")
         if (isCollapsed) {
@@ -35,32 +26,38 @@ export default class extends Controller {
         }
     }
 
-    collapse() {
+ collapse() {
+        // Animate out
         this.sidebarTarget.classList.add("-translate-x-full")
-        this.sidebarTarget.classList.add("hidden")
-        this.backdropTarget.classList.add("hidden")
-        // Hide all text spans and badges
-        this.sidebarTarget.querySelectorAll("span, svg, a").forEach(span => {
-            span.classList.add("hidden")
-        })
-        this.sidebarTarget.classList.add("collapsed")
         
+        // Remove width AFTER animation completes (300ms)
+        setTimeout(() => {
+            this.sidebarTarget.classList.add("w-0")
+            this.sidebarTarget.classList.remove("w-64")
+        }, 300)
+        
+        if (this.hasBackdropTarget) {
+            this.backdropTarget.classList.add("hidden")
+        }
+         
         localStorage.setItem("sidebarCollapsed", "true")
     }
 
     expand() {
+        // Restore width BEFORE animation starts
+        this.sidebarTarget.classList.add("w-64")
+        this.sidebarTarget.classList.remove("w-0")
+        
+        // Force reflow to ensure width is applied
+        void this.sidebarTarget.offsetWidth
+        
+        // Animate in
         this.sidebarTarget.classList.remove("-translate-x-full")
-        this.sidebarTarget.classList.remove("hidden")
 
-        if (window.innerWidth < 768) {
+        if (window.innerWidth < 768 && this.hasBackdropTarget) {
             this.backdropTarget.classList.remove("hidden")
         }
         
-        // Show all text spans and badges
-        this.sidebarTarget.querySelectorAll("span, svg, a").forEach(span => {
-            span.classList.remove("hidden")
-        })
-      
         localStorage.setItem("sidebarCollapsed", "false")
     }
 }
