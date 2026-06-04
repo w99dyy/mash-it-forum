@@ -13,4 +13,7 @@ module ApplicationHelper
         colors[badge.name] || "text-white"
     end
 
+    def pinned_topics
+        @cached_pinned_topics ||= Topic.where(pinned: true).includes(:posts, :taggings, :tags).limit(10)
+    end
 end

@@ -1,17 +1,24 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-    static targets = ["sidebar", "collapseIcon", "expandIcon"]
+    static targets = ["sidebar", "hideSideBar", "backdrop"]
 
     connect() {
+        if (window.innerWidth < 768) {
+            this.sidebarTarget.classList.add("-translate-x-full")
+            return
+        }
+
+        // desktop
         const isCollapsed = localStorage.getItem("sidebarCollapsed") === "true"
         if (isCollapsed) {
-            this.collapse()
+            this.sidebarTarget.classList.add("-translate-x-full")
+        } else {
+            this.sidebarTarget.classList.remove("-translate-x-full")
         }
     }
-
     toggle() {
-        const isCollapsed = this.sidebarTarget.classList.contains("w-16")
+        const isCollapsed = this.sidebarTarget.classList.contains("-translate-x-full")
         if (isCollapsed) {
             this.expand()
         } else {
@@ -19,60 +26,37 @@ export default class extends Controller {
         }
     }
 
-    collapse() {
-        this.sidebarTarget.classList.add("w-16")
-        this.sidebarTarget.classList.remove("w-64")
+ collapse() {
+        // Animate out
+        this.sidebarTarget.classList.add("-translate-x-full")
         
-        // Hide all text spans and badges
-        this.sidebarTarget.querySelectorAll("span").forEach(span => {
-            span.classList.add("hidden")
-        })
-
-        // Center the header (remove justify-between, add justify-center)
-        const header = this.sidebarTarget.querySelector('.flex.justify-between')
-        if (header) {
-            header.classList.remove("justify-between")
-            header.classList.add("justify-center")
+        // Remove width AFTER animation completes (300ms)
+        setTimeout(() => {
+            this.sidebarTarget.classList.add("w-0")
+            this.sidebarTarget.classList.remove("w-64")
+        }, 300)
+        
+        if (this.hasBackdropTarget) {
+            this.backdropTarget.classList.add("hidden")
         }
-        
-        // Center the links
-        this.sidebarTarget.querySelectorAll("li a").forEach(link => {
-            link.classList.add("justify-center", "px-0")
-            link.classList.remove("pl-2", "gap-3", "px-3")
-        })
-
-        // Swap icons: hide collapse, show expand
-        this.collapseIconTarget.classList.add("hidden")
-        this.expandIconTarget.classList.remove("hidden")
-        
+         
         localStorage.setItem("sidebarCollapsed", "true")
     }
 
     expand() {
+        // Restore width BEFORE animation starts
         this.sidebarTarget.classList.add("w-64")
-        this.sidebarTarget.classList.remove("w-16")
+        this.sidebarTarget.classList.remove("w-0")
         
-        // Show all text spans and badges
-        this.sidebarTarget.querySelectorAll("span").forEach(span => {
-            span.classList.remove("hidden")
-        })
+        // Force reflow to ensure width is applied
+        void this.sidebarTarget.offsetWidth
         
-        // Reset header (add justify-between back)
-        const header = this.sidebarTarget.querySelector('.flex.justify-center')
-        if (header) {
-            header.classList.remove("justify-center")
-            header.classList.add("justify-between")
-        }
-        
-        // Reset links
-        this.sidebarTarget.querySelectorAll("li a").forEach(link => {
-            link.classList.remove("justify-center", "px-0")
-            link.classList.add("pl-2", "gap-3", "px-3")
-        })
+        // Animate in
+        this.sidebarTarget.classList.remove("-translate-x-full")
 
-        // Swap icons: hide expand, show collapse
-        this.expandIconTarget.classList.add("hidden")
-        this.collapseIconTarget.classList.remove("hidden")
+        if (window.innerWidth < 768 && this.hasBackdropTarget) {
+            this.backdropTarget.classList.remove("hidden")
+        }
         
         localStorage.setItem("sidebarCollapsed", "false")
     }
