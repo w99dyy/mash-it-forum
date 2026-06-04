@@ -45,9 +45,6 @@ gem "resend"
 # admin dashboard
 gem "avo"
 
-# dashboard
-gem "chartkick"
-
 # Friendly URL
 gem 'friendly_id', '~> 5.5.0'
 
