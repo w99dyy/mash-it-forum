@@ -1,9 +1,25 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-    static targets = ["sidebar", "hideSideBar"]
+    static targets = ["sidebar", "hideSideBar", "backdrop"]
 
     connect() {
+        const isMobile = window.innerWidth < 768
+        // sidebar default is closed on mobile
+        if(isMobile) {
+            this.sidebarTarget.classList.add("hidden")
+            this.sidebarTarget.classList.remove("md:flex")
+            localStorage.setItem("sidebarOpen", "false")
+        } else {
+            // Default on dekstop is opened
+            const isOpen = localStorage.getItem("sidebarOpen") !== "false"
+            if (isOpen) {
+                this.sidebarTarget.classList.remove("hidden")
+                this.sidebarTarget.classList.add("flex")
+            }
+        }
+        
+        
         const isCollapsed = localStorage.getItem("sidebarCollapsed") === "true"
         if (isCollapsed) {
             this.collapse()
@@ -11,7 +27,7 @@ export default class extends Controller {
     }
 
     toggle() {
-        const isCollapsed = this.sidebarTarget.classList.contains("w-0")
+        const isCollapsed = this.sidebarTarget.classList.contains("-translate-x-full")
         if (isCollapsed) {
             this.expand()
         } else {
@@ -20,9 +36,9 @@ export default class extends Controller {
     }
 
     collapse() {
-        this.sidebarTarget.classList.add("w-0")
-        this.sidebarTarget.classList.remove("w-64")
-        
+        this.sidebarTarget.classList.add("-translate-x-full")
+        this.sidebarTarget.classList.add("hidden")
+        this.backdropTarget.classList.add("hidden")
         // Hide all text spans and badges
         this.sidebarTarget.querySelectorAll("span, svg, a").forEach(span => {
             span.classList.add("hidden")
@@ -33,27 +49,18 @@ export default class extends Controller {
     }
 
     expand() {
-        this.sidebarTarget.classList.add("w-64")
-        this.sidebarTarget.classList.remove("w-0")
+        this.sidebarTarget.classList.remove("-translate-x-full")
+        this.sidebarTarget.classList.remove("hidden")
+
+        if (window.innerWidth < 768) {
+            this.backdropTarget.classList.remove("hidden")
+        }
         
         // Show all text spans and badges
         this.sidebarTarget.querySelectorAll("span, svg, a").forEach(span => {
             span.classList.remove("hidden")
         })
-        
-        // Reset header (add justify-between back)
-        const header = this.sidebarTarget.querySelector('.flex.justify-center')
-        if (header) {
-            header.classList.remove("justify-center")
-            header.classList.add("justify-between")
-        }
-        
-        // Reset links
-        this.sidebarTarget.querySelectorAll("li a").forEach(link => {
-            link.classList.remove("justify-center", "px-0")
-            link.classList.add("pl-2", "gap-3", "px-3")
-        })
-        this.sidebarTarget.classList.remove("collapsed")
+      
         localStorage.setItem("sidebarCollapsed", "false")
     }
 }
