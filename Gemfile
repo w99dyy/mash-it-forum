@@ -19,6 +19,9 @@ gem "tailwindcss-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
+# Caching
+gem "redis"
+
 # for threaded(nested) comments
 gem "closure_tree"
 
