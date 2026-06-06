@@ -47,9 +47,6 @@ Rails.application.configure do
 
   # Replace the default in-process memory cache store with a durable alternative.
   config.cache_store = :redis_cache_store, { url: ENV["REDIS_URL"] }
-  
-  # Disabling solid_cache in production since I'll be using Redis(upstash)
-  config.solid_cache.connects_to = nil
 
   # Replace the default in-process and non-durable queuing backend for Active Job.
   config.active_job.queue_adapter = :solid_queue
