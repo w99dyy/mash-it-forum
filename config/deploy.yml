@@ -5,7 +5,7 @@ service: forum
 # drain_timeout: 30
 
 # Name of the container image (use your-user/app-name on external registries).
-image: ghcr.io/w99dyy/mash_it
+image: w99dyy/mash_it
 
 # Deploy to these servers.
 servers:
@@ -59,6 +59,7 @@ env:
     - RESEND_API_KEY
     - APP_URL
     - DISCORD_WEBHOOK_URL
+    - REDIS_URL
   clear:
     # Run the Solid Queue Supervisor inside the web server's Puma process to do jobs.
     # When you start using multiple servers, you should split out job processing to a dedicated machine.
