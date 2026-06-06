@@ -53,6 +53,7 @@ env:
   secret:
     - RAILS_MASTER_KEY
     - DATABASE_URL
+    - QUEUE_DATABASE_URL
     - RESEND_API_KEY
     - APP_URL
     - DISCORD_WEBHOOK_URL
