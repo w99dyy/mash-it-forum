@@ -7,7 +7,7 @@ class TopicsController < ApplicationController
         @topics = if params[:tag].present?
         Topic.by_tag(params[:tag]).pinned_first
         else
-       @topics = Topic.includes(:posts, :taggings, :tags).pinned_first
+       @topics = Topic.includes(:posts, :taggings, :tags).page(params[:page]).per(10).pinned_first
         end
     end
 
