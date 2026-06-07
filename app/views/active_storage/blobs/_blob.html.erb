@@ -1,20 +1,10 @@
 <figure class="attachment attachment--<%= blob.representable? ? "preview" : "file" %> attachment--<%= blob.filename.extension %>">
   <% if blob.representable? %>
-    <% if local_assigns[:in_gallery] %>
-      <%= cl_image_tag blob.key,
-            transformation: [
-              { width: 800, height: 600, crop: :limit },
-              { format: :webp, quality: 85 }
-            ],
-            loading: "lazy" %>
-    <% else %>
-      <%= cl_image_tag blob.key,
-            transformation: [
-              { width: 1024, height: 768, crop: :limit },
-              { format: :webp, quality: 85 }
-            ],
-            loading: "lazy" %>
-    <% end %>
+  <%= cl_image_tag blob.key, 
+      transformation: [
+        { width: 1024, height: 768, crop: :limit },
+        { quality: 85, format: :webp }
+      ] %>
   <% end %>
 
   <figcaption class="attachment__caption">
