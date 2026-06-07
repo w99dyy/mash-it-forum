@@ -6,4 +6,5 @@ pin "@hotwired/stimulus", to: "stimulus.min.js"
 pin "@hotwired/stimulus-loading", to: "stimulus-loading.js"
 pin_all_from "app/javascript/controllers", under: "controllers"
 pin "trix" # @2.1.18
+pin "@rails/activestorage", to: "activestorage.esm.js"
 pin "@rails/actiontext", to: "@rails--actiontext.js" # @8.1.300
