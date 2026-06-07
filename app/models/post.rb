@@ -6,7 +6,7 @@ class Post < ApplicationRecord
     has_many :comments, dependent: :destroy
     has_rich_text :body   
     has_many_attached :images do |attachable|
-      attachable.variant :optimized, convert: :webp, saver: { quality: 85 }
+      attachable.variant :optimized, convert: :webp, saver: { quality: 85 }, preprocessed: true
     end
     acts_as_taggable_on :tags
     has_one_attached :avatar
