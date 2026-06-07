@@ -12,9 +12,11 @@ export default class extends Controller {
         // desktop
         const isCollapsed = localStorage.getItem("sidebarCollapsed") === "true"
         if (isCollapsed) {
-            this.sidebarTarget.classList.add("-translate-x-full")
+            this.sidebarTarget.classList.add("-translate-x-full", "w-0")
+            this.sidebarTarget.classList.remove("w-64")
         } else {
-            this.sidebarTarget.classList.remove("-translate-x-full")
+            this.sidebarTarget.classList.remove("-translate-x-full", "w-0")
+            this.sidebarTarget.classList.add("w-64")
         }
     }
     toggle() {
