@@ -6,7 +6,7 @@ class Post < ApplicationRecord
     has_many :comments, dependent: :destroy
     has_rich_text :body   
     has_many_attached :images do |attachable|
-      attachable.variant :optimized, convert: :webp, saver: { quality: 85 }, preprocessed: true
+      attachable.variant :optimized, convert: :webp, saver: { quality: 85 }
     end
     acts_as_taggable_on :tags
     has_one_attached :avatar
@@ -36,6 +36,19 @@ class Post < ApplicationRecord
   validate :tags_must_exist
 
   validate :topic_not_locked, on: :create
+
+  validate :acceptable_images
+
+  def acceptable_images
+    images.each do |image|
+    unless image.content_type.in?(%w[image/jpeg image/png image/webp])
+      errors.add(:images, "must be JPEG, PNG or WebP")
+    end
+      if image.byte_size > 3.megabytes
+        errors.add(:images, "must be less than 5MB each")
+      end
+    end
+  end
 
   def tags_must_exist
     tag_list.each do |tag_name|
