@@ -22,8 +22,9 @@ gem "jbuilder"
 # Caching
 gem "redis"
 
-# for threaded(nested) comments
-gem "closure_tree"
+# Cloud storage for images
+gem "cloudinary"
+gem "activestorage-cloudinary-service"
 
 # Authentication
 gem "devise", "~> 5.0"

@@ -61,6 +61,9 @@ Rails.application.configure do
   config.action_mailer.resend_settings = {
     api_key: ENV["RESEND_API_KEY"]
   }
+  
+  # Set cloud storage to cloudinary service to host images
+  config.active_storage.service = :cloudinary
 
   # Enable locale fallbacks for I18n.
   config.i18n.fallbacks = true
