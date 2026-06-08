@@ -5,7 +5,13 @@ class DiscordNotifier
 
       require "net/http"
       require "uri"
-
+      
+      # Fetch image first from Cloudinary
+      image_url = nil
+      if post.body.embeds.any?
+        image_url = Cloudinary::Utils.cloudinary_url(post.body.embeds.first.key)
+      end
+          
         message = {
         content: "**New post on Mashit Forum**",
         embeds: [{
@@ -23,9 +29,11 @@ class DiscordNotifier
 
         {
           name: "Content:",
-          value: post.body.to_plain_text.truncate(100)
+          # Added gsub to remove file name if there is attachments
+          value: post.body.to_plain_text.gsub(/\[.*?\.(gif|jpg|jpeg|png)\]/i, '').truncate(100)
         }
       ],
+      
       footer: {
         text: "Mash-it project.",
         url: "https://mash-it.io/mashers"
@@ -34,6 +42,10 @@ class DiscordNotifier
 
         }]
 }
+      # Add Image to embed if it exists
+      if image_url
+        message[:embeds][0][:image] = { url: image_url }
+      end
 
       uri = URI.parse(webhook_url)
       http = Net::HTTP.new(uri.host, uri.port)
