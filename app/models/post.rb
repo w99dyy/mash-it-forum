@@ -5,9 +5,7 @@ class Post < ApplicationRecord
     belongs_to :user
     has_many :comments, dependent: :destroy
     has_rich_text :body   
-    has_many_attached :images do |attachable|
-      attachable.variant :optimized, convert: :webp, saver: { quality: 85 }
-    end
+    has_many_attached :images
     acts_as_taggable_on :tags
     has_one_attached :avatar
     has_one_attached :cover_image
