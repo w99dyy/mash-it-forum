@@ -42,8 +42,8 @@ class Post < ApplicationRecord
     unless image.content_type.in?(%w[image/jpeg image/png image/gif image/webp])
       errors.add(:images, "must be JPEG, GIF, PNG or WebP")
     end
-      if image.byte_size > 15.megabytes
-        errors.add(:images, "must be less than 15MB each")
+      if image.byte_size > 10.megabytes
+        errors.add(:images, "must be less than 10MB each")
       end
     end
   end
