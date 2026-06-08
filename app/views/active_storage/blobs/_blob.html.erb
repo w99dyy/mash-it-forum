@@ -1,10 +1,10 @@
 <figure class="attachment attachment--<%= blob.representable? ? "preview" : "file" %> attachment--<%= blob.filename.extension %>">
   <% if blob.representable? %>
-  <%= cl_image_tag blob.key, 
-      transformation: [
-        { width: 1024, height: 768, crop: :limit },
-        { quality: 85, format: :webp }
-      ] %>
+      <%= cl_image_tag blob.key, 
+          transformation: [
+            { width: 1024, height: 768, crop: :limit },
+            { quality: 85, fetch_format: :webp }
+          ] %>
   <% end %>
 
   <figcaption class="attachment__caption">
