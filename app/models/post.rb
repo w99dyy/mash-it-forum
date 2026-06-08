@@ -5,7 +5,7 @@ class Post < ApplicationRecord
     belongs_to :user
     has_many :comments, dependent: :destroy
     has_rich_text :body   
-    has_many_attached :images
+    has_many_attached :images, dependent: :perge_later
     acts_as_taggable_on :tags
     has_one_attached :avatar
     has_one_attached :cover_image
@@ -39,11 +39,11 @@ class Post < ApplicationRecord
 
   def acceptable_images
     images.each do |image|
-    unless image.content_type.in?(%w[image/jpeg image/png image/webp])
-      errors.add(:images, "must be JPEG, PNG or WebP")
+    unless image.content_type.in?(%w[image/jpeg image/png image/gif image/webp])
+      errors.add(:images, "must be JPEG, GIF, PNG or WebP")
     end
-      if image.byte_size > 3.megabytes
-        errors.add(:images, "must be less than 5MB each")
+      if image.byte_size > 15.megabytes
+        errors.add(:images, "must be less than 15MB each")
       end
     end
   end
