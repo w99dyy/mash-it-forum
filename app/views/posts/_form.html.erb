@@ -19,11 +19,11 @@
       placeholder: "Enter a title for your post" %>
   </div>
 
-  <%# Tags field %>
+    <%# Tags field %>
     <div class="field mb-4" data-controller="modal">
       <button type="button"
         data-action="click->modal#open"
-        class="flex items-center gap-2 bg-[#2a2a2a] hover:bg-[#3a3a3a] px-3 py-0.5 rounded-full text-sm text-gray-300 transition">
+        class="flex items-center gap-2 bg-[#2a2a2a] hover:bg-[#3a3a3a] mb-3 px-3 py-0.5 rounded-full text-sm text-gray-300 transition">
         Tags
       </button>
 
@@ -31,34 +31,38 @@
            data-action="click->modal#close"
            class="hidden fixed inset-0 bg-black/60 z-40">
       </div>
-
       <div data-modal-target="modal"
-      class="hidden fixed z-50 bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-5 shadow-xl overflow-y-auto
-       bottom-0 left-0 right-0 max-h-[70vh] rounded-b-none
-       md:bottom-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:w-96 md:max-h-[600px] md:rounded-xl">
+           class="hidden fixed z-50 bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-5 shadow-xl
+                  bottom-0 left-0 right-0 rounded-b-none
+                  md:bottom-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:w-96 md:rounded-xl">
+
         <div class="flex items-center justify-between mb-4">
           <h3 class="text-white font-semibold">Select a tag</h3>
           <button type="button" data-action="click->modal#close" class="px-2 py-0.5 rounded-full bg-[#2a2a2a] hover:bg-[#3a3a3a] text-gray-400 hover:text-white">✕</button>
         </div>
-        <div class="flex flex-wrap gap-2">
-          <% @available_tags.each do |tag| %>
-            <label class="flex items-center cursor-pointer">
-              <%= check_box_tag "post[tag_list][]",
-                tag.name,
-                post.tag_list.include?(tag.name),
-                id: "tag_#{tag.id}",
-                class: "hidden peer" %>
-              <span class="bg-[#2a2a2a] text-gray-400 peer-checked:bg-[#de7200] peer-checked:text-white px-3 py-1 rounded-full text-sm font-medium cursor-pointer transition-all select-none hover:bg-[#3a3a3a]">
-                <%= tag.name %>
-              </span>
-            </label>
-          <% end %>
+
+        <div class="overflow-y-auto max-h-[300px] md:max-h-[400px]">
+          <div class="flex flex-wrap gap-2">
+            <% @available_tags.each do |tag| %>
+              <label class="flex items-center cursor-pointer">
+                <%= check_box_tag "post[tag_list][]",
+                  tag.name,
+                  post.tag_list.include?(tag.name),
+                  id: "tag_#{tag.id}",
+                  class: "hidden peer" %>
+                <span class="bg-[#2a2a2a] text-gray-400 peer-checked:bg-[#de7200] peer-checked:text-white px-3 py-1 rounded-full text-sm font-medium cursor-pointer transition-all select-none hover:bg-[#3a3a3a]">
+                  <%= tag.name %>
+                </span>
+              </label>
+            <% end %>
+          </div>
         </div>
-        <button type="button" data-action="click->modal#close" class="mt-4 w-full bg-[#de7200] hover:bg-[#c56500] text-white py-2 rounded-lg text-sm font-medium transition">
-          Done
-        </button>
-      </div>
+
+      <button type="button" data-action="click->modal#close" class="mt-4 w-full bg-[#de7200] hover:bg-[#c56500] text-white py-2 rounded-lg text-sm font-medium transition">
+        Done
+      </button>
     </div>
+
   <div class="field mb-4">
     <%= form.rich_text_area :body,
       placeholder: "Write your post content here... You can use markdown for formatting." %>
