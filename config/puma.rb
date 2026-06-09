@@ -42,4 +42,4 @@ plugin :solid_queue if ENV["SOLID_QUEUE_IN_PUMA"]
 pidfile ENV["PIDFILE"] if ENV["PIDFILE"]
 
 #increase worket timeout for cloudinary timeout uploads
-worker_timeout 120
+worker_timeout 300
