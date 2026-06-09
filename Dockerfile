@@ -51,6 +51,8 @@ RUN bundle exec bootsnap precompile -j 1 app/ lib/
 # Precompiling assets - Using 'bundle exec rails' is more reliable than './bin/rails'
 RUN SECRET_KEY_BASE_DUMMY=1 bundle exec rails assets:precompile
 
+RUN touch /rails/public/406-unsupported-browser.html
+
 # --- Final Stage ---
 FROM base
 
