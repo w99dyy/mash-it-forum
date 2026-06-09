@@ -18,11 +18,13 @@ class TopicsController < ApplicationController
 
     def new
         @topic = Topic.new
+        @available_tags = ActsAsTaggableOn::Tag.all.order(:name)
     end
 
     def create
         @topic = Topic.new(topic_params)
         @topic.user = current_user
+        @available_tags = ActsAsTaggableOn::Tag.all.order(:name)
         respond_to do |format|
             if @topic.save
                 format.html { redirect_to topic_posts_path(@topic), notice: "Topic created!" }
