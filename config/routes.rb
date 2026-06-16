@@ -60,6 +60,7 @@ Rails.application.routes.draw do
       member do
         patch :pin
         patch :unpin
+        post :upvote # Upvotes only for contests
       end
         resources :comments, only: [ :create, :edit, :update, :destroy ] do
         member do
@@ -92,4 +93,6 @@ Rails.application.routes.draw do
       patch :mark_all_as_read
     end
   end
+
+  resources :mentions, only: [:index]
 end
