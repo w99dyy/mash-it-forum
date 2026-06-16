@@ -26,5 +26,7 @@ module MashIt
 
     # Use the routes to handle exceptions
     config.exceptions_app = routes
+
+    Rails.application.config.active_storage.analyzers = []
   end
 end
