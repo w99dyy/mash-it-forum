@@ -12,16 +12,6 @@ Rails.application.routes.draw do
     }
 
   get "pages/about"
-  namespace :admin do
-    root to: "dashboard#index"
-    resources :posts, only: [ :index, :destroy ]
-    resources :users, only: [ :index ] do
-      member do
-        patch :promote
-        patch :demote
-      end
-    end
-  end
 
   devise_for :users, controllers: {
     confirmations: "users/confirmation",
