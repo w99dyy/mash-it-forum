@@ -1,0 +1,55 @@
+<div class="min-h-screen px-2 mb-10">
+  <div class="flex justify-between border-b border-[#2a2a2a] mb-7">
+  <span class="text-2xl font-bold mb-4"> <%= @topic.title %> </span>
+
+    <div class="hidden sm:block gap-3">
+      <%= link_to new_topic_post_path(@topic), class: "rounded-md px-3 py-1 bg-[#ed5024] hover:bg-[#e0603c] font-medium flex items-center gap-1" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-plus">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M12 5l0 14" />
+          <path d="M5 12l14 0" />
+        </svg>
+        <span>Submit Mashi</span>
+      <% end %>
+    </div>
+  </div>
+  
+  <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+    <% posts.each do |post| %>
+      <% first_image = post.body.embeds.first %>
+      <% if first_image %>
+        <div class="bg-[#2a2a2a] h-full pb-2 rounded-lg overflow-hidden">
+        <% if current_user.admin? %>
+          <%= link_to topic_post_path(post.topic, post) do %>
+            <div class="overflow-hidden hover:opacity-90 transition">
+              <%= image_tag rails_blob_path(first_image, only_path: true),
+                  class: "object-cover" %>
+            </div>
+          <% end %>
+        <% else %>
+            <div class="overflow-hidden hover:opacity-90 transition">
+              <%= image_tag rails_blob_path(first_image, only_path: true),
+                  class: "object-cover" %>
+            </div>
+        <% end %>
+          
+          <div class="flex justify-between items-center gap-1 px-3 mt-2">
+            <span class="truncate font-medium text-sm text-white"><%= post.title %></span>
+            
+            <div class="flex items-center gap-1 flex-shrink-0">
+              <%= button_to upvote_topic_post_path(post.topic, post), 
+                  method: :post, 
+                  class: "p-1 hover:opacity-80 transition flex items-center" do %>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-heart text-red-500">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M6.979 3.074a6 6 0 0 1 4.988 1.425l.037 .033l.034 -.03a6 6 0 0 1 4.733 -1.44l.246 .036a6 6 0 0 1 3.364 10.008l-.18 .185l-.048 .041l-7.45 7.379a1 1 0 0 1 -1.313 .082l-.094 -.082l-7.493 -7.422a6 6 0 0 1 3.176 -10.215z" />
+                </svg>
+              <% end %>
+              <span class="text-sm text-gray-300"><%= post.get_upvotes.size %></span>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
