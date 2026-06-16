@@ -17,5 +17,7 @@ class Avo::Resources::Topic < Avo::BaseResource
     field :user, as: :belongs_to
     field :posts, as: :has_many
     field :tag_list, as: :tags
+    field :layout, as: :select,
+      options: { "Default" => "default", "Gallery" => "gallery" }
   end
 end
