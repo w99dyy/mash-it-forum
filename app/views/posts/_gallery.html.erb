@@ -19,7 +19,7 @@
       <% first_image = post.body.embeds.first %>
       <% if first_image %>
         <div class="bg-[#2a2a2a] h-full pb-2 rounded-lg overflow-hidden">
-        <% if current_user.admin? %>
+        <% if current_user&.admin? %>
           <%= link_to topic_post_path(post.topic, post) do %>
             <div class="overflow-hidden hover:opacity-90 transition">
               <%= image_tag rails_blob_path(first_image, only_path: true),
