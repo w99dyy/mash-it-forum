@@ -7,8 +7,8 @@ class Post < ApplicationRecord
     has_rich_text :body   
     has_many_attached :images, dependent: :perge_later
     acts_as_taggable_on :tags
+    acts_as_votable
     has_one_attached :avatar
-    has_one_attached :cover_image
 
     extend FriendlyId
     friendly_id :title, use: [:slugged, :finders]

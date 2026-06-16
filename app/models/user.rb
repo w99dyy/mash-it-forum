@@ -2,7 +2,9 @@ class User < ApplicationRecord
   include Merit
   has_merit
   after_save :grant_admin_badge, if: :saved_change_to_admin?
-
+  
+  # Attachable for mentions
+  include ActionText::Attachable
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
 
@@ -15,7 +17,7 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_one :profile
   has_one_attached :avatar
-
+  acts_as_voter
   has_many :notifications, as: :recipient, dependent: :destroy, class_name: "Noticed::Notification"
 
   extend FriendlyId
@@ -40,6 +42,14 @@ class User < ApplicationRecord
       mashit_avatar_url.is_a?(Array) ? mashit_avatar_url : JSON.parse(mashit_avatar_url)
       rescue JSON::ParserError
       []
+    end
+
+    def to_partial_path
+      "users/user"
+    end
+
+    def to_trix_content_attachment_partial_path
+      "users/trix_content_attachment"
     end
 
     private

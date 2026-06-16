@@ -81,6 +81,31 @@ class PostsController < ApplicationController
     end
   end
 
+  def upvote
+    @topic = Topic.find_by!(slug: params[:topic_slug])
+    @post = Post.find_by!(slug: params[:slug])
+
+    if current_user.votes.count >= 1 && !current_user.voted_for?(@post)
+      redirect_back fallback_location: topic_posts_path(@topic), alert: "You can only vote one post"
+      return
+    end
+    
+    if @post.user == current_user
+      redirect_back fallback_location: topic_posts_path(@topic), alert: "You can't vote your own post"
+      return
+    end
+
+    if current_user.voted_for?(@post)
+      @post.unvote_by current_user
+      message = "Vote removed"
+    else
+      @post.upvote_by current_user
+      message = "Voted succesfuly!"
+    end
+
+    redirect_back fallback_location: topic_posts_path(@topic), notice: message 
+  end
+
   def tagged
   @posts = Post.tagged_with(params[:tag]).includes(:taggings, :tags, :user).order(created_at: :desc)
   end
