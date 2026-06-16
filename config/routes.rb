@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get "/.git/config", to: redirect("/404")
+  post "/xmlrpc.php", to: redirect("/404")
+  get "/api/auth/validate-sso", to: redirect("/404")
+  
   mount_avo
 
   # Error handling routes
