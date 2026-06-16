@@ -82,6 +82,7 @@ GEM
     acts-as-taggable-on (13.0.0)
       activerecord (>= 7.1, < 8.2)
       zeitwerk (>= 2.4, < 3.0)
+    acts_as_votable (0.14.0)
     addressable (2.8.8)
       public_suffix (>= 2.0.2, < 8.0)
     ambry (1.0.0)
@@ -529,6 +530,7 @@ DEPENDENCIES
   actiontext
   activestorage-cloudinary-service
   acts-as-taggable-on
+  acts_as_votable
   avo
   bootsnap
   brakeman (>= 8.0.4)

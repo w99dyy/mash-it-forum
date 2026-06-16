@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_06_203806) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_13_185154) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -95,6 +95,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_06_203806) do
     t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
     t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
     t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
+  end
+
+  create_table "mentions", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "merit_actions", force: :cascade do |t|
@@ -222,6 +227,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_06_203806) do
   create_table "topics", force: :cascade do |t|
     t.text "content"
     t.datetime "created_at", null: false
+    t.string "layout"
     t.boolean "locked"
     t.boolean "pinned", default: false, null: false
     t.integer "posts_count"
@@ -261,6 +267,22 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_06_203806) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["slug"], name: "index_users_on_slug", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true
+  end
+
+  create_table "votes", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "votable_id"
+    t.string "votable_type"
+    t.boolean "vote_flag"
+    t.string "vote_scope"
+    t.integer "vote_weight"
+    t.bigint "voter_id"
+    t.string "voter_type"
+    t.index ["votable_id", "votable_type", "vote_scope"], name: "index_votes_on_votable_id_and_votable_type_and_vote_scope"
+    t.index ["votable_type", "votable_id"], name: "index_votes_on_votable"
+    t.index ["voter_id", "voter_type", "vote_scope"], name: "index_votes_on_voter_id_and_voter_type_and_vote_scope"
+    t.index ["voter_type", "voter_id"], name: "index_votes_on_voter"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
