@@ -19,7 +19,9 @@ Rails.application.configure do
   config.public_file_server.headers = { "cache-control" => "public, max-age=#{1.year.to_i}" }
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
-  config.active_storage.service = :local
+  config.active_storage.service = :cloudinary
+
+  config.active_storage.queues.analysis = :default
 
   # --- SSL / PROXY SETTINGS ---
   # Assume all access to the app is happening through a SSL-terminating reverse proxy.
@@ -54,14 +56,14 @@ Rails.application.configure do
 
   # Set host to be used by links generated in mailer templates.
   config.action_mailer.default_url_options = {
-    host: 'mashiverse.com',
-    protocol: 'https'
+    host: "mashiverse.com",
+    protocol: "https"
   }
   config.action_mailer.delivery_method = :resend
   config.action_mailer.resend_settings = {
     api_key: ENV["RESEND_API_KEY"]
   }
-  
+
   # Set cloud storage to cloudinary service to host images
   config.active_storage.service = :cloudinary
 
@@ -80,7 +82,7 @@ Rails.application.configure do
   # Add all possible hosts that might connect to the app
   config.hosts = [
     "mashiverse.com",
-    "www.mashiverse.com", 
+    "www.mashiverse.com",
     "212.227.161.11",
     /.*\.kamal\.local$/,
     /.*\.internal$/,
@@ -89,6 +91,6 @@ Rails.application.configure do
     /.*\.ionos\.local$/
   ]
 
-  config.action_controller.default_url_options = { host: 'mashiverse.com', protocol: 'https' }
-  config.action_mailer.default_url_options = { host: 'mashiverse.com', protocol: 'https' }
+  config.action_controller.default_url_options = { host: "mashiverse.com", protocol: "https" }
+  config.action_mailer.default_url_options = { host: "mashiverse.com", protocol: "https" }
 end
