@@ -89,7 +89,7 @@ class PostsController < ApplicationController
       redirect_back fallback_location: topic_posts_path(@topic), alert: "You can only vote one post"
       return
     end
-    
+
     if @post.user == current_user
       redirect_back fallback_location: topic_posts_path(@topic), alert: "You can't vote your own post"
       return
@@ -103,7 +103,7 @@ class PostsController < ApplicationController
       message = "Voted succesfuly!"
     end
 
-    redirect_back fallback_location: topic_posts_path(@topic), notice: message 
+    redirect_back fallback_location: topic_posts_path(@topic), notice: message
   end
 
   def tagged
@@ -121,13 +121,11 @@ class PostsController < ApplicationController
   end
 
   def lock
-      @post = Post.friendly.find(params[:id])
       @post.update(locked: true)
       redirect_to @post, notice: "Post has been locked!"
   end
 
   def unlock
-      @post = Post.friendly.find(params[:id])
       @post.update(locked: false)
       redirect_to @post, notice: "Post has been unlocked!"
   end
