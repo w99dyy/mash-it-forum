@@ -4,18 +4,18 @@ class Post < ApplicationRecord
     belongs_to :topic, counter_cache: true
     belongs_to :user
     has_many :comments, dependent: :destroy
-    has_rich_text :body   
-    has_many_attached :images, dependent: :perge_later
+    has_rich_text :body
+    has_many_attached :images, dependent: :purge_later
     acts_as_taggable_on :tags
     acts_as_votable
     has_one_attached :avatar
 
     extend FriendlyId
-    friendly_id :title, use: [:slugged, :finders]
+    friendly_id :title, use: [ :slugged, :finders ]
 
-  #  def thumbnail
-  #    body.embeds.attachments.first&.blob
-  #  end
+    #  def thumbnail
+    #    body.embeds.attachments.first&.blob
+    #  end
 
     scope :by_tag, ->(tag) { tagged_with(tag) if tag.present? }
 
