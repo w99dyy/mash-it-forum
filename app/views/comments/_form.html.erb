@@ -2,7 +2,7 @@
   <%= form_with(model: [@topic, @post, comment]) do |form| %>
       <%= render "comments/shared/error_messages", resource: form.object %>
 
-      <div class="field mb-4">
+      <div class="field editor-wrapper mb-4">
         <%= form.rich_text_area :body, id: "body_#{comment.id || 'new'}"%>
       </div>
 

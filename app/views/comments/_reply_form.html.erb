@@ -16,7 +16,9 @@
       <% end %>
         <%= form.hidden_field :quoted_comment_id, value: comment.id %>
         <%= form.hidden_field :parent_id, value: comment.id %>
-        <%= form.rich_text_area :body, id: "reply_body_#{comment.id}" %>
+        <div class="editor-wrapper">
+           <%= form.rich_text_area :body, id: "reply_body_#{comment.id}" %>
+        </div>
         
         <div class="flex gap-2 items-center mt-2 mb-3">
           <%= form.submit "Reply", class: "bg-[#ed5024] hover:bg-[#e0603c] py-1 px-5 font-medium rounded-full shadow transition duration-200 cursor-pointer" %>

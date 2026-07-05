@@ -1,14 +1,32 @@
 /*
  * Default Trix editor styles. See Action Text overwrites below.
 */
-
-trix-editor {
+.editor-wrapper {
   border: 1px solid #2a2a2a;
   border-radius: 0.5rem;
+  width: 100%;
+  overflow: hidden;        /* clips children to rounded corners */
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+  .editor-wrapper {
+    width: 85%;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .editor-wrapper {
+    width: 65%;
+  }
+}
+
+
+trix-editor {
   margin: 0;
   padding: 0.4em 0.6em;
   min-height: 5em;
-  width: 65%;
   outline: none; }
 
 trix-toolbar * {
@@ -17,18 +35,18 @@ trix-toolbar * {
 trix-toolbar .trix-button-row {
   display: flex;
   flex-wrap: nowrap;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   overflow-x: auto; }
 
 trix-toolbar .trix-button-group {
   display: flex;
   margin-bottom: 10px;
-  border: 1px solid #2a2a2a;
-  border-top-color: #2a2a2a;
+  border-right: 1px solid #2a2a2a;
   border-bottom-color: #2a2a2a;
-  border-radius: 3px; }
+  border-radius: 3px;
+  background-color: #161616; }
   trix-toolbar .trix-button-group:not(:first-child) {
-    margin-left: 1.5vw; }
+    margin-left: 0; }
     @media (max-width: 768px) {
       trix-toolbar .trix-button-group:not(:first-child) {
         margin-left: 0; } }

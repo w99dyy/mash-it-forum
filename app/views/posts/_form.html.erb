@@ -15,7 +15,7 @@
     <%= form.text_field :title,
       required: true,
       minlength: 5,
-      class: "w-[65%] px-3 py-2 text-white border border-[#2a2a2a] rounded-lg outline-none", 
+      class: "w-[100%] sm:w-[65%] px-3 py-2 text-white border border-[#2a2a2a] rounded-lg outline-none", 
       placeholder: "Enter a title for your post" %>
   </div>
 
@@ -50,7 +50,7 @@
                   post.tag_list.include?(tag.name),
                   id: "tag_#{tag.id}",
                   class: "hidden peer" %>
-                <span class="bg-[#2a2a2a] text-gray-400 peer-checked:bg-[#de7200] peer-checked:text-white px-3 py-1 rounded-full text-sm font-medium cursor-pointer transition-all select-none hover:bg-[#3a3a3a]">
+                <span class="bg-[#2a2a2a] text-gray-400 peer-checked:bg-[#de7200] peer-checked:text-white px-3 py-1 rounded-full text-sm font-medium cursor-pointer transition-all select-none">
                   <%= tag.name %>
                 </span>
               </label>
@@ -63,8 +63,9 @@
       </button>
     </div>
 
-  <div class="field mb-4">
+  <div class="field editor-wrapper mb-4">
     <%= form.rich_text_area :body,
+      data: { controller: "trix-validator" },
       placeholder: "Write your post content here... You can use markdown for formatting." %>
   </div>
 
